@@ -1,26 +1,28 @@
-<div class="home-hero">
-  <h1>The Road to the Championship</h1>
-  <p>The AFFL {{ site.current_season }} Playoffs are underway!</p>
-</div>
-
-<div class="playoff-focus">
-  <h2>Playoff Picture</h2>
-  <p>Every matchup counts. Who will take home the title?</p>
-  
+<div class="dashboard-grid">
+  <!-- Playoff Picture -->
   {% assign current_season_data = site.data.all_seasons | where: "year", site.current_season | first %}
-  {% if current_season_data %}
-    <h3>Top Contenders</h3>
-    <ul>
-      {% for team in current_season_data.standings limit:4 %}
-        <li><strong>{{ team.team_name }}</strong> ({{ team.record }})</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-  
-  <a href="{{ site.baseurl }}/standings/{{ site.current_season }}/" class="btn">View Playoff Bracket (Sleeper)</a>
-</div>
+  <div class="dashboard-card" style="grid-column: span 2;">
+    <h2>🏆 The Road to the Title</h2>
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+      <div style="flex: 1; min-width: 200px;">
+        <h3 style="font-size: 1em;">Championship Hunt</h3>
+        <ul style="margin: 0; padding-left: 20px; font-size: 0.9em;">
+          {% for team in current_season_data.standings limit:4 %}
+            <li style="margin-bottom: 5px;"><strong>{{ team.team_name }}</strong> ({{ team.record }})</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+        <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/playoffs" target="_blank" class="btn">Live Playoff Bracket</a>
+        <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">Current Matchups</a>
+      </div>
+    </div>
+  </div>
 
-<section class="historic-context">
-  <h2>Can they join the greats?</h2>
-  <p>Check out our <a href="{{ site.baseurl }}/history/">League History</a> to see past champions.</p>
-</section>
+  <!-- Historic Context -->
+  <div class="dashboard-card">
+    <h2>📜 Join the Greats</h2>
+    <p style="font-size: 0.9em; margin-bottom: 15px;">Who will be the next champion of the Art of Fantasy Football?</p>
+    <a href="{{ site.baseurl }}/history/" class="btn">View All Champions</a>
+  </div>
+</div>

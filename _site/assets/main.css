@@ -647,16 +647,6 @@ table td {
 }
 
 :root {
-  --bg-color: #ffffff;
-  --text-color: #111111;
-  --link-color: #2a7ae2;
-  --border-color: #e8e8e8;
-  --header-bg: #fdfdfd;
-  --footer-bg: #fdfdfd;
-  --card-bg: #f9f9f9;
-}
-
-body.dark-mode {
   --bg-color: #181a1b;
   --text-color: #e8e6e3;
   --link-color: #6ebff3;
@@ -664,6 +654,16 @@ body.dark-mode {
   --header-bg: #1c1e1f;
   --footer-bg: #1c1e1f;
   --card-bg: #242729;
+}
+
+body.light-mode {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --link-color: #2a7ae2;
+  --border-color: #e8e8e8;
+  --header-bg: #fdfdfd;
+  --footer-bg: #fdfdfd;
+  --card-bg: #f9f9f9;
 }
 
 body {
@@ -697,39 +697,49 @@ a {
 
 a:hover {
   text-decoration: underline;
-  color: rgb(26.0041322314, 97.7396694215, 190.9958677686);
+  color: rgb(180.652866242, 222.1847133758, 248.847133758);
 }
 
-body.dark-mode a:hover {
-  color: rgb(180.652866242, 222.1847133758, 248.847133758);
+body.light-mode a:hover {
+  color: rgb(26.0041322314, 97.7396694215, 190.9958677686);
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-  color: var(--text-color);
+  color: var(--text-color) !important;
+  background-color: var(--bg-color);
+  margin-bottom: 30px;
 }
 
 th {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #242729 !important;
+  color: #fff !important;
   font-weight: bold;
+  text-align: left;
 }
 
-body.dark-mode th {
-  background-color: rgba(255, 255, 255, 0.1);
+body.light-mode th {
+  background-color: #f0f0f0 !important;
+  color: #111 !important;
 }
 
 th, td {
   border: 1px solid var(--border-color) !important;
-  padding: 8px;
+  padding: 12px 15px;
 }
 
 tr:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
-body.dark-mode tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.05);
+body.light-mode tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+td a {
+  font-weight: bold;
+  text-decoration: underline !important;
 }
 
 .winner-card, .roadmap-item {
@@ -743,8 +753,121 @@ body.dark-mode tr:nth-child(even) {
   opacity: 0.8;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: var(--link-color);
+  color: #111 !important;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none !important;
+  transition: opacity 0.2s, transform 0.1s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+body.light-mode .btn {
+  color: #fff !important;
+}
+
 hr {
   border-color: var(--border-color);
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card h2 {
+  margin-top: 0;
+  font-size: 1.25em;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.spotlight-container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 25px;
+  align-items: center;
+}
+
+.champion-box {
+  background: rgba(255, 215, 0, 0.12);
+  padding: 30px;
+  border-radius: 16px;
+  border: 2px solid #ffd700;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.secondary-spotlight {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toilet-bowl-box {
+  background: rgba(165, 42, 42, 0.08);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(165, 42, 42, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.post-header {
+  margin-bottom: 0 !important;
+  display: none !important;
+}
+
+@media screen and (max-width: 600px) {
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

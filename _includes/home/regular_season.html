@@ -1,41 +1,47 @@
-<div class="home-hero">
-  <h1>The {{ site.current_season }} Season is Live!</h1>
-  <p>Track the battle for the AFFL Championship.</p>
-</div>
-
-<div class="current-leaders">
-  <h2>League Leaders</h2>
+<div class="dashboard-grid">
+  <!-- Current Standings (Top 5) -->
   {% assign current_season_data = site.data.all_seasons | where: "year", site.current_season | first %}
-  {% if current_season_data %}
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Team</th>
-          <th>Record</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for team in current_season_data.standings limit:3 %}
+  <div class="dashboard-card" style="grid-column: span 2;">
+    <h2>📊 {{ site.current_season }} Standings (Top 5)</h2>
+    {% if current_season_data %}
+      <table style="font-size: 0.9em; margin-bottom: 15px;">
+        <thead>
           <tr>
-            <td>{{ forloop.index }}</td>
-            <td>{{ team.team_name }}</td>
-            <td>{{ team.record }}</td>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Record</th>
+            <th>Points</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a href="{{ site.baseurl }}/standings/{{ site.current_season }}/" class="btn">View Full Standings</a>
-  {% else %}
-    <p>Standings will appear once the season begins.</p>
-  {% endif %}
-</div>
+        </thead>
+        <tbody>
+          {% for team in current_season_data.standings limit:5 %}
+            <tr>
+              <td>{{ forloop.index }}</td>
+              <td style="display: flex; align-items: center; gap: 10px;">
+                {% if team.avatar %}
+                  <img src="https://sleepercdn.com/avatars/thumbs/{{ team.avatar }}" style="width: 25px; height: 25px; border-radius: 50%;">
+                {% endif %}
+                {{ team.team_name }}
+              </td>
+              <td>{{ team.record }}</td>
+              <td>{{ sprintf('%.2f', team.points_for) }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{{ site.baseurl }}/standings/{{ site.current_season }}/" class="btn" style="align-self: flex-start;">View Full Standings</a>
+    {% else %}
+      <p>Data will appear once the season starts.</p>
+    {% endif %}
+  </div>
 
-<section class="weekly-links">
-  <h2>Quick Links</h2>
-  <ul>
-    <li><a href="{{ site.baseurl }}/standings/">Standings</a></li>
-    <li><a href="{{ site.baseurl }}/schedule/">Schedule</a></li>
-    <li><a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank">Open Sleeper League</a></li>
-  </ul>
-</section>
+  <!-- Weekly Links -->
+  <div class="dashboard-card">
+    <h2>🔗 Quick Links</h2>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">Current Matchups</a>
+      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/scores" target="_blank" class="btn">Recent Scores</a>
+      <a href="{{ site.baseurl }}/schedule/" class="btn">League Schedule</a>
+    </div>
+  </div>
+</div>

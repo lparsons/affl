@@ -35,10 +35,8 @@ module Jekyll
       seasons.sort_by! { |s| -s['year'] }
       site.data['all_seasons'] = seasons
 
-      # Generate pages for each season
-      seasons.each do |season|
-        site.pages << SeasonStandingsPage.new(site, site.source, "standings/#{season['year']}", season)
-      end
+      # Note: We no longer generate individual SeasonStandingsPage files
+      # as the main /standings/ page is now dynamic.
     end
 
     private
@@ -50,12 +48,7 @@ module Jekyll
 
       draft_date = Time.parse(draft_date_str)
       
-      # Correctly handle year-end transitions
-      # If draft_date is in the future, we are either in offseason or predraft
-      # If draft_date is in the past, we are either in regular season or playoffs
-      
       state = if now < draft_date
-                # Pre-draft or Offseason
                 prep_start = draft_date - (21 * 24 * 60 * 60) # 3 weeks
                 if now >= prep_start
                   'predraft'
@@ -63,8 +56,6 @@ module Jekyll
                   'offseason'
                 end
               else
-                # Regular Season or Playoffs
-                # Typically playoffs start around Week 14-15 (early Dec)
                 playoff_start = Time.new(draft_date.year, 12, 1)
                 offseason_end = Time.new(draft_date.year + 1, 1, 11)
                 
@@ -79,42 +70,6 @@ module Jekyll
 
       site.config['league_state'] = state
       Jekyll.logger.info "Sleeper:", "Automated league state detected: #{state}"
-    end
-  end
-
-  class SeasonStandingsPage < Page
-    def initialize(site, base, dir, season)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.md'
-
-      self.process(@name)
-      
-      self.data ||= {}
-      self.data['layout'] = 'page'
-      self.data['title'] = "#{season['year']} Standings"
-      self.data['season'] = season
-      
-      # Build the content dynamically
-      self.content = render_standings(season)
-    end
-
-    def render_standings(season)
-      content = "# #{season['year']} AFFL Standings\n\n"
-      content << "## Current Standings\n\n"
-      content << "| Rank | Team Name | Manager | Record | Points For | Points Against |\n"
-      content << "|------|-----------|---------|---------|------------|----------------|\n"
-
-      season['standings'].each_with_index do |team, index|
-        team_name = team['team_name'] || team['username']
-        avatar_url = team['avatar'] ? "https://sleepercdn.com/avatars/thumbs/#{team['avatar']}" : "https://sleepercdn.com/images/v2/icons/player_default.webp"
-        content << "| #{index + 1} | <img src=\"#{avatar_url}\" width=\"30\" height=\"30\" style=\"border-radius: 50%; vertical-align: middle; margin-right: 10px;\"> #{team_name} | #{team['username']} | #{team['record']} | #{sprintf('%.2f', team['points_for'])} | #{sprintf('%.2f', team['points_against'])} |\n"
-      end
-
-      content << "\n---\n\n"
-      content << "*League: #{season['name']} (#{season['year']})*"
-      content
     end
   end
 end

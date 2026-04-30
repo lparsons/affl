@@ -1,21 +1,37 @@
-<div class="home-hero">
-  <h1>Draft Season is Approaching!</h1>
-  <p>Gear up for the {{ site.current_season }} AFFL Draft.</p>
-</div>
+<div class="dashboard-grid">
+  <!-- Draft Countdown -->
+  <div class="dashboard-card" style="grid-column: span 2;">
+    <h2>⏳ Draft Countdown</h2>
+    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0;">
+      <div style="text-align: center;">
+        <p style="font-size: 2em; font-weight: bold; margin: 0;" id="days-remaining">--</p>
+        <p style="margin: 0; opacity: 0.8;">Days</p>
+      </div>
+      <div style="text-align: center;">
+        <p style="font-size: 1.2em; margin: 0;">{{ site.draft_date | date: "%B %d, %Y" }}</p>
+        <p style="margin: 0; opacity: 0.8;">at {{ site.draft_date | date: "%I:%M %p" }}</p>
+      </div>
+      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/draft" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
+    </div>
+  </div>
 
-<div class="draft-countdown">
-  <h2>Countdown to Draft</h2>
-  <div id="countdown" data-date="{{ site.draft_date }}">
-    <p>Draft Date: <strong>{{ site.draft_date | date: "%B %d, %Y at %I:%M %p" }}</strong></p>
+  <!-- Draft Prep Links -->
+  <div class="dashboard-card">
+    <h2>📋 Prep Tools</h2>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/rosters" target="_blank" class="btn">View All Rosters</a>
+      <a href="{{ site.baseurl }}/rules/" class="btn">Review Rules</a>
+      <a href="{{ site.baseurl }}/history/" class="btn">Past Records</a>
+    </div>
   </div>
 </div>
 
-<section class="draft-details">
-  <h2>Draft Information</h2>
-  <p>The draft will take place on Sleeper. Make sure your rankings are set!</p>
-  <ul>
-    <li><strong>Platform:</strong> {{ site.platform }}</li>
-    <li><strong>Season:</strong> {{ site.current_season }}</li>
-    <li><a href="https://sleeper.com/leagues/{{ site.current_league_id }}/draft" target="_blank" class="btn">Go to Sleeper Draft Board</a></li>
-  </ul>
-</section>
+<script>
+  (function() {
+    const draftDate = new Date("{{ site.draft_date }}").getTime();
+    const now = new Date().getTime();
+    const diff = draftDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById('days-remaining').textContent = days > 0 ? days : 0;
+  })();
+</script>

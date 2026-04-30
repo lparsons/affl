@@ -1,122 +1,77 @@
-<div class="home-hero">
-  <h1>The Offseason is Here</h1>
-  <p>The AFFL is currently in the offseason. We are preparing for the upcoming <strong>{{ site.current_season }}</strong> season.</p>
-</div>
-
-<div class="post-season-celebration">
+<div class="dashboard-grid">
+  <!-- Post-Season Spotlight -->
   {% assign prev_year = site.current_season | minus: 1 %}
   {% assign prev_season = site.data.all_seasons | where: "year", prev_year | first %}
   
   {% if prev_season %}
-    <div class="winner-grid">
-      <div class="winner-card champion">
-        <h2>🏆 {{ prev_year }} Champion</h2>
-        {% assign champ_avatar = prev_season.champion.avatar %}
-        {% if champ_avatar %}
-          <img src="https://sleepercdn.com/avatars/thumbs/{{ champ_avatar }}" class="spotlight-avatar">
-        {% else %}
-          <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" class="spotlight-avatar">
-        {% endif %}
-        <p class="winner-name">{{ prev_season.champion.team_name }}</p>
-        <p class="manager-name">Managed by {{ prev_season.champion.username }}</p>
-      </div>
+    <div class="dashboard-card" style="grid-column: 1 / -1;">
+      <h2>🏆 {{ prev_year }} Season Spotlight</h2>
       
-      <div class="winner-card toilet-bowl">
-        <h2>🚽 Toilet Bowl "Winner"</h2>
-        {% assign toilet_avatar = prev_season.toilet_bowl_winner.avatar %}
-        {% if toilet_avatar %}
-          <img src="https://sleepercdn.com/avatars/thumbs/{{ toilet_avatar }}" class="spotlight-avatar">
-        {% else %}
-          <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" class="spotlight-avatar">
-        {% endif %}
-        <p class="winner-name">{{ prev_season.toilet_bowl_winner.team_name }}</p>
-        <p class="manager-name">Managed by {{ prev_season.toilet_bowl_winner.username }}</p>
+      <div class="spotlight-container">
+        <!-- Prominent Champion Section -->
+        <div class="champion-box">
+          {% if prev_season.champion.avatar %}
+            <img src="https://sleepercdn.com/avatars/thumbs/{{ prev_season.champion.avatar }}" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #ffd700; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+          {% else %}
+            <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 100px; height: 100px; border-radius: 50%;">
+          {% endif %}
+          <div>
+            <h3 style="margin: 0; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em;">League Champion</h3>
+            <p style="margin: 5px 0 0; font-size: 1.8em; font-weight: 800; line-height: 1.2;">{{ prev_season.champion.team_name }}</p>
+            <p style="margin: 0; opacity: 0.8;">Managed by {{ prev_season.champion.username }}</p>
+          </div>
+        </div>
+        
+        <!-- Secondary Section (Toilet Bowl & Bracket) -->
+        <div class="secondary-spotlight" style="width: 100%; max-width: 320px;">
+          <div class="toilet-bowl-box" style="box-sizing: border-box; width: 100%;">
+            {% if prev_season.toilet_bowl_winner.avatar %}
+              <img src="https://sleepercdn.com/avatars/thumbs/{{ prev_season.toilet_bowl_winner.avatar }}" style="width: 45px; height: 45px; border-radius: 50%;">
+            {% else %}
+              <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 45px; height: 45px; border-radius: 50%;">
+            {% endif %}
+            <div>
+              <h3 style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase;">Toilet Bowl</h3>
+              <p style="margin: 0; font-weight: bold;">{{ prev_season.toilet_bowl_winner.team_name }}</p>
+            </div>
+          </div>
+
+          <a href="https://sleeper.com/leagues/{{ prev_season.league_id }}" target="_blank" class="btn" style="width: 100%; box-sizing: border-box;">
+            <span style="margin-right: 8px;">📊</span> View League Home
+          </a>
+        </div>
       </div>
-    </div>
-    
-    <div class="bracket-link">
-      <a href="https://sleeper.com/leagues/{{ prev_season.league_id }}/playoffs" target="_blank" class="btn">View {{ prev_year }} Playoff Bracket</a>
     </div>
   {% endif %}
+
+  <!-- Full Width Roadmap Card -->
+  <div class="dashboard-card" style="grid-column: 1 / -1;">
+    <h2>🗓️ The Road to {{ site.current_season }}</h2>
+    <div style="display: flex; justify-content: space-around; align-items: center; padding: 20px 0; gap: 40px; flex-wrap: wrap;">
+      <div style="text-align: center; flex: 1; min-width: 200px;">
+        <p style="margin: 0; font-weight: bold; font-size: 0.9em; opacity: 0.6; text-transform: uppercase;">AFFL Draft Day</p>
+        <p style="margin: 5px 0 0; font-size: 1.5em; font-weight: bold;">{{ site.draft_date | date: "%B %d, %Y" }}</p>
+        <p style="margin: 0; opacity: 0.8;">at {{ site.draft_date | date: "%I:%M %p" }}</p>
+      </div>
+      
+      <div class="desktop-divider" style="height: 50px; border-left: 1px solid var(--border-color); opacity: 0.5;"></div>
+
+      <div style="text-align: center; flex: 1; min-width: 200px;">
+        <p style="margin: 0; font-weight: bold; font-size: 0.9em; opacity: 0.6; text-transform: uppercase;">NFL Season Kickoff</p>
+        <p style="margin: 5px 0 0; font-size: 1.5em; font-weight: bold;">{{ site.nfl_season_start | date: "%B %d, %Y" }}</p>
+        <p style="margin: 0; opacity: 0.8;">Thursday Night Football</p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<section class="upcoming-roadmap">
-  <h2>The Road to {{ site.current_season }}</h2>
-  <div class="roadmap-grid">
-    <div class="roadmap-item">
-      <h3>NFL Season Kickoff</h3>
-      <p><strong>{{ site.nfl_season_start | date: "%B %d, %Y" }}</strong></p>
-      <p>The quest for the Super Bowl begins.</p>
-    </div>
-    
-    <div class="roadmap-item">
-      <h3>AFFL Draft Day</h3>
-      <p><strong>{{ site.draft_date | date: "%B %d, %Y" }}</strong></p>
-      <p>Mark your calendars for the most important day of the year.</p>
-    </div>
-  </div>
-  
-  <div class="next-steps">
-    <h3>Next Steps</h3>
-    <ul>
-      <li>Review the <a href="{{ site.baseurl }}/rules/">League Rules</a> for any updates.</li>
-      <li>Check out the <a href="{{ site.baseurl }}/history/">League History</a> to see how you stack up.</li>
-      <li>Join the conversation in our league chat.</li>
-    </ul>
-  </div>
-</section>
-
 <style>
-  .winner-grid, .roadmap-grid {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: 20px 0;
-  }
-  .winner-card, .roadmap-item {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    width: 45%;
-    text-align: center;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-  }
-  .winner-card.champion {
-    border: 2px solid #ffd700;
-  }
-  .winner-card.toilet-bowl {
-    border: 2px solid #a52a2a;
-  }
-  .winner-name {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 10px 0 5px;
-  }
-  .spotlight-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    border: 3px solid #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .manager-name {
-    color: #666;
-  }
-  .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  .bracket-link {
-    text-align: center;
-    margin-bottom: 30px;
+  @media (max-width: 800px) {
+    .spotlight-container {
+      grid-template-columns: 1fr;
+    }
+    .desktop-divider {
+      display: none;
+    }
   }
 </style>
