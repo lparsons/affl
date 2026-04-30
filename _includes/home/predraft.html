@@ -1,0 +1,21 @@
+<div class="home-hero">
+  <h1>Draft Season is Approaching!</h1>
+  <p>Gear up for the {{ site.current_season }} AFFL Draft.</p>
+</div>
+
+<div class="draft-countdown">
+  <h2>Countdown to Draft</h2>
+  <div id="countdown" data-date="{{ site.draft_date }}">
+    <p>Draft Date: <strong>{{ site.draft_date | date: "%B %d, %Y at %I:%M %p" }}</strong></p>
+  </div>
+</div>
+
+<section class="draft-details">
+  <h2>Draft Information</h2>
+  <p>The draft will take place on Sleeper. Make sure your rankings are set!</p>
+  <ul>
+    <li><strong>Platform:</strong> {{ site.platform }}</li>
+    <li><strong>Season:</strong> {{ site.current_season }}</li>
+    <li><a href="https://sleeper.com/leagues/{{ site.current_league_id }}/draft" target="_blank" class="btn">Go to Sleeper Draft Board</a></li>
+  </ul>
+</section>

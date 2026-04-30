@@ -1,0 +1,102 @@
+<div class="home-hero">
+  <h1>The Offseason is Here</h1>
+  <p>The AFFL is currently in the offseason. We are preparing for the upcoming <strong>{{ site.current_season }}</strong> season.</p>
+</div>
+
+<div class="post-season-celebration">
+  {% assign prev_year = site.current_season | minus: 1 %}
+  {% assign prev_season = site.data.all_seasons | where: "year", prev_year | first %}
+  
+  {% if prev_season %}
+    <div class="winner-grid">
+      <div class="winner-card champion">
+        <h2>🏆 {{ prev_year }} Champion</h2>
+        <p class="winner-name">{{ prev_season.champion.team_name }}</p>
+        <p class="manager-name">Managed by {{ prev_season.champion.username }}</p>
+      </div>
+      
+      <div class="winner-card toilet-bowl">
+        <h2>🚽 Toilet Bowl "Winner"</h2>
+        <p class="winner-name">{{ prev_season.toilet_bowl_winner.team_name }}</p>
+        <p class="manager-name">Managed by {{ prev_season.toilet_bowl_winner.username }}</p>
+      </div>
+    </div>
+    
+    <div class="bracket-link">
+      <a href="https://sleeper.com/leagues/{{ prev_season.league_id }}/playoffs" target="_blank" class="btn">View {{ prev_year }} Playoff Bracket</a>
+    </div>
+  {% endif %}
+</div>
+
+<hr>
+
+<section class="upcoming-roadmap">
+  <h2>The Road to {{ site.current_season }}</h2>
+  <div class="roadmap-grid">
+    <div class="roadmap-item">
+      <h3>NFL Season Kickoff</h3>
+      <p><strong>{{ site.nfl_season_start | date: "%B %d, %Y" }}</strong></p>
+      <p>The quest for the Super Bowl begins.</p>
+    </div>
+    
+    <div class="roadmap-item">
+      <h3>AFFL Draft Day</h3>
+      <p><strong>{{ site.draft_date | date: "%B %d, %Y" }}</strong></p>
+      <p>Mark your calendars for the most important day of the year.</p>
+    </div>
+  </div>
+  
+  <div class="next-steps">
+    <h3>Next Steps</h3>
+    <ul>
+      <li>Review the <a href="{{ site.baseurl }}/rules/">League Rules</a> for any updates.</li>
+      <li>Check out the <a href="{{ site.baseurl }}/history/">League History</a> to see how you stack up.</li>
+      <li>Join the conversation in our league chat.</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .winner-grid, .roadmap-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .winner-card, .roadmap-item {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 45%;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  .winner-card.champion {
+    border: 2px solid #ffd700;
+  }
+  .winner-card.toilet-bowl {
+    border: 2px solid #a52a2a;
+  }
+  .winner-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 10px 0 5px;
+  }
+  .manager-name {
+    color: #666;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .bracket-link {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+</style>

@@ -1,0 +1,45 @@
+title: The Art of Fantasy Football League (AFFL)
+email: your-email@example.com
+description: >-
+  Official website for The Art of Fantasy Football League (AFFL) - 
+  A competitive fantasy football league hosted on Sleeper.
+baseurl: ""
+url: ""
+twitter_username: 
+github_username: 
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Custom variables
+league_name: "The Art of Fantasy Football League"
+league_abbreviation: "AFFL"
+platform: "Sleeper"
+draft_date: "2026-08-30 18:00:00"
+nfl_season_start: "2026-09-10"
+current_season: 2026
+current_league_id: "1257465132527661056"
+
+# Navigation
+header_pages:
+  - about.md
+  - standings.md
+  - schedule.md
+  - rules.md
+  - history.md
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/

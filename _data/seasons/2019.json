@@ -1,0 +1,140 @@
+{
+  "year": 2019,
+  "league_id": "463028468251095040",
+  "name": "The Art of Fantasy Football League",
+  "status": "complete",
+  "standings": [
+    {
+      "user_id": "463028232669622272",
+      "username": "CodeBrewer",
+      "team_name": "Desert Scorpions",
+      "wins": 11,
+      "losses": 2,
+      "ties": 0,
+      "points_for": 1581.52,
+      "points_against": 1336.36,
+      "record": "11-2"
+    },
+    {
+      "user_id": "466831529767596032",
+      "username": "kolners",
+      "team_name": "kolners",
+      "wins": 10,
+      "losses": 3,
+      "ties": 0,
+      "points_for": 1665.3,
+      "points_against": 1335.8,
+      "record": "10-3"
+    },
+    {
+      "user_id": "467698630166310912",
+      "username": "maheshbiradar",
+      "team_name": "Birants",
+      "wins": 10,
+      "losses": 3,
+      "ties": 0,
+      "points_for": 1389.56,
+      "points_against": 1289.14,
+      "record": "10-3"
+    },
+    {
+      "user_id": "466828458412994560",
+      "username": "wichart",
+      "team_name": "Erie-Mason Eagles",
+      "wins": 7,
+      "losses": 6,
+      "ties": 0,
+      "points_for": 1508.78,
+      "points_against": 1503.54,
+      "record": "7-6"
+    },
+    {
+      "user_id": "467713945692532736",
+      "username": "TheBrawlers",
+      "team_name": "Beantown Brawlers",
+      "wins": 6,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1549.02,
+      "points_against": 1513.46,
+      "record": "6-7"
+    },
+    {
+      "user_id": "467597885412732928",
+      "username": "nightmare123",
+      "team_name": "nightmare123",
+      "wins": 6,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1490.32,
+      "points_against": 1569.8,
+      "record": "6-7"
+    },
+    {
+      "user_id": "467071694998073344",
+      "username": "SteelDragons",
+      "team_name": "SteelDragons",
+      "wins": 6,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1472.14,
+      "points_against": 1463.98,
+      "record": "6-7"
+    },
+    {
+      "user_id": "467551024677122048",
+      "username": "VAPatsNation",
+      "team_name": "VAPatsNation",
+      "wins": 6,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1472.06,
+      "points_against": 1422.76,
+      "record": "6-7"
+    },
+    {
+      "user_id": "467887669452468224",
+      "username": "TheUntouchable",
+      "team_name": "Untouchable ",
+      "wins": 6,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1327.32,
+      "points_against": 1407.7,
+      "record": "6-7"
+    },
+    {
+      "user_id": "468106048058683392",
+      "username": "bsowden",
+      "team_name": "Easy Breesy Sunday",
+      "wins": 4,
+      "losses": 9,
+      "ties": 0,
+      "points_for": 1330.96,
+      "points_against": 1482.72,
+      "record": "4-9"
+    },
+    {
+      "user_id": "467051300257787904",
+      "username": "Eliminator",
+      "team_name": "Eliminator19",
+      "wins": 4,
+      "losses": 9,
+      "ties": 0,
+      "points_for": 1297.26,
+      "points_against": 1483.26,
+      "record": "4-9"
+    },
+    {
+      "user_id": "468149345745629184",
+      "username": "trolldrengi",
+      "team_name": "Who Dats",
+      "wins": 2,
+      "losses": 11,
+      "ties": 0,
+      "points_for": 1204.06,
+      "points_against": 1479.78,
+      "record": "2-11"
+    }
+  ]
+}

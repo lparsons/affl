@@ -1,0 +1,140 @@
+{
+  "year": 2024,
+  "league_id": "1124837607272898560",
+  "name": "The Art of Fantasy Football League",
+  "status": "complete",
+  "standings": [
+    {
+      "user_id": "466831529767596032",
+      "username": "kolners",
+      "team_name": "Kolners",
+      "wins": 10,
+      "losses": 4,
+      "ties": 0,
+      "points_for": 1823.98,
+      "points_against": 1708.02,
+      "record": "10-4"
+    },
+    {
+      "user_id": "467698630166310912",
+      "username": "maheshbiradar",
+      "team_name": "Birants",
+      "wins": 10,
+      "losses": 4,
+      "ties": 0,
+      "points_for": 1733.84,
+      "points_against": 1597.4,
+      "record": "10-4"
+    },
+    {
+      "user_id": "463028232669622272",
+      "username": "CodeBrewer",
+      "team_name": "Desert Scorpions",
+      "wins": 9,
+      "losses": 5,
+      "ties": 0,
+      "points_for": 1783.64,
+      "points_against": 1629.42,
+      "record": "9-5"
+    },
+    {
+      "user_id": "467051300257787904",
+      "username": "Eliminator",
+      "team_name": "Eliminator",
+      "wins": 8,
+      "losses": 6,
+      "ties": 0,
+      "points_for": 1690.04,
+      "points_against": 1579.74,
+      "record": "8-6"
+    },
+    {
+      "user_id": "467551024677122048",
+      "username": "VAPatsNation",
+      "team_name": "VAPatsNation",
+      "wins": 8,
+      "losses": 6,
+      "ties": 0,
+      "points_for": 1573.44,
+      "points_against": 1522.88,
+      "record": "8-6"
+    },
+    {
+      "user_id": "468149345745629184",
+      "username": "trolldrengi",
+      "team_name": "Football Commandants",
+      "wins": 7,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1699.3,
+      "points_against": 1621.22,
+      "record": "7-7"
+    },
+    {
+      "user_id": "601971095054725120",
+      "username": "CaseyWhite",
+      "team_name": "Big EZ Blue",
+      "wins": 7,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1694.78,
+      "points_against": 1796.06,
+      "record": "7-7"
+    },
+    {
+      "user_id": "467597885412732928",
+      "username": "nightmare123",
+      "team_name": "nightmare123",
+      "wins": 7,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1683.88,
+      "points_against": 1665.99,
+      "record": "7-7"
+    },
+    {
+      "user_id": "467713945692532736",
+      "username": "TheBrawlers",
+      "team_name": "TheBrawlers",
+      "wins": 6,
+      "losses": 8,
+      "ties": 0,
+      "points_for": 1787.58,
+      "points_against": 1740.22,
+      "record": "6-8"
+    },
+    {
+      "user_id": "467887669452468224",
+      "username": "TheUntouchable",
+      "team_name": "TheUntouchable",
+      "wins": 6,
+      "losses": 8,
+      "ties": 0,
+      "points_for": 1663.14,
+      "points_against": 1761.88,
+      "record": "6-8"
+    },
+    {
+      "user_id": "467071694998073344",
+      "username": "icchipaad",
+      "team_name": "BeerBicepsBiryani",
+      "wins": 4,
+      "losses": 10,
+      "ties": 0,
+      "points_for": 1649.8,
+      "points_against": 1784.92,
+      "record": "4-10"
+    },
+    {
+      "user_id": "468106048058683392",
+      "username": "bsowden",
+      "team_name": "FF Dumpster Fire",
+      "wins": 2,
+      "losses": 12,
+      "ties": 0,
+      "points_for": 1527.28,
+      "points_against": 1902.94,
+      "record": "2-12"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<div class="home-hero">
+  <h1>The Road to the Championship</h1>
+  <p>The AFFL {{ site.current_season }} Playoffs are underway!</p>
+</div>
+
+<div class="playoff-focus">
+  <h2>Playoff Picture</h2>
+  <p>Every matchup counts. Who will take home the title?</p>
+  
+  {% assign current_season_data = site.data.all_seasons | where: "year", site.current_season | first %}
+  {% if current_season_data %}
+    <h3>Top Contenders</h3>
+    <ul>
+      {% for team in current_season_data.standings limit:4 %}
+        <li><strong>{{ team.team_name }}</strong> ({{ team.record }})</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  <a href="{{ site.baseurl }}/standings/{{ site.current_season }}/" class="btn">View Playoff Bracket (Sleeper)</a>
+</div>
+
+<section class="historic-context">
+  <h2>Can they join the greats?</h2>
+  <p>Check out our <a href="{{ site.baseurl }}/history/">League History</a> to see past champions.</p>
+</section>
