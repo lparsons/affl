@@ -3,20 +3,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Standings | The Art of Fantasy Football League (AFFL)</title>
+<title>Seasons Dashboard | The Art of Fantasy Football League (AFFL)</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Standings" />
+<meta property="og:title" content="Seasons Dashboard" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Official website for The Art of Fantasy Football League (AFFL) - A competitive fantasy football league hosted on Sleeper." />
 <meta property="og:description" content="Official website for The Art of Fantasy Football League (AFFL) - A competitive fantasy football league hosted on Sleeper." />
-<link rel="canonical" href="/standings/" />
-<meta property="og:url" content="/standings/" />
+<link rel="canonical" href="/seasons/" />
+<meta property="og:url" content="/seasons/" />
 <meta property="og:site_name" content="The Art of Fantasy Football League (AFFL)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Standings" />
+<meta property="twitter:title" content="Seasons Dashboard" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Official website for The Art of Fantasy Football League (AFFL) - A competitive fantasy football league hosted on Sleeper.","headline":"Standings","url":"/standings/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Official website for The Art of Fantasy Football League (AFFL) - A competitive fantasy football league hosted on Sleeper.","headline":"Seasons Dashboard","url":"/seasons/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="The Art of Fantasy Football League (AFFL)" /></head>
 <body><header class="site-header" role="banner">
@@ -36,7 +36,13 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/standings/">Standings</a><a class="page-link" href="/schedule/">Schedule</a><a class="page-link" href="/rules/">Rules</a><a class="page-link" href="/history/">History</a><!-- Dark Mode Toggle -->
+        <div class="trigger">
+          <a class="page-link" href="/records/">Record Book</a>
+          <a class="page-link" href="/seasons/">Seasons</a>
+          <a class="page-link" href="/history/">History</a>
+          <a class="page-link" href="/rules/">Rules</a>
+          
+          <!-- Dark Mode Toggle -->
           <button id="theme-toggle" aria-label="Toggle Dark Mode" style="background: none; border: none; cursor: pointer; vertical-align: middle; padding: 0 10px;">
             <span id="theme-toggle-icon">🌙</span>
           </button>
@@ -70,18 +76,18 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Standings</h1>
+    <h1 class="post-title">Seasons Dashboard</h1>
   </header>
 
   <div class="post-content">
     <div class="dashboard-container">
-  <div class="dashboard-header" style="justify-content: space-between;">
+  <div class="dashboard-header" style="justify-content: space-between; align-items: flex-start;">
     <div>
-      <h1 style="margin: 0;" id="standings-title">Standings</h1>
+      <h1 style="margin: 0;" id="seasons-title">Season Dashboard</h1>
       <p style="margin: 5px 0 0; opacity: 0.8;" id="selected-season-label">Historical League Records</p>
     </div>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <label for="season-selector" style="font-weight: bold; font-size: 0.9em; opacity: 0.7;">View Season:</label>
+    <div style="display: flex; align-items: center; gap: 15px; background: var(--card-bg); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+      <label for="season-selector" style="font-weight: bold; font-size: 0.9em; opacity: 0.7;">Select Year:</label>
       <select id="season-selector" style="padding: 8px 15px; border-radius: 8px; background: var(--header-bg); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer;">
         
           <option value="2025">2025</option>
@@ -102,6 +108,12 @@
     </div>
   </div>
 
+  <!-- Season Awards & Podium -->
+  <div id="season-highlights" class="dashboard-grid">
+    <!-- Will be injected by JS -->
+  </div>
+
+  <!-- Standings Table -->
   <div id="standings-content">
     <!-- Standings Table will be injected here by JS -->
   </div>
@@ -109,20 +121,24 @@
 
 <script>
   const seasonSelector = document.getElementById('season-selector');
-  const title = document.getElementById('standings-title');
+  const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
+  const highlightsContainer = document.getElementById('season-highlights');
   
   const seasonsData = {
     
       "2025": {
         "year": "2025",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":4,"user_id":"467051300257787904","matchup_id":2,"points":200.72,"username":"Eliminator","team_name":"Eliminator"},"regular_season_points_leader":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5"}},
+        "podium": {"first":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"CMC You Later","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":11,"losses":3,"ties":0,"points_for":1805.52,"points_against":1559.94,"record":"11-3"},"second":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5"},"third":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","wins":9,"losses":5,"ties":0,"points_for":1798.64,"points_against":1626.68,"record":"9-5"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "CMC You Later",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "11-3",
               "points_for": "1805.52",
               "points_against": "1559.94",
@@ -133,6 +149,7 @@
               "rank": 2,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "9-5",
               "points_for": "1836.98",
               "points_against": "1769.08",
@@ -143,6 +160,7 @@
               "rank": 3,
               "team_name": "Football Commandants",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "9-5",
               "points_for": "1798.64",
               "points_against": "1626.68",
@@ -153,6 +171,7 @@
               "rank": 4,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "9-5",
               "points_for": "1752.52",
               "points_against": "1544.32",
@@ -163,6 +182,7 @@
               "rank": 5,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "8-6",
               "points_for": "1787.62",
               "points_against": "1787.56",
@@ -173,6 +193,7 @@
               "rank": 6,
               "team_name": "Birants",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "7-7",
               "points_for": "1697.3",
               "points_against": "1730.82",
@@ -183,6 +204,7 @@
               "rank": 7,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "6-8",
               "points_for": "1613.26",
               "points_against": "1634.36",
@@ -193,6 +215,7 @@
               "rank": 8,
               "team_name": "BeerBicepsBiryani",
               "username": "icchipaad",
+              "user_id": "467071694998073344",
               "record": "6-8",
               "points_for": "1549.18",
               "points_against": "1677.44",
@@ -203,6 +226,7 @@
               "rank": 9,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "5-9",
               "points_for": "1714.64",
               "points_against": "1740.26",
@@ -213,6 +237,7 @@
               "rank": 10,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "5-9",
               "points_for": "1552.44",
               "points_against": "1678.48",
@@ -223,6 +248,7 @@
               "rank": 11,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "5-9",
               "points_for": "1512.52",
               "points_against": "1662.48",
@@ -233,6 +259,7 @@
               "rank": 12,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "4-10",
               "points_for": "1588.18",
               "points_against": "1797.38",
@@ -245,12 +272,15 @@
       "2024": {
         "year": "2024",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":2,"points":198.52,"username":"maheshbiradar","team_name":"Birants"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4"}},
+        "podium": {"first":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4"},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","wins":10,"losses":4,"ties":0,"points_for":1733.84,"points_against":1597.4,"record":"10-4"},"third":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":9,"losses":5,"ties":0,"points_for":1783.64,"points_against":1629.42,"record":"9-5"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "10-4",
               "points_for": "1823.98",
               "points_against": "1708.02",
@@ -261,6 +291,7 @@
               "rank": 2,
               "team_name": "Birants",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "10-4",
               "points_for": "1733.84",
               "points_against": "1597.4",
@@ -271,6 +302,7 @@
               "rank": 3,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "9-5",
               "points_for": "1783.64",
               "points_against": "1629.42",
@@ -281,6 +313,7 @@
               "rank": 4,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "8-6",
               "points_for": "1690.04",
               "points_against": "1579.74",
@@ -291,6 +324,7 @@
               "rank": 5,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "8-6",
               "points_for": "1573.44",
               "points_against": "1522.88",
@@ -301,6 +335,7 @@
               "rank": 6,
               "team_name": "Football Commandants",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "7-7",
               "points_for": "1699.3",
               "points_against": "1621.22",
@@ -311,6 +346,7 @@
               "rank": 7,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "7-7",
               "points_for": "1694.78",
               "points_against": "1796.06",
@@ -321,6 +357,7 @@
               "rank": 8,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "7-7",
               "points_for": "1683.88",
               "points_against": "1665.99",
@@ -331,6 +368,7 @@
               "rank": 9,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "6-8",
               "points_for": "1787.58",
               "points_against": "1740.22",
@@ -341,6 +379,7 @@
               "rank": 10,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "6-8",
               "points_for": "1663.14",
               "points_against": "1761.88",
@@ -351,6 +390,7 @@
               "rank": 11,
               "team_name": "BeerBicepsBiryani",
               "username": "icchipaad",
+              "user_id": "467071694998073344",
               "record": "4-10",
               "points_for": "1649.8",
               "points_against": "1784.92",
@@ -361,6 +401,7 @@
               "rank": 12,
               "team_name": "FF Dumpster Fire",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "2-12",
               "points_for": "1527.28",
               "points_against": "1902.94",
@@ -373,12 +414,15 @@
       "2023": {
         "year": "2023",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":2,"points":191.16,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Sunday Shanahan-igans","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":9,"losses":5,"ties":0,"points_for":1917.78,"points_against":1724.44,"record":"9-5"}},
+        "podium": {"first":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","wins":11,"losses":3,"ties":0,"points_for":1787.76,"points_against":1543.1,"record":"11-3"},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":11,"losses":3,"ties":0,"points_for":1769.84,"points_against":1570.18,"record":"11-3"},"third":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Sunday Shanahan-igans","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":9,"losses":5,"ties":0,"points_for":1917.78,"points_against":1724.44,"record":"9-5"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "11-3",
               "points_for": "1787.76",
               "points_against": "1543.1",
@@ -389,6 +433,7 @@
               "rank": 2,
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "11-3",
               "points_for": "1769.84",
               "points_against": "1570.18",
@@ -399,6 +444,7 @@
               "rank": 3,
               "team_name": "Sunday Shanahan-igans",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "9-5",
               "points_for": "1917.78",
               "points_against": "1724.44",
@@ -409,6 +455,7 @@
               "rank": 4,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "9-5",
               "points_for": "1802.86",
               "points_against": "1721.6",
@@ -419,6 +466,7 @@
               "rank": 5,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "7-7",
               "points_for": "1720.54",
               "points_against": "1632.2",
@@ -429,6 +477,7 @@
               "rank": 6,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "7-7",
               "points_for": "1639.78",
               "points_against": "1632.12",
@@ -439,6 +488,7 @@
               "rank": 7,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "6-8",
               "points_for": "1627.94",
               "points_against": "1667.98",
@@ -449,6 +499,7 @@
               "rank": 8,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "6-8",
               "points_for": "1541.36",
               "points_against": "1672.28",
@@ -459,6 +510,7 @@
               "rank": 9,
               "team_name": "Football Commandants",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "5-9",
               "points_for": "1682.78",
               "points_against": "1833.94",
@@ -469,6 +521,7 @@
               "rank": 10,
               "team_name": "BeerBicepsBiryani",
               "username": "EcchiPaad",
+              "user_id": "467071694998073344",
               "record": "5-9",
               "points_for": "1586.18",
               "points_against": "1710.84",
@@ -479,6 +532,7 @@
               "rank": 11,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "5-9",
               "points_for": "1492.04",
               "points_against": "1624.76",
@@ -489,6 +543,7 @@
               "rank": 12,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "3-11",
               "points_for": "1609.74",
               "points_against": "1845.16",
@@ -501,12 +556,15 @@
       "2022": {
         "year": "2022",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":2,"points":166.56,"username":"kolners","team_name":"Kolners"},"regular_season_points_leader":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3"}},
+        "podium": {"first":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3"},"second":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Sunday Shanahan-igans","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":10,"losses":4,"ties":0,"points_for":1555.72,"points_against":1464.5,"record":"10-4"},"third":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":9,"losses":5,"ties":0,"points_for":1581.86,"points_against":1630.44,"record":"9-5"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "Football Commandants",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "11-3",
               "points_for": "1696.74",
               "points_against": "1438.56",
@@ -517,6 +575,7 @@
               "rank": 2,
               "team_name": "Sunday Shanahan-igans",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "10-4",
               "points_for": "1555.72",
               "points_against": "1464.5",
@@ -527,6 +586,7 @@
               "rank": 3,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "9-5",
               "points_for": "1581.86",
               "points_against": "1630.44",
@@ -537,6 +597,7 @@
               "rank": 4,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "8-6",
               "points_for": "1692.02",
               "points_against": "1437.38",
@@ -547,6 +608,7 @@
               "rank": 5,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "8-6",
               "points_for": "1405.6",
               "points_against": "1335.38",
@@ -557,6 +619,7 @@
               "rank": 6,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "7-7",
               "points_for": "1499.28",
               "points_against": "1446.9",
@@ -567,6 +630,7 @@
               "rank": 7,
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "7-7",
               "points_for": "1435.3",
               "points_against": "1496.7",
@@ -577,6 +641,7 @@
               "rank": 8,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "6-8",
               "points_for": "1469.06",
               "points_against": "1398.72",
@@ -587,6 +652,7 @@
               "rank": 9,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "6-8",
               "points_for": "1331.38",
               "points_against": "1458.46",
@@ -597,6 +663,7 @@
               "rank": 10,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "5-9",
               "points_for": "1431.62",
               "points_against": "1575.14",
@@ -607,6 +674,7 @@
               "rank": 11,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "4-10",
               "points_for": "1354.02",
               "points_against": "1571.32",
@@ -617,6 +685,7 @@
               "rank": 12,
               "team_name": "SteelDragons",
               "username": "SteelDragons",
+              "user_id": "467071694998073344",
               "record": "3-11",
               "points_for": "1372.22",
               "points_against": "1571.32",
@@ -629,12 +698,15 @@
       "2021": {
         "year": "2021",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":3,"points":176.2,"username":"maheshbiradar","team_name":"maheshbiradar"},"regular_season_points_leader":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":7,"losses":7,"ties":0,"points_for":1757.2,"points_against":1611.4,"record":"7-7"}},
+        "podium": {"first":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":5,"ties":0,"points_for":1682.46,"points_against":1559.42,"record":"9-5"},"second":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":9,"losses":5,"ties":0,"points_for":1575.6,"points_against":1445.06,"record":"9-5"},"third":{"user_id":"467597885412732928","roster_id":7,"username":"nightmare123","team_name":"nightmare123","avatar":"accfa8d733980b98db2fcb40cb98bc1b","wins":9,"losses":5,"ties":0,"points_for":1564.8,"points_against":1511.92,"record":"9-5"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "9-5",
               "points_for": "1682.46",
               "points_against": "1559.42",
@@ -645,6 +717,7 @@
               "rank": 2,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "9-5",
               "points_for": "1575.6",
               "points_against": "1445.06",
@@ -655,6 +728,7 @@
               "rank": 3,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "9-5",
               "points_for": "1564.8",
               "points_against": "1511.92",
@@ -665,6 +739,7 @@
               "rank": 4,
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "8-6",
               "points_for": "1713.24",
               "points_against": "1653.06",
@@ -675,6 +750,7 @@
               "rank": 5,
               "team_name": "Fantasy Football Team",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "8-6",
               "points_for": "1604.38",
               "points_against": "1552.3",
@@ -685,6 +761,7 @@
               "rank": 6,
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "7-7",
               "points_for": "1757.2",
               "points_against": "1611.4",
@@ -695,6 +772,7 @@
               "rank": 7,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "7-7",
               "points_for": "1719.96",
               "points_against": "1648.92",
@@ -705,6 +783,7 @@
               "rank": 8,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "7-7",
               "points_for": "1557.84",
               "points_against": "1524.08",
@@ -715,6 +794,7 @@
               "rank": 9,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "6-8",
               "points_for": "1588.64",
               "points_against": "1658.04",
@@ -725,6 +805,7 @@
               "rank": 10,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "5-9",
               "points_for": "1483.82",
               "points_against": "1644.3",
@@ -735,6 +816,7 @@
               "rank": 11,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "5-9",
               "points_for": "1384.0",
               "points_against": "1616.18",
@@ -745,6 +827,7 @@
               "rank": 12,
               "team_name": "SteelDragons",
               "username": "SteelDragons",
+              "user_id": "467071694998073344",
               "record": "4-10",
               "points_for": "1270.42",
               "points_against": "1477.68",
@@ -757,12 +840,15 @@
       "2020": {
         "year": "2020",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":4,"points":189.12,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4"}},
+        "podium": {"first":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","wins":11,"losses":2,"ties":0,"points_for":1587.96,"points_against":1258.64,"record":"11-2"},"second":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4"},"third":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Easy Breesy Sunday","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":9,"losses":4,"ties":0,"points_for":1503.52,"points_against":1407.94,"record":"9-4"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
+              "user_id": "601971095054725120",
               "record": "11-2",
               "points_for": "1587.96",
               "points_against": "1258.64",
@@ -773,6 +859,7 @@
               "rank": 2,
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "9-4",
               "points_for": "1654.24",
               "points_against": "1408.06",
@@ -783,6 +870,7 @@
               "rank": 3,
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "9-4",
               "points_for": "1503.52",
               "points_against": "1407.94",
@@ -793,6 +881,7 @@
               "rank": 4,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "8-5",
               "points_for": "1596.9",
               "points_against": "1488.32",
@@ -803,6 +892,7 @@
               "rank": 5,
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "8-5",
               "points_for": "1574.46",
               "points_against": "1445.44",
@@ -813,6 +903,7 @@
               "rank": 6,
               "team_name": "Fantasy Football Team",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "8-5",
               "points_for": "1478.16",
               "points_against": "1456.82",
@@ -823,6 +914,7 @@
               "rank": 7,
               "team_name": "Eliminator",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "7-6",
               "points_for": "1579.78",
               "points_against": "1612.12",
@@ -833,6 +925,7 @@
               "rank": 8,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "5-8",
               "points_for": "1455.66",
               "points_against": "1456.44",
@@ -843,6 +936,7 @@
               "rank": 9,
               "team_name": "Kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "5-8",
               "points_for": "1348.48",
               "points_against": "1454.78",
@@ -853,6 +947,7 @@
               "rank": 10,
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "4-9",
               "points_for": "1444.94",
               "points_against": "1488.9",
@@ -863,6 +958,7 @@
               "rank": 11,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "3-10",
               "points_for": "1101.98",
               "points_against": "1541.16",
@@ -873,6 +969,7 @@
               "rank": 12,
               "team_name": "SteelDragons",
               "username": "SteelDragons",
+              "user_id": "467071694998073344",
               "record": "1-12",
               "points_for": "1157.46",
               "points_against": "1464.92",
@@ -885,12 +982,15 @@
       "2019": {
         "year": "2019",
         "name": "The Art of Fantasy Football League",
+        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":1,"points":193.02,"username":"kolners","team_name":"kolners"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3"}},
+        "podium": {"first":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":11,"losses":2,"ties":0,"points_for":1581.52,"points_against":1336.36,"record":"11-2"},"second":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3"},"third":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","wins":10,"losses":3,"ties":0,"points_for":1389.56,"points_against":1289.14,"record":"10-3"}},
         "standings": [
           
             {
               "rank": 1,
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
+              "user_id": "463028232669622272",
               "record": "11-2",
               "points_for": "1581.52",
               "points_against": "1336.36",
@@ -901,6 +1001,7 @@
               "rank": 2,
               "team_name": "kolners",
               "username": "kolners",
+              "user_id": "466831529767596032",
               "record": "10-3",
               "points_for": "1665.3",
               "points_against": "1335.8",
@@ -911,6 +1012,7 @@
               "rank": 3,
               "team_name": "Birants",
               "username": "maheshbiradar",
+              "user_id": "467698630166310912",
               "record": "10-3",
               "points_for": "1389.56",
               "points_against": "1289.14",
@@ -921,6 +1023,7 @@
               "rank": 4,
               "team_name": "Erie-Mason Eagles",
               "username": "wichart",
+              "user_id": "466828458412994560",
               "record": "7-6",
               "points_for": "1508.78",
               "points_against": "1503.54",
@@ -931,6 +1034,7 @@
               "rank": 5,
               "team_name": "Beantown Brawlers",
               "username": "TheBrawlers",
+              "user_id": "467713945692532736",
               "record": "6-7",
               "points_for": "1549.02",
               "points_against": "1513.46",
@@ -941,6 +1045,7 @@
               "rank": 6,
               "team_name": "nightmare123",
               "username": "nightmare123",
+              "user_id": "467597885412732928",
               "record": "6-7",
               "points_for": "1490.32",
               "points_against": "1569.8",
@@ -951,6 +1056,7 @@
               "rank": 7,
               "team_name": "SteelDragons",
               "username": "SteelDragons",
+              "user_id": "467071694998073344",
               "record": "6-7",
               "points_for": "1472.14",
               "points_against": "1463.98",
@@ -961,6 +1067,7 @@
               "rank": 8,
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
+              "user_id": "467551024677122048",
               "record": "6-7",
               "points_for": "1472.06",
               "points_against": "1422.76",
@@ -971,6 +1078,7 @@
               "rank": 9,
               "team_name": "Untouchable ",
               "username": "TheUntouchable",
+              "user_id": "467887669452468224",
               "record": "6-7",
               "points_for": "1327.32",
               "points_against": "1407.7",
@@ -981,6 +1089,7 @@
               "rank": 10,
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
+              "user_id": "468106048058683392",
               "record": "4-9",
               "points_for": "1330.96",
               "points_against": "1482.72",
@@ -991,6 +1100,7 @@
               "rank": 11,
               "team_name": "Eliminator19",
               "username": "Eliminator",
+              "user_id": "467051300257787904",
               "record": "4-9",
               "points_for": "1297.26",
               "points_against": "1483.26",
@@ -1001,6 +1111,7 @@
               "rank": 12,
               "team_name": "Who Dats",
               "username": "trolldrengi",
+              "user_id": "468149345745629184",
               "record": "2-11",
               "points_for": "1204.06",
               "points_against": "1479.78",
@@ -1012,16 +1123,70 @@
     
   };
 
-  function updateStandings(year) {
+  function updateSeasonsDashboard(year) {
     const season = seasonsData[year];
     if (!season) return;
 
-    title.textContent = `${year} Standings`;
+    title.textContent = `${year} Season Dashboard`;
     label.textContent = season.name;
     seasonSelector.value = year;
 
-    let html = `
-      <div class="dashboard-card">
+    // Build Highlights HTML
+    let highlightsHtml = '';
+    
+    // Podium Card
+    if (season.podium) {
+      highlightsHtml += `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <h2>🏆 Final Podium</h2>
+          <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 0; gap: 20px;">
+            <div style="text-align: center; flex: 1; order: 2;">
+              <p style="font-size: 2em; margin: 0;">🥇</p>
+              <img src="${season.podium.first.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.first.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #ffd700;">
+              <p style="margin: 5px 0 0; font-weight: 800;"><a href="/teams/${season.podium.first.user_id}/">${season.podium.first.team_name}</a></p>
+            </div>
+            <div style="text-align: center; flex: 1; order: 1; opacity: 0.9;">
+              <p style="font-size: 1.5em; margin: 0;">🥈</p>
+              <img src="${season.podium.second.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.second.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid #c0c0c0;">
+              <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.9em;"><a href="/teams/${season.podium.second.user_id}/">${season.podium.second.team_name}</a></p>
+            </div>
+            <div style="text-align: center; flex: 1; order: 3; opacity: 0.8;">
+              <p style="font-size: 1.3em; margin: 0;">🥉</p>
+              <img src="${season.podium.third.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.third.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #cd7f32;">
+              <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.8em;"><a href="/teams/${season.podium.third.user_id}/">${season.podium.third.team_name}</a></p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Awards Card
+    if (season.awards) {
+      highlightsHtml += `
+        <div class="dashboard-card">
+          <h2>🌟 Season Honors</h2>
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">High Score of Year</p>
+              <p style="margin: 0; font-weight: bold; color: #4caf50;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
+              <p style="margin: 0; font-size: 0.9em;"><a href="/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">Regular Season Points King</p>
+              <p style="margin: 0; font-weight: bold; color: var(--link-color);">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
+              <p style="margin: 0; font-size: 0.9em;"><a href="/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    highlightsContainer.innerHTML = highlightsHtml;
+
+    // Build Standings HTML
+    let standingsHtml = `
+      <div class="dashboard-card" style="margin-top: 20px;">
+        <h2>Full Standings</h2>
         <table class="high-contrast-table">
           <thead>
             <tr>
@@ -1029,8 +1194,8 @@
               <th>Team</th>
               <th>Manager</th>
               <th>Record</th>
-              <th>Points For</th>
-              <th>Points Against</th>
+              <th>PF</th>
+              <th>PA</th>
             </tr>
           </thead>
           <tbody>
@@ -1038,12 +1203,12 @@
     
     season.standings.forEach(team => {
       const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
-      html += `
+      standingsHtml += `
         <tr>
           <td>${team.rank}</td>
           <td style="display: flex; align-items: center; gap: 10px;">
             <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
-            ${team.team_name}
+            <a href="/teams/${team.user_id}/">${team.team_name}</a>
           </td>
           <td>${team.username}</td>
           <td>${team.record}</td>
@@ -1053,21 +1218,19 @@
       `;
     });
     
-    html += `</tbody></table></div>`;
-    document.getElementById('standings-content').innerHTML = html;
+    standingsHtml += `</tbody></table></div>`;
+    document.getElementById('standings-content').innerHTML = standingsHtml;
   }
 
   seasonSelector.addEventListener('change', (e) => {
-    updateStandings(e.target.value);
-    // Update hash for deep linking
+    updateSeasonsDashboard(e.target.value);
     window.location.hash = e.target.value;
   });
 
-  // Initial Load: Check hash or default to latest
   window.addEventListener('load', () => {
     const hashYear = window.location.hash.substring(1);
     const latestYear = Object.keys(seasonsData).sort().reverse()[0];
-    updateStandings(seasonsData[hashYear] ? hashYear : latestYear);
+    updateSeasonsDashboard(seasonsData[hashYear] ? hashYear : latestYear);
   });
 </script>
 

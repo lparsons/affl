@@ -1,0 +1,122 @@
+---
+layout: default
+---
+<div class="dashboard-container">
+  <div class="dashboard-header" style="justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 25px;">
+      {% if page.team_data.current_avatar %}
+        <img src="https://sleepercdn.com/avatars/thumbs/{{ page.team_data.current_avatar }}" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--border-color);">
+      {% else %}
+        <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 100px; height: 100px; border-radius: 50%;">
+      {% endif %}
+      <div>
+        <h1 style="margin: 0;">{{ page.team_data.username }}</h1>
+        <p style="margin: 5px 0 0; opacity: 0.8; font-size: 1.2em;">{{ page.team_data.current_team_name }}</p>
+      </div>
+    </div>
+    
+    <div style="text-align: right;">
+      <div style="display: flex; gap: 15px; justify-content: flex-end; margin-bottom: 10px;">
+        {% if page.team_data.stats.championships > 0 %}
+          <div title="Championships" style="background: rgba(255,215,0,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #ffd700; color: #ffd700; font-weight: bold;">
+            🏆 {{ page.team_data.stats.championships }}
+          </div>
+        {% endif %}
+        {% if page.team_data.stats.toilet_bowls > 0 %}
+          <div title="Toilet Bowls" style="background: rgba(165,42,42,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #a52a2a; color: #a52a2a; font-weight: bold;">
+            🚽 {{ page.team_data.stats.toilet_bowls }}
+          </div>
+        {% endif %}
+      </div>
+      <p style="margin: 0; opacity: 0.6; font-size: 0.9em;">Member since {{ page.team_data.seasons.last.year }}</p>
+    </div>
+  </div>
+
+  <!-- Career Stats Grid -->
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <h2>Career Record</h2>
+      <div style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+        <div style="text-align: center;">
+          <p style="font-size: 2.5em; font-weight: 800; margin: 0;">{{ page.team_data.stats.wins }}</p>
+          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Wins</p>
+        </div>
+        <div style="text-align: center;">
+          <p style="font-size: 2.5em; font-weight: 800; margin: 0;">{{ page.team_data.stats.losses }}</p>
+          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Losses</p>
+        </div>
+        <div style="text-align: center;">
+          <p style="font-size: 2.5em; font-weight: 800; margin: 0; color: var(--link-color);">{{ page.team_data.stats.win_pct }}%</p>
+          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Win %</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Points Summary</h2>
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="opacity: 0.8;">Career Points For:</span>
+          <span style="font-weight: bold; font-size: 1.2em;">{{ page.team_data.stats.points_for | round: 2 }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="opacity: 0.8;">Career Points Against:</span>
+          <span style="font-weight: bold;">{{ page.team_data.stats.points_against | round: 2 }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 10px;">
+          <span style="opacity: 0.8;">Avg. Points/Game:</span>
+          <span style="font-weight: bold; color: var(--link-color);">{{ page.team_data.stats.avg_points | round: 2 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Personal Bests</h2>
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="opacity: 0.8;">Highest Score:</span>
+          <span style="font-weight: bold; color: #4caf50;">{{ page.team_data.stats.max_score.points | round: 2 }}</span>
+        </div>
+        <div style="font-size: 0.8em; opacity: 0.6; text-align: right; margin-top: -10px;">
+          Week {{ page.team_data.stats.max_score.week }}, {{ page.team_data.stats.max_score.year }}
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="opacity: 0.8;">Best Finish:</span>
+          <span style="font-weight: bold;">{{ page.team_data.stats.best_finish }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 10px;">
+          <span style="opacity: 0.8;">Seasons Played:</span>
+          <span style="font-weight: bold;">{{ page.team_data.seasons.size }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <h2>Season History</h2>
+    <table class="high-contrast-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Team Name</th>
+          <th>Finish</th>
+          <th>Record</th>
+          <th>Points For</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for season in page.team_data.seasons %}
+          <tr>
+            <td><a href="{{ site.baseurl }}/standings/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+            <td>{{ season.team_name }}</td>
+            <td>
+              {% if season.rank == 1 %}🥇{% elsif season.rank == 2 %}🥈{% elsif season.rank == 3 %}🥉{% else %}{{ season.rank }}{% endif %}
+            </td>
+            <td>{{ season.wins }}-{{ season.losses }}</td>
+            <td>{{ season.points_for | round: 2 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

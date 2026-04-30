@@ -6,6 +6,7 @@
   "standings": [
     {
       "user_id": "601971095054725120",
+      "roster_id": 2,
       "username": "CaseyWhite",
       "team_name": "Big EZ Blue",
       "avatar": "3dd5a49b6e8b46b474e36af0acaf7914",
@@ -18,6 +19,7 @@
     },
     {
       "user_id": "467698630166310912",
+      "roster_id": 8,
       "username": "maheshbiradar",
       "team_name": "maheshbiradar",
       "avatar": "075fe66610341350b439e893ba517e2e",
@@ -30,6 +32,7 @@
     },
     {
       "user_id": "468106048058683392",
+      "roster_id": 11,
       "username": "bsowden",
       "team_name": "Sunday Shanahan-igans",
       "avatar": "eefceb945b9159798eac0eb764d3fbc4",
@@ -42,6 +45,7 @@
     },
     {
       "user_id": "463028232669622272",
+      "roster_id": 1,
       "username": "CodeBrewer",
       "team_name": "Desert Scorpions",
       "avatar": "91be7277060d885a5752feb0894283ea",
@@ -54,6 +58,7 @@
     },
     {
       "user_id": "467551024677122048",
+      "roster_id": 6,
       "username": "VAPatsNation",
       "team_name": "VAPatsNation",
       "avatar": "f05c41681f8c74fb2777b07c7754be35",
@@ -66,6 +71,7 @@
     },
     {
       "user_id": "467051300257787904",
+      "roster_id": 4,
       "username": "Eliminator",
       "team_name": "Eliminator",
       "avatar": "e1e1a4b6f1058b266d2e8175179460ca",
@@ -78,6 +84,7 @@
     },
     {
       "user_id": "467713945692532736",
+      "roster_id": 9,
       "username": "TheBrawlers",
       "team_name": "TheBrawlers",
       "avatar": "76cc8b5ae0332a91c67349dcb590bc7e",
@@ -90,6 +97,7 @@
     },
     {
       "user_id": "467887669452468224",
+      "roster_id": 10,
       "username": "TheUntouchable",
       "team_name": "TheUntouchable",
       "avatar": "e4d90bf3a010debbcbef6993d3a5df1c",
@@ -102,6 +110,7 @@
     },
     {
       "user_id": "468149345745629184",
+      "roster_id": 12,
       "username": "trolldrengi",
       "team_name": "Football Commandants",
       "avatar": "20324c98137101a90bd3396e7bc940cf",
@@ -114,6 +123,7 @@
     },
     {
       "user_id": "467071694998073344",
+      "roster_id": 5,
       "username": "EcchiPaad",
       "team_name": "BeerBicepsBiryani",
       "avatar": "3ba9b13839d8aae42305608dfbb1bfe2",
@@ -126,6 +136,7 @@
     },
     {
       "user_id": "467597885412732928",
+      "roster_id": 7,
       "username": "nightmare123",
       "team_name": "nightmare123",
       "avatar": "accfa8d733980b98db2fcb40cb98bc1b",
@@ -138,6 +149,7 @@
     },
     {
       "user_id": "466831529767596032",
+      "roster_id": 3,
       "username": "kolners",
       "team_name": "Kolners",
       "avatar": "742a9945bbbe992e56db3884006cd326",
@@ -148,5 +160,1339 @@
       "points_against": 1845.16,
       "record": "3-11"
     }
-  ]
+  ],
+  "matchups": {
+    "1": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 118.66
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 102.66
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 92.64
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 2,
+        "points": 107.44
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 4,
+        "points": 93.76
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 1,
+        "points": 138.64
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 3,
+        "points": 104.34
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 3,
+        "points": 97.4
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 5,
+        "points": 127.56
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 84.18
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 5,
+        "points": 136.08
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 2,
+        "points": 101.02
+      }
+    ],
+    "2": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 144.44
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 133.4
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 77.76
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 3,
+        "points": 118.74
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 133.08
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 105.24
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 2,
+        "points": 85.5
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 3,
+        "points": 151.82
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 6,
+        "points": 104.7
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 121.86
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 4,
+        "points": 110.18
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 1,
+        "points": 129.16
+      }
+    ],
+    "3": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 111.58
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 5,
+        "points": 150.7
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 137.62
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 1,
+        "points": 96.28
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 139.58
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 132.56
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 3,
+        "points": 148.98
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 2,
+        "points": 135.94
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 4,
+        "points": 142.66
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 128.46
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 6,
+        "points": 169.06
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 86.44
+      }
+    ],
+    "4": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 124.16
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 189.96
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 4,
+        "points": 107.8
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 2,
+        "points": 159.5
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 99.44
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 96.48
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 1,
+        "points": 81.72
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 3,
+        "points": 108.86
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 5,
+        "points": 103.4
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 69.88
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 6,
+        "points": 142.6
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 104.8
+      }
+    ],
+    "5": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 116.46
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 4,
+        "points": 113.54
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 107.26
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 3,
+        "points": 117.08
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 102.64
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 191.16
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 3,
+        "points": 90.44
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 1,
+        "points": 97.02
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 6,
+        "points": 133.52
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 99.12
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 5,
+        "points": 174.08
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 2,
+        "points": 130.62
+      }
+    ],
+    "6": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 1,
+        "points": 120.64
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 126.08
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 93.86
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 92.12
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 2,
+        "points": 113.12
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 111.34
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 106.34
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 118.0
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 4,
+        "points": 86.54
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 153.28
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 3,
+        "points": 130.8
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 133.44
+      }
+    ],
+    "7": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 2,
+        "points": 137.0
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 5,
+        "points": 137.36
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 105.9
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 96.8
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 1,
+        "points": 145.48
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 109.76
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 134.26
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 129.96
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 3,
+        "points": 93.46
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 98.3
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 4,
+        "points": 131.76
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 120.84
+      }
+    ],
+    "8": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 5,
+        "points": 168.36
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 4,
+        "points": 119.52
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 3,
+        "points": 165.76
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 111.16
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 6,
+        "points": 91.48
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 125.78
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 133.9
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 130.26
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 2,
+        "points": 129.38
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 100.96
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 1,
+        "points": 152.68
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 144.86
+      }
+    ],
+    "9": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 6,
+        "points": 143.12
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 3,
+        "points": 79.74
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 4,
+        "points": 112.32
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 137.32
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 77.38
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 117.0
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 104.6
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 152.88
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 1,
+        "points": 93.4
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 126.92
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 2,
+        "points": 116.92
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 105.64
+      }
+    ],
+    "10": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 3,
+        "points": 180.8
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 2,
+        "points": 120.82
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 1,
+        "points": 118.48
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 136.14
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 4,
+        "points": 92.82
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 90.24
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 117.62
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 140.1
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 6,
+        "points": 124.9
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 100.36
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 5,
+        "points": 139.42
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 106.46
+      }
+    ],
+    "11": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 128.38
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 1,
+        "points": 117.1
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 2,
+        "points": 114.2
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 4,
+        "points": 87.46
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 3,
+        "points": 113.76
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 132.44
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 5,
+        "points": 113.38
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 6,
+        "points": 139.9
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 5,
+        "points": 129.64
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 84.3
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 6,
+        "points": 120.44
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 109.06
+      }
+    ],
+    "12": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 111.96
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 163.08
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 92.16
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 2,
+        "points": 156.78
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 4,
+        "points": 109.18
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 1,
+        "points": 137.7
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 3,
+        "points": 86.92
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 3,
+        "points": 138.6
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 5,
+        "points": 115.9
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 105.44
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 5,
+        "points": 131.18
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 2,
+        "points": 145.74
+      }
+    ],
+    "13": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 94.48
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 6,
+        "points": 127.08
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 177.86
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 3,
+        "points": 109.64
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 146.98
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 130.06
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 2,
+        "points": 94.4
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 3,
+        "points": 123.92
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 6,
+        "points": 83.88
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 145.4
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 4,
+        "points": 141.74
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 1,
+        "points": 130.66
+      }
+    ],
+    "14": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 4,
+        "points": 102.82
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 5,
+        "points": 106.72
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 6,
+        "points": 106.12
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 1,
+        "points": 113.32
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 5,
+        "points": 127.48
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 2,
+        "points": 102.14
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 3,
+        "points": 89.64
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 2,
+        "points": 105.18
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 4,
+        "points": 159.0
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 1,
+        "points": 122.9
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 6,
+        "points": 121.34
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 3,
+        "points": 134.04
+      }
+    ],
+    "15": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 1,
+        "points": 118.06
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": null,
+        "points": 171.16
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 104.08
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 2,
+        "points": 111.58
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 4,
+        "points": 95.64
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 1,
+        "points": 79.96
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 4,
+        "points": 101.1
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": null,
+        "points": 103.92
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": null,
+        "points": 159.68
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": null,
+        "points": 106.76
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 2,
+        "points": 127.62
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 5,
+        "points": 60.56
+      }
+    ],
+    "16": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 1,
+        "points": 134.42
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 1,
+        "points": 143.22
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 99.38
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": 3,
+        "points": 124.62
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": 6,
+        "points": 137.22
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": 3,
+        "points": 92.54
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 4,
+        "points": 153.1
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 2,
+        "points": 127.04
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 4,
+        "points": 94.3
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 5,
+        "points": 111.82
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 2,
+        "points": 96.88
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": 6,
+        "points": 185.7
+      }
+    ],
+    "17": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": 2,
+        "points": 129.36
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": 1,
+        "points": 138.78
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": 5,
+        "points": 90.56
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": null,
+        "points": 106.62
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": null,
+        "points": 135.54
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": null,
+        "points": 117.3
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": 4,
+        "points": 70.48
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": 1,
+        "points": 137.18
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": 5,
+        "points": 148.68
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": 4,
+        "points": 108.38
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": 2,
+        "points": 126.34
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": null,
+        "points": 119.5
+      }
+    ],
+    "18": [
+      {
+        "roster_id": 1,
+        "user_id": "463028232669622272",
+        "matchup_id": null,
+        "points": 92.08
+      },
+      {
+        "roster_id": 2,
+        "user_id": "601971095054725120",
+        "matchup_id": null,
+        "points": 69.46
+      },
+      {
+        "roster_id": 3,
+        "user_id": "466831529767596032",
+        "matchup_id": null,
+        "points": 84.16
+      },
+      {
+        "roster_id": 4,
+        "user_id": "467051300257787904",
+        "matchup_id": null,
+        "points": 69.5
+      },
+      {
+        "roster_id": 5,
+        "user_id": "467071694998073344",
+        "matchup_id": null,
+        "points": 123.2
+      },
+      {
+        "roster_id": 6,
+        "user_id": "467551024677122048",
+        "matchup_id": null,
+        "points": 110.2
+      },
+      {
+        "roster_id": 7,
+        "user_id": "467597885412732928",
+        "matchup_id": null,
+        "points": 38.96
+      },
+      {
+        "roster_id": 8,
+        "user_id": "467698630166310912",
+        "matchup_id": null,
+        "points": 112.6
+      },
+      {
+        "roster_id": 9,
+        "user_id": "467713945692532736",
+        "matchup_id": null,
+        "points": 92.74
+      },
+      {
+        "roster_id": 10,
+        "user_id": "467887669452468224",
+        "matchup_id": null,
+        "points": 106.18
+      },
+      {
+        "roster_id": 11,
+        "user_id": "468106048058683392",
+        "matchup_id": null,
+        "points": 87.38
+      },
+      {
+        "roster_id": 12,
+        "user_id": "468149345745629184",
+        "matchup_id": null,
+        "points": 133.16
+      }
+    ]
+  }
 }

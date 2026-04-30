@@ -35,9 +35,10 @@ permalink: /history/
               {% if season.status == 'complete' or season.year < site.current_season %}
                 <div style="display: flex; align-items: center; gap: 10px;">
                   <img src="{{ avatar_url }}" width="30" height="30" style="border-radius: 50%;">
-                  {{ champ.team_name }}
+                  <a href="{{ site.baseurl }}/teams/{{ champ.user_id }}/">{{ champ.team_name }}</a>
                 </div>
-              {% else %}
+            {% else %}
+
                 <span style="opacity: 0.7; font-style: italic;">Season in Progress</span>
               {% endif %}
             </td>

@@ -26,6 +26,11 @@ class SleeperAPI
     response = make_request("/league/#{id}/rosters")
     JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
   end
+
+  def get_matchups(week, id = @league_id)
+    response = make_request("/league/#{id}/matchups/#{week}")
+    JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
+  end
   
   def generate_standings(id = @league_id)
     rosters = get_rosters(id)
@@ -36,6 +41,11 @@ class SleeperAPI
     user_lookup = users.each_with_object({}) do |user, hash|
       hash[user['user_id']] = user
     end
+
+    # Create roster lookup for internal mapping
+    roster_lookup = rosters.each_with_object({}) do |roster, hash|
+      hash[roster['roster_id']] = roster['owner_id']
+    end
     
     standings = rosters.map do |roster|
       user = user_lookup[roster['owner_id']]
@@ -43,6 +53,7 @@ class SleeperAPI
       
       {
         'user_id' => roster['owner_id'],
+        'roster_id' => roster['roster_id'],
         'username' => user ? user['display_name'] : 'Unknown',
         'team_name' => team_name,
         'avatar' => user ? user['avatar'] : nil,
@@ -55,7 +66,7 @@ class SleeperAPI
       }
     end
     
-    standings.sort_by { |team| [-team['wins'], -team['points_for']] }
+    [standings.sort_by { |team| [-team['wins'], -team['points_for']] }, roster_lookup]
   end
   
   private
@@ -89,14 +100,33 @@ def update_all_seasons
     year = info['season']
     puts "Found Season: #{year} (ID: #{current_ptr})"
     
-    standings = api.generate_standings(current_ptr)
+    standings, roster_to_owner = api.generate_standings(current_ptr)
     
+    # Fetch all matchups for this season
+    puts "  Fetching matchups for #{year}..."
+    matchups_by_week = {}
+    (1..18).each do |week|
+      matchups = api.get_matchups(week, current_ptr)
+      break if matchups.nil? || matchups.empty?
+      
+      # Simplify matchups for storage
+      matchups_by_week[week] = matchups.map do |m|
+        {
+          'roster_id' => m['roster_id'],
+          'user_id' => roster_to_owner[m['roster_id']],
+          'matchup_id' => m['matchup_id'],
+          'points' => m['points']
+        }
+      end
+    end
+
     season_entry = {
       'year' => year.to_i,
       'league_id' => current_ptr,
       'name' => info['name'],
       'status' => info['status'],
-      'standings' => standings
+      'standings' => standings,
+      'matchups' => matchups_by_week
     }
     
     # Save individual season data
