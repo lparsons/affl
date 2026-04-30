@@ -17,6 +17,7 @@ plugins:
 # Custom variables
 league_name: "The Art of Fantasy Football League"
 league_abbreviation: "AFFL"
+league_logo: "https://sleepercdn.com/avatars/3a3980fe203cf0de61241defe04aa2d0"
 platform: "Sleeper"
 draft_date: "2026-08-30 18:00:00"
 nfl_season_start: "2026-09-10"

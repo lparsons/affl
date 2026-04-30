@@ -108,7 +108,8 @@ module Jekyll
 
       season['standings'].each_with_index do |team, index|
         team_name = team['team_name'] || team['username']
-        content << "| #{index + 1} | #{team_name} | #{team['username']} | #{team['record']} | #{sprintf('%.2f', team['points_for'])} | #{sprintf('%.2f', team['points_against'])} |\n"
+        avatar_url = team['avatar'] ? "https://sleepercdn.com/avatars/thumbs/#{team['avatar']}" : "https://sleepercdn.com/images/v2/icons/player_default.webp"
+        content << "| #{index + 1} | <img src=\"#{avatar_url}\" width=\"30\" height=\"30\" style=\"border-radius: 50%; vertical-align: middle; margin-right: 10px;\"> #{team_name} | #{team['username']} | #{team['record']} | #{sprintf('%.2f', team['points_for'])} | #{sprintf('%.2f', team['points_against'])} |\n"
       end
 
       content << "\n---\n\n"

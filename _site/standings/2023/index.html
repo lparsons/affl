@@ -21,7 +21,12 @@
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="The Art of Fantasy Football League (AFFL)" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">The Art of Fantasy Football League (AFFL)</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">
+      
+        <img src="https://sleepercdn.com/avatars/3a3980fe203cf0de61241defe04aa2d0" alt="The Art of Fantasy Football League (AFFL)" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+      
+      The Art of Fantasy Football League (AFFL)
+    </a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -31,9 +36,33 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/standings/">Standings</a><a class="page-link" href="/schedule/">Schedule</a><a class="page-link" href="/rules/">Rules</a><a class="page-link" href="/history/">History</a></div>
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/standings/">Standings</a><a class="page-link" href="/schedule/">Schedule</a><a class="page-link" href="/rules/">Rules</a><a class="page-link" href="/history/">History</a><!-- Dark Mode Toggle -->
+          <button id="theme-toggle" aria-label="Toggle Dark Mode" style="background: none; border: none; cursor: pointer; vertical-align: middle; padding: 0 10px;">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+        </div>
       </nav></div>
 </header>
+
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleIcon = document.getElementById('theme-toggle-icon');
+  const body = document.body;
+
+  // Check for saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggleIcon.textContent = '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    themeToggleIcon.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         <article class="post">
@@ -61,7 +90,7 @@
   <tbody>
     <tr>
       <td>1</td>
-      <td>Big EZ Blue</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/3dd5a49b6e8b46b474e36af0acaf7914" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Big EZ Blue</td>
       <td>CaseyWhite</td>
       <td>11-3</td>
       <td>1787.76</td>
@@ -69,7 +98,7 @@
     </tr>
     <tr>
       <td>2</td>
-      <td>maheshbiradar</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/075fe66610341350b439e893ba517e2e" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> maheshbiradar</td>
       <td>maheshbiradar</td>
       <td>11-3</td>
       <td>1769.84</td>
@@ -77,7 +106,7 @@
     </tr>
     <tr>
       <td>3</td>
-      <td>Sunday Shanahan-igans</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/eefceb945b9159798eac0eb764d3fbc4" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Sunday Shanahan-igans</td>
       <td>bsowden</td>
       <td>9-5</td>
       <td>1917.78</td>
@@ -85,7 +114,7 @@
     </tr>
     <tr>
       <td>4</td>
-      <td>Desert Scorpions</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/91be7277060d885a5752feb0894283ea" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Desert Scorpions</td>
       <td>CodeBrewer</td>
       <td>9-5</td>
       <td>1802.86</td>
@@ -93,7 +122,7 @@
     </tr>
     <tr>
       <td>5</td>
-      <td>VAPatsNation</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/f05c41681f8c74fb2777b07c7754be35" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> VAPatsNation</td>
       <td>VAPatsNation</td>
       <td>7-7</td>
       <td>1720.54</td>
@@ -101,7 +130,7 @@
     </tr>
     <tr>
       <td>6</td>
-      <td>Eliminator</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/e1e1a4b6f1058b266d2e8175179460ca" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Eliminator</td>
       <td>Eliminator</td>
       <td>7-7</td>
       <td>1639.78</td>
@@ -109,7 +138,7 @@
     </tr>
     <tr>
       <td>7</td>
-      <td>TheBrawlers</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/76cc8b5ae0332a91c67349dcb590bc7e" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> TheBrawlers</td>
       <td>TheBrawlers</td>
       <td>6-8</td>
       <td>1627.94</td>
@@ -117,7 +146,7 @@
     </tr>
     <tr>
       <td>8</td>
-      <td>TheUntouchable</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/e4d90bf3a010debbcbef6993d3a5df1c" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> TheUntouchable</td>
       <td>TheUntouchable</td>
       <td>6-8</td>
       <td>1541.36</td>
@@ -125,7 +154,7 @@
     </tr>
     <tr>
       <td>9</td>
-      <td>Football Commandants</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/20324c98137101a90bd3396e7bc940cf" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Football Commandants</td>
       <td>trolldrengi</td>
       <td>5-9</td>
       <td>1682.78</td>
@@ -133,7 +162,7 @@
     </tr>
     <tr>
       <td>10</td>
-      <td>BeerBicepsBiryani</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/3ba9b13839d8aae42305608dfbb1bfe2" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> BeerBicepsBiryani</td>
       <td>EcchiPaad</td>
       <td>5-9</td>
       <td>1586.18</td>
@@ -141,7 +170,7 @@
     </tr>
     <tr>
       <td>11</td>
-      <td>nightmare123</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/accfa8d733980b98db2fcb40cb98bc1b" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> nightmare123</td>
       <td>nightmare123</td>
       <td>5-9</td>
       <td>1492.04</td>
@@ -149,7 +178,7 @@
     </tr>
     <tr>
       <td>12</td>
-      <td>Kolners</td>
+      <td><img src="https://sleepercdn.com/avatars/thumbs/742a9945bbbe992e56db3884006cd326" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;" /> Kolners</td>
       <td>kolners</td>
       <td>3-11</td>
       <td>1609.74</td>

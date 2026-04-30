@@ -21,7 +21,12 @@
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="The Art of Fantasy Football League (AFFL)" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">The Art of Fantasy Football League (AFFL)</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">
+      
+        <img src="https://sleepercdn.com/avatars/3a3980fe203cf0de61241defe04aa2d0" alt="The Art of Fantasy Football League (AFFL)" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+      
+      The Art of Fantasy Football League (AFFL)
+    </a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -31,9 +36,33 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/standings/">Standings</a><a class="page-link" href="/schedule/">Schedule</a><a class="page-link" href="/rules/">Rules</a><a class="page-link" href="/history/">History</a></div>
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/standings/">Standings</a><a class="page-link" href="/schedule/">Schedule</a><a class="page-link" href="/rules/">Rules</a><a class="page-link" href="/history/">History</a><!-- Dark Mode Toggle -->
+          <button id="theme-toggle" aria-label="Toggle Dark Mode" style="background: none; border: none; cursor: pointer; vertical-align: middle; padding: 0 10px;">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+        </div>
       </nav></div>
 </header>
+
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleIcon = document.getElementById('theme-toggle-icon');
+  const body = document.body;
+
+  // Check for saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggleIcon.textContent = '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    themeToggleIcon.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         <article class="post">

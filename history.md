@@ -6,22 +6,14 @@ permalink: /history/
 
 # AFFL League History
 
-## Past Champions
+## League History & Archives
 
-| Year | League Name | Champion Team | Manager |
-|------|-------------|---------------|---------|
-{% for season in site.data.all_seasons %}{% if season.status == 'complete' or season.year < site.current_season %}{% assign champ = season.standings | first %}| {{ season.year }} | {{ season.name }} | {{ champ.team_name }} | {{ champ.username }} |
-{% endif %}{% endfor %}
+Browse past standings and celebrate our former champions.
 
-## League Archive
-
-Browse the full standings for every season in AFFL history:
-
-<ul>
-  {% for season in site.data.all_seasons %}
-    <li><a href="{{ site.baseurl }}/standings/{{ season.year }}/">{{ season.year }} Season</a></li>
-  {% endfor %}
-</ul>
+| Year | Champion Team | Manager |
+|------|---------------|---------|
+{% for season in site.data.all_seasons %}{% assign champ = season.standings | first %}{% if champ.avatar %}{% assign avatar_url = "https://sleepercdn.com/avatars/thumbs/" | append: champ.avatar %}{% else %}{% assign avatar_url = "https://sleepercdn.com/images/v2/icons/player_default.webp" %}{% endif %}| [{{ season.year }}]({{ site.baseurl }}/standings/{{ season.year }}/) | {% if season.status == 'complete' or season.year < site.current_season %}<img src="{{ avatar_url }}" width="30" height="30" style="border-radius: 50%; vertical-align: middle; margin-right: 5px;"> {{ champ.team_name }}{% else %}*Season in Progress*{% endif %} | {% if season.status == 'complete' or season.year < site.current_season %}{{ champ.username }}{% else %}-{% endif %} |
+{% endfor %}
 
 <hr>
 

@@ -4,6 +4,11 @@ title: Home
 ---
 
 <div class="affl-dynamic-home">
+  {% if site.league_logo %}
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="{{ site.league_logo }}" alt="{{ site.league_name }}" style="max-width: 200px;">
+    </div>
+  {% endif %}
   {% if site.league_state == 'offseason' %}
     {% include home/offseason.html %}
   {% elsif site.league_state == 'predraft' %}

@@ -45,6 +45,7 @@ class SleeperAPI
         'user_id' => roster['owner_id'],
         'username' => user ? user['display_name'] : 'Unknown',
         'team_name' => team_name,
+        'avatar' => user ? user['avatar'] : nil,
         'wins' => (roster['settings']['wins'] || 0).to_i,
         'losses' => (roster['settings']['losses'] || 0).to_i,
         'ties' => (roster['settings']['ties'] || 0).to_i,
