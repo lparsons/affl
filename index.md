@@ -14,6 +14,12 @@ layout: page
     </div>
   </div>
 
+  <!-- Date Attention Warning (if any anomalies detected) -->
+  {% include date_warning_banner.html %}
+
+  <!-- Upcoming Event Highlight -->
+  {% include upcoming_event_banner.html %}
+
   <!-- Dynamic Content Area -->
   <div class="dashboard-content">
     {% if site.league_state == 'offseason' %}
@@ -36,10 +42,11 @@ layout: page
     <div class="dashboard-card">
       <h2>Quick Navigation</h2>
       <ul style="margin: 0; padding-left: 20px;">
+        <li><a href="{{ site.baseurl }}/schedule/">League Calendar & Schedule</a></li>
         <li><a href="{{ site.baseurl }}/seasons/">Seasons Dashboard</a></li>
         <li><a href="{{ site.baseurl }}/records/">League Record Book</a></li>
         <li><a href="{{ site.baseurl }}/history/">Hall of Champions</a></li>
-        <li><a href="{{ site.baseurl }}/rules/">Official Rules</a></li>
+        <li><a href="{{ site.baseurl }}/rules/">Official Rules & Constitution</a></li>
       </ul>
     </div>
     

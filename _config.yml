@@ -1,12 +1,12 @@
 title: The Art of Fantasy Football League (AFFL)
-email: your-email@example.com
+email: lance@parsonsclan.com
 description: >-
   Official website for The Art of Fantasy Football League (AFFL) - 
   A competitive fantasy football league hosted on Sleeper.
 baseurl: ""
 url: ""
 twitter_username: 
-github_username: 
+github_username: lparsons
 
 # Build settings
 markdown: kramdown
@@ -19,10 +19,13 @@ league_name: "The Art of Fantasy Football League"
 league_abbreviation: "AFFL"
 league_logo: "https://sleepercdn.com/avatars/3a3980fe203cf0de61241defe04aa2d0"
 platform: "Sleeper"
-draft_date: "2026-08-30 18:00:00"
-nfl_season_start: "2026-09-10"
 current_season: 2026
 current_league_id: "1257465132527661056"
+
+# Date Settings (Optional Overrides)
+# Uncomment only if you need to override the automatic NFL/AFFL calendar calculation:
+# draft_date: "2026-08-30 18:00:00"     # Format: "YYYY-MM-DD HH:MM:SS"
+# nfl_season_start: "2026-09-10"         # Format: "YYYY-MM-DD"
 
 # Navigation
 header_pages:

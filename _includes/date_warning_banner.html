@@ -1,0 +1,21 @@
+{% if site.data.date_warning.has_warning %}
+<div class="calendar-warning-banner">
+  <div style="display: flex; align-items: flex-start; gap: 12px;">
+    <span style="font-size: 1.5em; line-height: 1;">⚠️</span>
+    <div style="flex: 1;">
+      <h3 style="margin: 0 0 6px 0; color: #ffb74d; font-size: 1.05em;">League Calendar Attention Required</h3>
+      <p style="margin: 0 0 8px 0; font-size: 0.9em; opacity: 0.9;">
+        The system detected potential discrepancies with one or more scheduled league dates:
+      </p>
+      <ul style="margin: 0 0 8px 0; padding-left: 20px; font-size: 0.88em;">
+        {% for msg in site.data.date_warning.messages %}
+          <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+      <p style="margin: 0; font-size: 0.82em; opacity: 0.75;">
+        You can manually override these dates by updating <code>nfl_season_start</code> or <code>draft_date</code> in <code>_config.yml</code>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endif %}

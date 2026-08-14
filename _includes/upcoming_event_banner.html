@@ -1,0 +1,79 @@
+{% if site.data.next_event %}
+  {% assign next_ev = site.data.next_event %}
+  <div class="calendar-highlight-card">
+    <div class="calendar-highlight-content">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span class="event-badge badge-next">Upcoming Milestone</span>
+        <span class="category-tag">{{ next_ev.tag }}</span>
+      </div>
+      <div class="calendar-highlight-title">
+        <span>{{ next_ev.icon }}</span>
+        <span>{{ next_ev.title }}</span>
+      </div>
+      <div class="calendar-highlight-date">
+        📅 {{ next_ev.formatted_date }}
+      </div>
+      <p class="calendar-highlight-desc">
+        {{ next_ev.description }}
+      </p>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+      <div class="calendar-countdown-badge" id="event-countdown-box">
+        <span class="calendar-countdown-num" id="event-countdown-days">
+          {% if next_ev.days_away < 0 %}
+            0
+          {% else %}
+            {{ next_ev.days_away }}
+          {% endif %}
+        </span>
+        <span class="calendar-countdown-label" id="event-countdown-label">
+          {% if next_ev.days_away == 0 %}
+            Today!
+          {% elsif next_ev.days_away == 1 %}
+            Day Left
+          {% else %}
+            Days Left
+          {% endif %}
+        </span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        {% if next_ev.id == 'draft_day' %}
+          <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/draft" target="_blank" class="btn">Enter Draft Room</a>
+        {% elsif next_ev.id == 'kickoff' or next_ev.id == 'playoffs_wildcard' %}
+          <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">View Matchups</a>
+        {% else %}
+          <a href="{{ site.baseurl }}{{ next_ev.rule_ref }}" class="btn">View Rule Details</a>
+        {% endif %}
+        <a href="{{ site.baseurl }}/schedule/" style="font-size: 0.85em; text-align: center; text-decoration: underline;">Full Calendar &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const eventDateStr = "{{ next_ev.date }}";
+      if (!eventDateStr) return;
+      const targetDate = new Date(eventDateStr + "T23:59:59").getTime();
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      
+      const numEl = document.getElementById('event-countdown-days');
+      const labelEl = document.getElementById('event-countdown-label');
+      if (numEl && labelEl) {
+        if (days > 0) {
+          numEl.textContent = days;
+          labelEl.textContent = days === 1 ? 'Day Left' : 'Days Left';
+        } else if (days === 0) {
+          numEl.textContent = '0';
+          labelEl.textContent = 'Today!';
+        } else {
+          numEl.textContent = '0';
+          labelEl.textContent = 'Completed';
+        }
+      }
+    })();
+  </script>
+{% endif %}

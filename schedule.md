@@ -1,88 +1,81 @@
 ---
 layout: page
-title: Schedule
+title: League Calendar & Schedule
 permalink: /schedule/
 ---
 
-# {{ site.current_season }} AFFL Schedule
+# {{ site.current_season }} AFFL League Calendar & Schedule
 
-## Important Dates
+Welcome to the official schedule and calendar for The Art of Fantasy Football League. Key dates are governed by the [AFFL Constitution & Rules]({{ site.baseurl }}/rules/) and synchronized with the active Sleeper season.
 
-### Pre-Season
-- **League Setup**: TBD
-- **Draft Date**: TBD
-- **Waiver Wire Opens**: TBD
+{% include date_warning_banner.html %}
 
-### Regular Season
-- **Season Start**: Week 1 of NFL Season
-- **Trade Deadline**: TBD
-- **Regular Season End**: TBD
+## ⚡ Next Upcoming Milestone
 
-### Playoffs
-- **Playoff Start**: TBD
-- **Championship Week**: TBD
-
-## Weekly Matchups
-
-### Week 1
-*Matchups TBD*
-
-### Week 2
-*Matchups TBD*
-
-### Week 3
-*Matchups TBD*
-
-### Week 4
-*Matchups TBD*
-
-### Week 5
-*Matchups TBD*
-
-### Week 6
-*Matchups TBD*
-
-### Week 7
-*Matchups TBD*
-
-### Week 8
-*Matchups TBD*
-
-### Week 9
-*Matchups TBD*
-
-### Week 10
-*Matchups TBD*
-
-### Week 11
-*Matchups TBD*
-
-### Week 12
-*Matchups TBD*
-
-### Week 13
-*Matchups TBD*
-
-### Week 14
-*Matchups TBD*
-
-## Playoff Schedule
-
-### Wild Card Round
-*TBD*
-
-### Semi-Finals
-*TBD*
-
-### Championship
-*TBD*
-
-## Upcoming Deadlines
-
-- **Add/Drop Deadline**: Every Tuesday at 11:59 PM
-- **Lineup Changes**: Before each player's game starts
-- **Trade Deadline**: TBD
+{% include upcoming_event_banner.html %}
 
 ---
 
-*Schedule updates automatically from Sleeper. All times are local.*
+## 🗓️ Season Milestone Calendar
+
+<div class="timeline-list">
+  {% for event in site.data.league_calendar %}
+    <div class="timeline-item {% if event == site.data.next_event %}status-next{% elsif event.status == 'past' %}status-past{% endif %}">
+      <div class="timeline-icon">
+        {{ event.icon }}
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-header">
+          <div>
+            <h3 class="timeline-title">{{ event.title }}</h3>
+            <div class="timeline-date">
+              📅 {{ event.formatted_date }}
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            {% if event.status == 'today' %}
+              <span class="event-badge badge-next">Today</span>
+            {% elsif event == site.data.next_event %}
+              <span class="event-badge badge-next">Next Up ({{ event.days_away }}d)</span>
+            {% elsif event.days_away > 0 %}
+              <span class="event-badge badge-upcoming">In {{ event.days_away }} days</span>
+            {% else %}
+              <span class="event-badge badge-past">Completed</span>
+            {% endif %}
+            <span class="category-tag">{{ event.tag }}</span>
+          </div>
+        </div>
+        <p class="timeline-description">
+          {{ event.description }}
+        </p>
+        <div>
+          <a href="{{ site.baseurl }}{{ event.rule_ref }}" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+---
+
+## 🏈 In-Season Weekly Schedule & Matchups
+
+* **Regular Season:** Weeks 1 through 14 (14 head-to-head regular season matchups).
+* **Playoffs:** Weeks 15 through 17 (3-round tournament: Wild Card, Semifinals, and AFFL Super Bowl / Toilet Bowl Final).
+
+<div style="margin: 20px 0; display: flex; gap: 15px; flex-wrap: wrap;">
+  <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">View Live Matchups on Sleeper</a>
+  <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/playoffs" target="_blank" class="btn">View Playoff Bracket on Sleeper</a>
+</div>
+
+---
+
+## ⏰ Recurring In-Season Deadlines
+
+| Category | Deadline | Policy Summary |
+|:---|:---|:---|
+| **Waiver Wire Claims** | **Wednesday Morning** *(automated)* | Unclaimed players become free agents after claims process. |
+| **Free Agent Add/Drop** | **Individual Game Kickoff** | Unlocked players may be added/dropped until their scheduled kickoff. |
+| **Lineup Locks** | **Individual Game Kickoff** | Starters and bench players lock automatically once their game begins. |
+| **Trade Deadline** | **Conclusion of Week 13** | In-season trades lock after Week 13 games conclude. |
+| **Playoff Free Agency Lock** | **Start of Week 15** | Free agency locks for the season before the first playoff kickoff. |

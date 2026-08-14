@@ -37,6 +37,7 @@
         </label>
 
         <div class="trigger">
+          <a class="page-link" href="/schedule/">Schedule</a>
           <a class="page-link" href="/records/">Record Book</a>
           <a class="page-link" href="/seasons/">Seasons</a>
           <a class="page-link" href="/history/">History</a>
@@ -88,86 +89,126 @@
     
     <div>
       <h1 style="margin: 0;">The Art of Fantasy Football League</h1>
-      <p style="margin: 5px 0 0; opacity: 0.8;">Offseason Phase • 2026 Season</p>
+      <p style="margin: 5px 0 0; opacity: 0.8;">Predraft Phase • 2026 Season</p>
     </div>
   </div>
+
+  <!-- Date Attention Warning (if any anomalies detected) -->
+  
+
+
+  <!-- Upcoming Event Highlight -->
+  
+  
+  <div class="calendar-highlight-card">
+    <div class="calendar-highlight-content">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span class="event-badge badge-next">Upcoming Milestone</span>
+        <span class="category-tag">Draft Prep</span>
+      </div>
+      <div class="calendar-highlight-title">
+        <span>🔒</span>
+        <span>Keeper Selections Due</span>
+      </div>
+      <div class="calendar-highlight-date">
+        📅 August 16, 2026
+      </div>
+      <p class="calendar-highlight-desc">
+        Managers must finalize designation of up to 1 keeper player (forfeits Round 1 pick).
+      </p>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+      <div class="calendar-countdown-badge" id="event-countdown-box">
+        <span class="calendar-countdown-num" id="event-countdown-days">
+          
+            3
+          
+        </span>
+        <span class="calendar-countdown-label" id="event-countdown-label">
+          
+            Days Left
+          
+        </span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        
+          <a href="/rules/#4-keeper-rules" class="btn">View Rule Details</a>
+        
+        <a href="/schedule/" style="font-size: 0.85em; text-align: center; text-decoration: underline;">Full Calendar &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const eventDateStr = "2026-08-16";
+      if (!eventDateStr) return;
+      const targetDate = new Date(eventDateStr + "T23:59:59").getTime();
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      
+      const numEl = document.getElementById('event-countdown-days');
+      const labelEl = document.getElementById('event-countdown-label');
+      if (numEl && labelEl) {
+        if (days > 0) {
+          numEl.textContent = days;
+          labelEl.textContent = days === 1 ? 'Day Left' : 'Days Left';
+        } else if (days === 0) {
+          numEl.textContent = '0';
+          labelEl.textContent = 'Today!';
+        } else {
+          numEl.textContent = '0';
+          labelEl.textContent = 'Completed';
+        }
+      }
+    })();
+  </script>
+
+
 
   <!-- Dynamic Content Area -->
   <div class="dashboard-content">
     
       <div class="dashboard-grid">
-  <!-- Post-Season Spotlight -->
-  
-  
-  
-  
-    <div class="dashboard-card" style="grid-column: 1 / -1;">
-      <h2>🏆 2025 Season Spotlight</h2>
-      
-      <div class="spotlight-container">
-        <!-- Prominent Champion Section -->
-        <div class="champion-box">
-          
-            <img src="https://sleepercdn.com/avatars/thumbs/eefceb945b9159798eac0eb764d3fbc4" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #ffd700; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" />
-          
-          <div>
-            <h3 style="margin: 0; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em;">League Champion</h3>
-            <p style="margin: 5px 0 0; font-size: 1.8em; font-weight: 800; line-height: 1.2;"><a href="/teams/468106048058683392/" style="color: inherit; text-decoration: none;">CMC You Later</a></p>
-            <p style="margin: 0; opacity: 0.8;">Managed by bsowden</p>
-          </div>
-        </div>
-        
-        <!-- Secondary Section (Toilet Bowl & Bracket) -->
-        <div class="secondary-spotlight" style="width: 100%; max-width: 320px;">
-          <div class="toilet-bowl-box" style="box-sizing: border-box; width: 100%;">
-            
-              <img src="https://sleepercdn.com/avatars/thumbs/76cc8b5ae0332a91c67349dcb590bc7e" style="width: 45px; height: 45px; border-radius: 50%;" />
-            
-            <div>
-              <h3 style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase;">Toilet Bowl</h3>
-              <p style="margin: 0; font-weight: bold;"><a href="/teams/467713945692532736/" style="color: inherit; text-decoration: none;">TheBrawlers</a></p>
-            </div>
-          </div>
-
-          <a href="https://sleeper.com/leagues/1257465132527661056" target="_blank" class="btn" style="width: 100%; box-sizing: border-box;">
-            <span style="margin-right: 8px;">📊</span> View League Home
-          </a>
-        </div>
+  <!-- Draft Countdown -->
+  <div class="dashboard-card" style="grid-column: span 2;">
+    <h2>⏳ Draft Countdown</h2>
+    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0;">
+      <div style="text-align: center;">
+        <p style="font-size: 2em; font-weight: bold; margin: 0;" id="days-remaining">--</p>
+        <p style="margin: 0; opacity: 0.8;">Days</p>
       </div>
-    </div>
-  
-
-  <!-- Full Width Roadmap Card -->
-  <div class="dashboard-card" style="grid-column: 1 / -1;">
-    <h2>🗓️ The Road to 2026</h2>
-    <div style="display: flex; justify-content: space-around; align-items: center; padding: 20px 0; gap: 40px; flex-wrap: wrap;">
-      <div style="text-align: center; flex: 1; min-width: 200px;">
-        <p style="margin: 0; font-weight: bold; font-size: 0.9em; opacity: 0.6; text-transform: uppercase;">AFFL Draft Day</p>
-        <p style="margin: 5px 0 0; font-size: 1.5em; font-weight: bold;">August 30, 2026</p>
+      <div style="text-align: center;">
+        <p style="font-size: 1.2em; margin: 0;">August 30, 2026</p>
         <p style="margin: 0; opacity: 0.8;">at 06:00 PM</p>
       </div>
-      
-      <div class="desktop-divider" style="height: 50px; border-left: 1px solid var(--border-color); opacity: 0.5;"></div>
+      <a href="https://sleeper.com/leagues/1257465132527661056/draft" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
+    </div>
+  </div>
 
-      <div style="text-align: center; flex: 1; min-width: 200px;">
-        <p style="margin: 0; font-weight: bold; font-size: 0.9em; opacity: 0.6; text-transform: uppercase;">NFL Season Kickoff</p>
-        <p style="margin: 5px 0 0; font-size: 1.5em; font-weight: bold;">September 10, 2026</p>
-        <p style="margin: 0; opacity: 0.8;">Thursday Night Football</p>
-      </div>
+  <!-- Draft Prep Links -->
+  <div class="dashboard-card">
+    <h2>📋 Prep Tools</h2>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <a href="https://sleeper.com/leagues/1257465132527661056/rosters" target="_blank" class="btn">View All Rosters</a>
+      <a href="/rules/" class="btn">Review Rules</a>
+      <a href="/history/" class="btn">Past Records</a>
     </div>
   </div>
 </div>
 
-<style>
-  @media (max-width: 800px) {
-    .spotlight-container {
-      grid-template-columns: 1fr;
-    }
-    .desktop-divider {
-      display: none;
-    }
-  }
-</style>
+<script>
+  (function() {
+    const draftDate = new Date("2026-08-30 18:00:00").getTime();
+    const now = new Date().getTime();
+    const diff = draftDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById('days-remaining').textContent = days > 0 ? days : 0;
+  })();
+</script>
 
     
   </div>
@@ -176,10 +217,11 @@
     <div class="dashboard-card">
       <h2>Quick Navigation</h2>
       <ul style="margin: 0; padding-left: 20px;">
+        <li><a href="/schedule/">League Calendar &amp; Schedule</a></li>
         <li><a href="/seasons/">Seasons Dashboard</a></li>
         <li><a href="/records/">League Record Book</a></li>
         <li><a href="/history/">Hall of Champions</a></li>
-        <li><a href="/rules/">Official Rules</a></li>
+        <li><a href="/rules/">Official Rules &amp; Constitution</a></li>
       </ul>
     </div>
     
@@ -214,10 +256,10 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">The Art of Fantasy Football League (AFFL)</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+          <li class="p-name">The Art of Fantasy Football League (AFFL)</li><li><a class="u-email" href="mailto:lance@parsonsclan.com">lance@parsonsclan.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/lparsons"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">lparsons</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">

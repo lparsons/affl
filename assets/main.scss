@@ -225,9 +225,219 @@ hr {
   display: none !important; // Hide post header globally to avoid redundant titles
 }
 
+// Timeline & League Calendar Styles
+.calendar-highlight-card {
+  background: linear-gradient(135deg, rgba(110, 191, 243, 0.15) 0%, rgba(36, 39, 41, 0.9) 100%);
+  border: 1px solid var(--link-color);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-highlight-content {
+  flex: 1;
+  min-width: 250px;
+}
+
+.calendar-highlight-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin: 4px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-highlight-date {
+  font-size: 1.1em;
+  color: var(--link-color);
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.calendar-highlight-desc {
+  margin: 0;
+  opacity: 0.85;
+  font-size: 0.95em;
+}
+
+.calendar-countdown-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 20px;
+  min-width: 110px;
+  text-align: center;
+}
+
+.calendar-countdown-num {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: var(--link-color);
+  line-height: 1;
+}
+
+.calendar-countdown-label {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 25px 0;
+}
+
+.timeline-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.timeline-item:hover {
+  border-color: var(--link-color);
+  transform: translateY(-2px);
+}
+
+.timeline-item.status-next {
+  border: 2px solid var(--link-color);
+  background: linear-gradient(135deg, rgba(110, 191, 243, 0.08) 0%, var(--card-bg) 100%);
+}
+
+.timeline-item.status-past {
+  opacity: 0.65;
+}
+
+.timeline-icon {
+  font-size: 1.8em;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.timeline-title {
+  font-size: 1.15em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.timeline-date {
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--link-color);
+  margin-bottom: 6px;
+}
+
+.timeline-description {
+  margin: 0 0 10px 0;
+  font-size: 0.92em;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.event-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-next {
+  background: #2a7ae2;
+  color: #fff !important;
+}
+
+.badge-upcoming {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.badge-past {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(110, 191, 243, 0.12);
+  color: var(--link-color);
+  border-radius: 4px;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+.calendar-warning-banner {
+  background: rgba(255, 152, 0, 0.12);
+  border: 2px solid #ff9800;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 15px 0 25px 0;
+  color: var(--text-color);
+}
+
 @media screen and (max-width: 600px) {
   .dashboard-header {
     flex-direction: column;
     text-align: center;
   }
+  
+  .timeline-item {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .calendar-highlight-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .calendar-countdown-badge {
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 15px;
+  }
 }
+
+
