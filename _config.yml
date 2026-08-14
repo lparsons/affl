@@ -29,11 +29,12 @@ current_league_id: "1257465132527661056"
 
 # Navigation
 header_pages:
-  - about.md
-  - standings.md
   - schedule.md
-  - rules.md
+  - records.md
+  - seasons.md
   - history.md
+  - rules.md
+  - about.md
 
 # Exclude from processing
 exclude:

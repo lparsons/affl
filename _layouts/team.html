@@ -107,7 +107,7 @@ layout: default
       <tbody>
         {% for season in page.team_data.seasons %}
           <tr>
-            <td><a href="{{ site.baseurl }}/standings/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+            <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
             <td>{{ season.team_name }}</td>
             <td>
               {% if season.rank == 1 %}🥇{% elsif season.rank == 2 %}🥈{% elsif season.rank == 3 %}🥉{% else %}{{ season.rank }}{% endif %}

@@ -30,7 +30,7 @@ permalink: /history/
             {% assign avatar_url = "https://sleepercdn.com/images/v2/icons/player_default.webp" %}
           {% endif %}
           <tr>
-            <td><a href="{{ site.baseurl }}/standings/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+            <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
             <td>
               {% if season.status == 'complete' or season.year < site.current_season %}
                 <div style="display: flex; align-items: center; gap: 10px;">
