@@ -23,7 +23,8 @@ current_season: 2026
 current_league_id: "1257465132527661056"
 
 # Date Settings (Optional Overrides)
-# Uncomment only if you need to override the automatic NFL/AFFL calendar calculation:
+# Uncomment or set only if you need to override the automatic calculations:
+keeper_deadline: "2026-08-23"          # Extended 2026 Keeper Deadline
 # draft_date: "2026-08-30 18:00:00"     # Format: "YYYY-MM-DD HH:MM:SS"
 # nfl_season_start: "2026-09-10"         # Format: "YYYY-MM-DD"
 

@@ -81,8 +81,24 @@ module Jekyll
       site.config['nfl_start_is_auto'] = !nfl_is_overridden
       site.config['draft_date_is_auto'] = !draft_is_overridden
 
-      # 3. Calculate all other milestone events deterministically
-      keeper_due_date = draft_date - 14
+      # 3. Determine Keeper Deadline (Config Override vs 2 weeks before draft)
+      calculated_keeper_due_date = draft_date - 14
+      keeper_due_date = calculated_keeper_due_date
+
+      if site.config['keeper_deadline'] && !site.config['keeper_deadline'].to_s.strip.empty?
+        begin
+          keeper_due_date = Date.parse(site.config['keeper_deadline'].to_s)
+        rescue StandardError => e
+          warnings << "Could not parse 'keeper_deadline' ('#{site.config['keeper_deadline']}'). Falling back to automatic date (#{calculated_keeper_due_date}). Error: #{e.message}"
+          keeper_due_date = calculated_keeper_due_date
+        end
+      end
+
+      if keeper_due_date > draft_date
+        warnings << "Keeper Deadline (#{keeper_due_date}) is set after Draft Date (#{draft_date}). Please check configuration."
+      end
+
+      # 4. Calculate all other milestone events deterministically
       preseason_claims_date = nfl_start_date - 2
       trade_deadline_date = nfl_start_date + (13 * 7) - 1 # Conclusion of Week 13
       regular_season_end_date = nfl_start_date + (14 * 7) # Start of Week 15
