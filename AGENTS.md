@@ -30,9 +30,9 @@ The Art of Fantasy Football League (AFFL) website is a Jekyll-based static site 
 
 ## 📋 Sleeper App Configuration Checklist (For Commissioner)
 When setting up the 2026 season in the Sleeper App/Web:
-- [ ] **Keeper Deadline:** Set Keeper Deadline to **August 23, 2026** (or 1 week prior to draft).
-- [ ] **Max Keepers:** Set to **1 Keeper** per team (Round 1 pick forfeited).
 - [ ] **Draft Date & Time:** Schedule slow snake draft for **Sunday, August 30, 2026 @ 6:00 PM**.
+- [ ] **Keeper Deadline:** Set to **"1 week before draft"** (resolves to **August 23, 2026** for the Aug 30 draft).
+- [ ] **Max Keepers:** Set to **1 Keeper** per team (Round 1 pick forfeited).
 - [ ] **Draft Order:** 
   - Assign non-playoff teams picks 1–6 in reverse order of regular season record.
   - Assign Toilet Bowl Winner Pick **2.01** (or 1.01 if keeping no player).
