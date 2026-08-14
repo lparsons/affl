@@ -20,10 +20,10 @@ module Jekyll
       labor_day + 3
     end
 
-    # Default Draft Date: The Sunday prior to kickoff (11 days prior at 6:00 PM)
+    # Default Draft Date: The Sunday prior to kickoff (11 days prior at 9:00 AM)
     def self.calculate_default_draft_time(nfl_kickoff_date)
       draft_date = nfl_kickoff_date - 11
-      Time.new(draft_date.year, draft_date.month, draft_date.day, 18, 0, 0)
+      Time.new(draft_date.year, draft_date.month, draft_date.day, 9, 0, 0)
     end
 
     def generate(site)
