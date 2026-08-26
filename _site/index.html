@@ -105,17 +105,17 @@
     <div class="calendar-highlight-content">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
         <span class="event-badge badge-next">Upcoming Milestone</span>
-        <span class="category-tag">Draft Prep</span>
+        <span class="category-tag">Draft Day</span>
       </div>
       <div class="calendar-highlight-title">
-        <span>🔒</span>
-        <span>Keeper Selections Due</span>
+        <span>📋</span>
+        <span>AFFL Slow Draft Begins</span>
       </div>
       <div class="calendar-highlight-date">
-        📅 August 16, 2026
+        📅 August 30, 2026 at 09:00 AM
       </div>
       <p class="calendar-highlight-desc">
-        Managers must finalize designation of up to 1 keeper player (forfeits Round 1 pick).
+        Official 2026 AFFL draft kicks off in the Sleeper draft room with timer active.
       </p>
     </div>
 
@@ -123,7 +123,7 @@
       <div class="calendar-countdown-badge" id="event-countdown-box">
         <span class="calendar-countdown-num" id="event-countdown-days">
           
-            3
+            5
           
         </span>
         <span class="calendar-countdown-label" id="event-countdown-label">
@@ -135,7 +135,7 @@
 
       <div style="display: flex; flex-direction: column; gap: 8px;">
         
-          <a href="/rules/#4-keeper-rules" class="btn">View Rule Details</a>
+          <a href="https://sleeper.com/leagues/1257465132527661056/draft" target="_blank" class="btn">Enter Draft Room</a>
         
         <a href="/schedule/" style="font-size: 0.85em; text-align: center; text-decoration: underline;">Full Calendar &rarr;</a>
       </div>
@@ -144,7 +144,7 @@
 
   <script>
     (function() {
-      const eventDateStr = "2026-08-16";
+      const eventDateStr = "2026-08-30";
       if (!eventDateStr) return;
       const targetDate = new Date(eventDateStr + "T23:59:59").getTime();
       const now = new Date().getTime();
@@ -184,7 +184,7 @@
       </div>
       <div style="text-align: center;">
         <p style="font-size: 1.2em; margin: 0;">August 30, 2026</p>
-        <p style="margin: 0; opacity: 0.8;">at 06:00 PM</p>
+        <p style="margin: 0; opacity: 0.8;">at 09:00 AM</p>
       </div>
       <a href="https://sleeper.com/leagues/1257465132527661056/draft" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
     </div>
@@ -194,7 +194,7 @@
   <div class="dashboard-card">
     <h2>📋 Prep Tools</h2>
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <a href="https://sleeper.com/leagues/1257465132527661056/rosters" target="_blank" class="btn">View All Rosters</a>
+      <a href="https://sleeper.com/leagues/1257465132527661056" target="_blank" class="btn">View Sleeper League</a>
       <a href="/rules/" class="btn">Review Rules</a>
       <a href="/history/" class="btn">Past Records</a>
     </div>
@@ -203,7 +203,7 @@
 
 <script>
   (function() {
-    const draftDate = new Date("2026-08-30 18:00:00").getTime();
+    const draftDate = new Date("2026-08-30 09:00:00").getTime();
     const now = new Date().getTime();
     const diff = draftDate - now;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
