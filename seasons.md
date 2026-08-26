@@ -36,6 +36,79 @@ permalink: /seasons/
   <div id="standings-content">
     <!-- Injected by JS -->
   </div>
+
+  <!-- All-Time Seasons & Champions Archive Table -->
+  <div class="dashboard-card" style="margin-top: 35px; grid-column: 1 / -1;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+      <div>
+        <h2 style="margin: 0;">📜 All-Time Season Records & Honors Archive</h2>
+        <p style="margin: 4px 0 0; font-size: 0.85em; opacity: 0.7;">Complete chronological honor roll and milestones across all AFFL seasons (2019–2025)</p>
+      </div>
+      <a href="{{ site.baseurl }}/records/" class="btn" style="padding: 6px 14px; font-size: 0.85em;">All-Time Record Book ↗</a>
+    </div>
+    <table class="high-contrast-table">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>🥇 Champion</th>
+          <th>🥈 Runner-Up</th>
+          <th>🚽 Toilet Bowl (Pick #1)</th>
+          <th>👑 Points King</th>
+          <th>🚀 Season High Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in site.data.records.completed_seasons %}
+          <tr>
+            <td>
+              <button onclick="updateSeasonsDashboard('{{ s.year }}'); window.location.hash='{{ s.year }}'; window.scrollTo({top: 0, behavior: 'smooth'});" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); border: 1px solid var(--border-color); font-weight: bold; border-radius: 6px; padding: 4px 10px; cursor: pointer;" title="View {{ s.year }} Season Dashboard">
+                {{ s.year }} ↗
+              </button>
+            </td>
+            <td>
+              {% if s.podium and s.podium.first %}
+                <a href="{{ site.baseurl }}/teams/{{ s.podium.first.user_id }}/" style="font-weight: bold;">{{ s.podium.first.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.podium.first.username }})</span>
+              {% elsif s.champion %}
+                <a href="{{ site.baseurl }}/teams/{{ s.champion.user_id }}/" style="font-weight: bold;">{{ s.champion.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.champion.username }})</span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if s.podium and s.podium.second %}
+                <a href="{{ site.baseurl }}/teams/{{ s.podium.second.user_id }}/">{{ s.podium.second.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.podium.second.username }})</span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if s.toilet_bowl_winner %}
+                <a href="{{ site.baseurl }}/teams/{{ s.toilet_bowl_winner.user_id }}/">{{ s.toilet_bowl_winner.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.toilet_bowl_winner.username }})</span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if s.awards and s.awards.regular_season_points_leader %}
+                <span style="font-weight: bold; color: var(--link-color);">{{ s.awards.regular_season_points_leader.points_for | round: 2 }} pts</span>
+                <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.regular_season_points_leader.user_id }}/">({{ s.awards.regular_season_points_leader.username }})</a></span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if s.awards and s.awards.highest_game %}
+                <span style="font-weight: bold; color: #4caf50;">{{ s.awards.highest_game.points | round: 2 }} pts</span>
+                <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.highest_game.user_id }}/">({{ s.awards.highest_game.username }}, Wk {{ s.awards.highest_game.week }})</a></span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
@@ -622,10 +695,13 @@ permalink: /seasons/
     window.location.hash = e.target.value;
   });
 
-  window.addEventListener('load', () => {
+  function handleRoute() {
     const hashYear = window.location.hash.substring(1);
     const initialYear = seasonsData[hashYear] ? hashYear : defaultSeasonYear;
     updateSeasonsDashboard(initialYear);
-  });
+  }
+
+  window.addEventListener('hashchange', handleRoute);
+  window.addEventListener('load', handleRoute);
 </script>
 
