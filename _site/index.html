@@ -242,37 +242,165 @@
     </div>
   
 
-  <!-- Season Format Overview -->
-  <div class="dashboard-card" style="grid-column: span 2;">
-    <h2>⚙️ 2026 Season Format</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px;">
-      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Roster Size</p>
-        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">15 Spots (9 Starters + 6 BN)</p>
-      </div>
-      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Keepers</p>
-        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">1 Keeper (Round 1 Forfeit)</p>
-      </div>
-      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Divisions</p>
-        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">2 Divisions (Yin &amp; Yang)</p>
-      </div>
-      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Playoffs</p>
-        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">6 Teams (Wks 15–17)</p>
-      </div>
-    </div>
-  </div>
+  
 
-  <!-- Draft Prep Links -->
-  <div class="dashboard-card">
-    <h2>📋 Season Prep</h2>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <a href="/seasons/" class="btn">Seasons Dashboard</a>
-      <a href="/rules/" class="btn">Keeper &amp; Draft Rules</a>
-      <a href="/records/" class="btn">All-Time Records</a>
-      <a href="/schedule/" class="btn">Milestone Calendar</a>
+  <!-- Current Season Summary Card -->
+  <div class="dashboard-card" style="grid-column: 1 / -1;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+      <div>
+        <h2 style="margin: 0;">🏈 2026 Season Overview</h2>
+        <p style="margin: 4px 0 0; font-size: 0.85em; opacity: 0.7;">Pre-Draft Alignment • 12 Teams across Yin &amp; Yang Divisions</p>
+      </div>
+      <a href="/seasons/#2026" class="btn" style="padding: 6px 14px; font-size: 0.85em;">View Full 2026 Dashboard ↗</a>
+    </div>
+
+    <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+      <!-- Yin Division Preview -->
+      <div style="padding: 12px 15px; background: rgba(42, 122, 226, 0.05); border: 1px solid rgba(42, 122, 226, 0.2); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <strong style="color: var(--link-color);">☯️ Yin Division</strong>
+          <span style="font-size: 0.8em; opacity: 0.7;">6 Teams</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/463028232669622272/">CodeBrewer</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#11)</span>
+              </span>
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/601971095054725120/">OrionGlorious</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#8)</span>
+              </span>
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/466831529767596032/">kolners</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#1)</span>
+              </span>
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467071694998073344/">icchipaad</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#4)</span>
+              </span>
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467713945692532736/">TheBrawlers</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#2)</span>
+              </span>
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/468106048058683392/">bsowden</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#9)</span>
+              </span>
+            
+          
+            
+          
+        </div>
+      </div>
+
+      <!-- Yang Division Preview -->
+      <div style="padding: 12px 15px; background: rgba(255, 152, 0, 0.05); border: 1px solid rgba(255, 152, 0, 0.2); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <strong style="color: #ff9800;">☯️ Yang Division</strong>
+          <span style="font-size: 0.8em; opacity: 0.7;">6 Teams</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          
+            
+          
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467051300257787904/">Eliminator</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#12)</span>
+              </span>
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467551024677122048/">VAPatsNation</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#3)</span>
+              </span>
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467597885412732928/">nightmare123</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#6)</span>
+              </span>
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467698630166310912/">maheshbiradar</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#10)</span>
+              </span>
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/467887669452468224/">TheUntouchable</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#5)</span>
+              </span>
+            
+          
+            
+          
+            
+              <span style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                <a href="/teams/468149345745629184/">trolldrengi</a>
+                <span style="opacity: 0.6; font-size: 0.8em;">(#7)</span>
+              </span>
+            
+          
+        </div>
+      </div>
+
+      <!-- Key Dates & League Rules Summary -->
+      <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <strong style="display: block; margin-bottom: 6px;">⚙️ Key League Rules</strong>
+          <ul style="margin: 0; padding-left: 18px; font-size: 0.85em; opacity: 0.85; line-height: 1.5;">
+            <li><strong>Keepers:</strong> 1 Keeper (Round 1 pick forfeited)</li>
+            <li><strong>Draft:</strong> Slow Snake (Sunday, August 30 @ 9:00 AM)</li>
+            <li><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</li>
+            <li><strong>Toilet Bowl:</strong> Winner earns 2027 Pick #1</li>
+          </ul>
+        </div>
+        <div style="margin-top: 10px; display: flex; gap: 8px;">
+          <a href="/rules/" style="font-size: 0.8em; text-decoration: underline;">Full Constitution &rarr;</a>
+          <a href="/schedule/" style="font-size: 0.8em; text-decoration: underline;">Schedule &rarr;</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
