@@ -120,6 +120,7 @@ module Jekyll
 
       latest_comp = seasons.find { |s| s['status'] == 'complete' || (s['standings'] && s['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 }) }
       site.data['latest_completed_season'] = latest_comp ? latest_comp['year'] : (seasons.first ? seasons.first['year'] : 2025)
+      site.data['reigning_season'] = latest_comp
 
       if (site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?) && seasons.first && seasons.first['draft_id']
         site.config['current_draft_id'] = seasons.first['draft_id']

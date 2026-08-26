@@ -175,11 +175,77 @@
   <!-- Dynamic Content Area -->
   <div class="dashboard-content">
     
-      <div class="dashboard-grid">
+      
+
+<div class="dashboard-grid">
+  <!-- Reigning Champion & 2025 Honors Spotlight -->
+  
+    <div class="dashboard-card" style="grid-column: 1 / -1;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+        <h2 style="margin: 0;">🏆 Reigning Champion &amp; 2025 Honors</h2>
+        <span class="category-tag">2025 Final Podium</span>
+      </div>
+
+      <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px;">
+        <!-- Champion Box -->
+        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255, 215, 0, 0.08); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px;">
+          
+            <img src="https://sleepercdn.com/avatars/thumbs/e1e1a4b6f1058b266d2e8175179460ca" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;" />
+          
+          <div>
+            <p style="margin: 0; font-size: 0.8em; color: #ffd700; text-transform: uppercase; font-weight: 800;">🥇 Reigning Champion</p>
+            <p style="margin: 2px 0 0; font-size: 1.3em; font-weight: 800;"><a href="/teams/467051300257787904/">Eliminator</a></p>
+            <p style="margin: 0; font-size: 0.85em; opacity: 0.8;">Eliminator (9-5)</p>
+          </div>
+        </div>
+
+        <!-- Runner-Up & Toilet Bowl Winner -->
+        <div style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+          
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+              <span style="font-size: 1.3em;">🥈</span>
+              <div>
+                <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Runner-Up</p>
+                <p style="margin: 0; font-size: 0.95em; font-weight: bold;"><a href="/teams/463028232669622272/">Desert Scorpions</a> <span style="font-size: 0.85em; opacity: 0.7;">(CodeBrewer)</span></p>
+              </div>
+            </div>
+          
+
+          
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
+              <span style="font-size: 1.3em;">🚽</span>
+              <div>
+                <p style="margin: 0; font-size: 0.75em; color: #ff9800; text-transform: uppercase; font-weight: bold;">Toilet Bowl Winner (Pick #1)</p>
+                <p style="margin: 0; font-size: 0.95em; font-weight: bold;"><a href="/teams/467597885412732928/">nightmare123</a> <span style="font-size: 0.85em; opacity: 0.7;">(nightmare123)</span></p>
+              </div>
+            </div>
+          
+        </div>
+
+        <!-- Season High Score & Points Leader -->
+        <div style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+          
+            <div style="padding: 8px 12px; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px;">
+              <p style="margin: 0; font-size: 0.75em; color: #4caf50; text-transform: uppercase; font-weight: bold;">🚀 Season High Score</p>
+              <p style="margin: 0; font-size: 0.95em; font-weight: bold;">200.72 pts — <a href="/teams/467051300257787904/">Eliminator</a> <span style="font-size: 0.85em; opacity: 0.7;">(Wk )</span></p>
+            </div>
+          
+
+          
+            <div style="padding: 8px 12px; background: rgba(42, 122, 226, 0.08); border: 1px solid rgba(42, 122, 226, 0.3); border-radius: 8px;">
+              <p style="margin: 0; font-size: 0.75em; color: var(--link-color); text-transform: uppercase; font-weight: bold;">👑 Regular Season Points King</p>
+              <p style="margin: 0; font-size: 0.95em; font-weight: bold;">1836.98 pts — <a href="/teams/467051300257787904/">Eliminator</a></p>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  
+
   <!-- Draft Countdown -->
   <div class="dashboard-card" style="grid-column: span 2;">
     <h2>⏳ Draft Countdown</h2>
-    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0;">
+    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0; flex-wrap: wrap; gap: 15px;">
       <div style="text-align: center;">
         <p style="font-size: 2em; font-weight: bold; margin: 0;" id="days-remaining">--</p>
         <p style="margin: 0; opacity: 0.8;">Days</p>
@@ -198,9 +264,9 @@
   <div class="dashboard-card">
     <h2>📋 Prep Tools</h2>
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <a href="https://sleeper.com/leagues/1389359803838509056" target="_blank" class="btn">View Sleeper League</a>
-      <a href="/rules/" class="btn">Review Rules</a>
-      <a href="/history/" class="btn">Past Records</a>
+      <a href="/seasons/" class="btn">Seasons Dashboard</a>
+      <a href="/rules/" class="btn">Keeper &amp; Draft Rules</a>
+      <a href="/records/" class="btn">All-Time Records</a>
     </div>
   </div>
 </div>
@@ -214,6 +280,7 @@
     document.getElementById('days-remaining').textContent = days > 0 ? days : 0;
   })();
 </script>
+
 
     
   </div>

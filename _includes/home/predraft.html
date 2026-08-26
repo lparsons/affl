@@ -1,8 +1,76 @@
+{% assign reigning = site.data.reigning_season %}
+
 <div class="dashboard-grid">
+  <!-- Reigning Champion & 2025 Honors Spotlight -->
+  {% if reigning and reigning.champion %}
+    <div class="dashboard-card" style="grid-column: 1 / -1;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+        <h2 style="margin: 0;">🏆 Reigning Champion & {{ reigning.year }} Honors</h2>
+        <span class="category-tag">{{ reigning.year }} Final Podium</span>
+      </div>
+
+      <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px;">
+        <!-- Champion Box -->
+        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255, 215, 0, 0.08); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px;">
+          {% if reigning.champion.avatar %}
+            <img src="https://sleepercdn.com/avatars/thumbs/{{ reigning.champion.avatar }}" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
+          {% else %}
+            <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
+          {% endif %}
+          <div>
+            <p style="margin: 0; font-size: 0.8em; color: #ffd700; text-transform: uppercase; font-weight: 800;">🥇 Reigning Champion</p>
+            <p style="margin: 2px 0 0; font-size: 1.3em; font-weight: 800;"><a href="{{ site.baseurl }}/teams/{{ reigning.champion.user_id }}/">{{ reigning.champion.team_name }}</a></p>
+            <p style="margin: 0; font-size: 0.85em; opacity: 0.8;">{{ reigning.champion.username }} ({{ reigning.champion.record }})</p>
+          </div>
+        </div>
+
+        <!-- Runner-Up & Toilet Bowl Winner -->
+        <div style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+          {% if reigning.podium and reigning.podium.second %}
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+              <span style="font-size: 1.3em;">🥈</span>
+              <div>
+                <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Runner-Up</p>
+                <p style="margin: 0; font-size: 0.95em; font-weight: bold;"><a href="{{ site.baseurl }}/teams/{{ reigning.podium.second.user_id }}/">{{ reigning.podium.second.team_name }}</a> <span style="font-size: 0.85em; opacity: 0.7;">({{ reigning.podium.second.username }})</span></p>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if reigning.toilet_bowl_winner %}
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
+              <span style="font-size: 1.3em;">🚽</span>
+              <div>
+                <p style="margin: 0; font-size: 0.75em; color: #ff9800; text-transform: uppercase; font-weight: bold;">Toilet Bowl Winner (Pick #1)</p>
+                <p style="margin: 0; font-size: 0.95em; font-weight: bold;"><a href="{{ site.baseurl }}/teams/{{ reigning.toilet_bowl_winner.user_id }}/">{{ reigning.toilet_bowl_winner.team_name }}</a> <span style="font-size: 0.85em; opacity: 0.7;">({{ reigning.toilet_bowl_winner.username }})</span></p>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Season High Score & Points Leader -->
+        <div style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+          {% if reigning.awards and reigning.awards.highest_game %}
+            <div style="padding: 8px 12px; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px;">
+              <p style="margin: 0; font-size: 0.75em; color: #4caf50; text-transform: uppercase; font-weight: bold;">🚀 Season High Score</p>
+              <p style="margin: 0; font-size: 0.95em; font-weight: bold;">{{ reigning.awards.highest_game.points | round: 2 }} pts — <a href="{{ site.baseurl }}/teams/{{ reigning.awards.highest_game.user_id }}/">{{ reigning.awards.highest_game.team_name }}</a> <span style="font-size: 0.85em; opacity: 0.7;">(Wk {{ reigning.awards.highest_game.week }})</span></p>
+            </div>
+          {% endif %}
+
+          {% if reigning.awards and reigning.awards.regular_season_points_leader %}
+            <div style="padding: 8px 12px; background: rgba(42, 122, 226, 0.08); border: 1px solid rgba(42, 122, 226, 0.3); border-radius: 8px;">
+              <p style="margin: 0; font-size: 0.75em; color: var(--link-color); text-transform: uppercase; font-weight: bold;">👑 Regular Season Points King</p>
+              <p style="margin: 0; font-size: 0.95em; font-weight: bold;">{{ reigning.awards.regular_season_points_leader.points_for | round: 2 }} pts — <a href="{{ site.baseurl }}/teams/{{ reigning.awards.regular_season_points_leader.user_id }}/">{{ reigning.awards.regular_season_points_leader.team_name }}</a></p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
   <!-- Draft Countdown -->
   <div class="dashboard-card" style="grid-column: span 2;">
     <h2>⏳ Draft Countdown</h2>
-    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0;">
+    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0; flex-wrap: wrap; gap: 15px;">
       <div style="text-align: center;">
         <p style="font-size: 2em; font-weight: bold; margin: 0;" id="days-remaining">--</p>
         <p style="margin: 0; opacity: 0.8;">Days</p>
@@ -23,9 +91,9 @@
   <div class="dashboard-card">
     <h2>📋 Prep Tools</h2>
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn">View Sleeper League</a>
-      <a href="{{ site.baseurl }}/rules/" class="btn">Review Rules</a>
-      <a href="{{ site.baseurl }}/history/" class="btn">Past Records</a>
+      <a href="{{ site.baseurl }}/seasons/" class="btn">Seasons Dashboard</a>
+      <a href="{{ site.baseurl }}/rules/" class="btn">Keeper & Draft Rules</a>
+      <a href="{{ site.baseurl }}/records/" class="btn">All-Time Records</a>
     </div>
   </div>
 </div>
@@ -39,3 +107,4 @@
     document.getElementById('days-remaining').textContent = days > 0 ? days : 0;
   })();
 </script>
+
