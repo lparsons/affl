@@ -282,7 +282,7 @@ permalink: /seasons/
             The slow snake draft commences on <strong>Sunday, August 30, 2026 at 09:00 AM EDT</strong>.
           </p>
           <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
+            <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
             <a href="{{ site.baseurl }}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Constitution & Rules</a>
             <a href="{{ site.baseurl }}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestone Schedule</a>
           </div>
@@ -368,7 +368,7 @@ permalink: /seasons/
                 <h3 style="margin: 0; font-size: 1.2em;">🎯 ${season.year} Draft Order Board</h3>
                 <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • August 30 @ 9:00 AM EDT</p>
               </div>
-              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
+              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
             </div>
             <table class="high-contrast-table">
               <thead>

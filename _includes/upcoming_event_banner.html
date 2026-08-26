@@ -41,7 +41,7 @@
       <div style="display: flex; flex-direction: column; gap: 8px;">
         {% if next_ev.id == 'draft_day' %}
           {% if site.current_draft_id and site.current_draft_id != "" %}
-            <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}" target="_blank" class="btn">Enter Draft Room</a>
+            <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn">Enter Draft Room</a>
           {% else %}
             <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn">Enter Draft Room</a>
           {% endif %}
