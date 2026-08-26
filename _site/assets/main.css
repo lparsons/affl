@@ -1054,6 +1054,59 @@ hr {
   color: var(--text-color);
 }
 
+.badge-clinch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.78em;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badge-bye {
+  background: rgba(255, 215, 0, 0.18);
+  color: #ffd700;
+  border: 1px solid #ffd700;
+}
+
+.badge-playoffs {
+  background: rgba(76, 175, 80, 0.18);
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+
+.badge-tb {
+  background: rgba(255, 152, 0, 0.18);
+  color: #ff9800;
+  border: 1px solid #ff9800;
+}
+
+.badge-bubble {
+  background: rgba(42, 122, 226, 0.15);
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+}
+
+.badge-hunt {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-color);
+  opacity: 0.75;
+  border: 1px solid var(--border-color);
+}
+
+.playoff-cutline-row td {
+  background: rgba(42, 122, 226, 0.08) !important;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+  color: var(--link-color);
+  border-top: 2px dashed var(--link-color) !important;
+  border-bottom: 2px dashed var(--link-color) !important;
+  padding: 6px 10px;
+}
+
 @media screen and (max-width: 600px) {
   .dashboard-header {
     flex-direction: column;
