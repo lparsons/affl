@@ -14,20 +14,27 @@ permalink: /seasons/
       <label for="season-selector" style="font-weight: bold; font-size: 0.9em; opacity: 0.7;">Select Year:</label>
       <select id="season-selector" style="padding: 8px 15px; border-radius: 8px; background: var(--header-bg); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer;">
         {% for season in site.data.all_seasons %}
-          <option value="{{ season.year }}">{{ season.year }}{% if season.year == site.current_season %} (Current){% endif %}</option>
+          {% assign has_played_games = false %}
+          {% for s in season.standings %}
+            {% assign total_g = s.wins | plus: s.losses %}
+            {% if total_g > 0 %}{% assign has_played_games = true %}{% endif %}
+          {% endfor %}
+          <option value="{{ season.year }}">
+            {{ season.year }}{% if season.year == site.current_season and has_played_games == false %} (Upcoming / Pre-Draft){% elsif season.year == site.data.latest_completed_season %} (Latest Final){% endif %}
+          </option>
         {% endfor %}
       </select>
     </div>
   </div>
 
-  <!-- Season Awards & Podium -->
+  <!-- Season Awards & Podium / Phase Highlights -->
   <div id="season-highlights" class="dashboard-grid">
-    <!-- Will be injected by JS -->
+    <!-- Injected by JS -->
   </div>
 
-  <!-- Standings Table -->
+  <!-- Standings / Divisions Content -->
   <div id="standings-content">
-    <!-- Standings Table will be injected here by JS -->
+    <!-- Injected by JS -->
   </div>
 </div>
 
@@ -36,6 +43,7 @@ permalink: /seasons/
   const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
   const highlightsContainer = document.getElementById('season-highlights');
+  const defaultSeasonYear = "{{ site.data.latest_completed_season | default: 2025 }}";
   
   const seasonsData = {
     {% for season in site.data.all_seasons %}
@@ -43,10 +51,12 @@ permalink: /seasons/
         "year": "{{ season.year }}",
         "name": "{{ season.name }}",
         "status": "{{ season.status }}",
+        "draft_id": "{{ season.draft_id }}",
         "is_current": {% if season.year == site.current_season %}true{% else %}false{% endif %},
         "awards": {{ season.awards | jsonify }},
         "podium": {{ season.podium | jsonify }},
         "toilet_bowl_winner": {{ season.toilet_bowl_winner | jsonify }},
+        "divisions": {{ season.divisions | jsonify }},
         "standings": [
           {% for team in season.standings %}
             {
@@ -56,7 +66,12 @@ permalink: /seasons/
               "team_name": {{ team.team_name | jsonify }},
               "username": "{{ team.username }}",
               "user_id": "{{ team.user_id }}",
+              "division": {{ team.division | default: 1 }},
+              "division_name": "{{ team.division_name | default: 'Yin' }}",
+              "draft_slot": {{ team.draft_slot | jsonify }},
               "record": "{{ team.record }}",
+              "wins": {{ team.wins | default: 0 }},
+              "losses": {{ team.losses | default: 0 }},
               "points_for": "{{ team.points_for | round: 2 }}",
               "points_against": "{{ team.points_against | round: 2 }}",
               "avatar": "{{ team.avatar }}"
@@ -70,7 +85,6 @@ permalink: /seasons/
   function computeClinchStatus(standings, totalWeeks = 14) {
     if (!standings || standings.length === 0) return {};
     
-    // Check total games played by top team
     const gamesPlayed = Math.max(...standings.map(t => {
       const parts = (t.record || "0-0").split("-");
       return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0);
@@ -93,20 +107,16 @@ permalink: /seasons/
       };
     });
 
-    // Sorted by current wins desc, pf desc
     const sorted = [...teamsWithBounds].sort((a, b) => (b.wins - a.wins) || (b.pf - a.pf));
 
     const clinchMap = {};
     sorted.forEach((team, index) => {
-      // 1. Bye clinch (Top 2 guaranteed): team's current wins > 3rd place team's max wins
       const thirdTeam = sorted[2];
       const isByeClinched = thirdTeam && (team.wins > thirdTeam.max_wins);
 
-      // 2. Playoff clinch (Top 6 guaranteed): team's current wins > 7th place team's max wins
       const seventhTeam = sorted[6];
       const isPlayoffClinched = seventhTeam && (team.wins > seventhTeam.max_wins);
 
-      // 3. Toilet Bowl Bound (Eliminated from Top 6): team's max wins < 6th place team's current wins
       const sixthTeam = sorted[5];
       const isEliminated = sixthTeam && (team.max_wins < sixthTeam.wins);
 
@@ -132,15 +142,15 @@ permalink: /seasons/
 
     const isComplete = season.status === 'complete';
     const hasGames = season.standings && season.standings.some(t => {
-      const parts = (t.record || "0-0").split("-");
-      return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0) > 0;
+      return (parseInt(t.wins) || 0) + (parseInt(t.losses) || 0) > 0;
     });
 
     title.textContent = `${year} Season Dashboard`;
-    label.textContent = isComplete ? `${season.name} • Final Results` : `${season.name} • Season in Progress`;
+    label.textContent = isComplete ? `${season.name} • Final Results` : `${season.name} • ${hasGames ? 'Regular Season in Progress' : 'Pre-Draft & Rosters'}`;
     seasonSelector.value = year;
 
     let highlightsHtml = '';
+    let contentHtml = '';
     
     if (isComplete) {
       // 🏆 Final Podium Card
@@ -215,126 +225,269 @@ permalink: /seasons/
           </div>
         `;
       }
-    } else {
-      // ⏳ Active / Pre-Draft Season Highlights
-      if (!hasGames) {
-        highlightsHtml += `
-          <div class="dashboard-card" style="grid-column: span 2;">
-            <h2>⏳ Pre-Draft Season Phase</h2>
-            <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-              The <strong>${season.year} season</strong> is currently in the pre-draft stage. 
-              Draft day is scheduled for <strong>August 30, 2026 at 09:00 AM</strong>.
-            </p>
-            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-              <a href="{{ site.baseurl }}/rules/" class="btn">View Draft & Keeper Rules</a>
-              <a href="{{ site.baseurl }}/schedule/" class="btn">Milestone Timeline</a>
-            </div>
-          </div>
-          <div class="dashboard-card">
-            <h2>ℹ️ Playoff Qualification</h2>
-            <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-              • <strong>Top 6 Teams:</strong> Advance to Championship Playoffs (Top 2 division leaders earn 1st-round byes).<br>
-              • <strong>Bottom 6 Teams:</strong> Compete in Toilet Bowl for next year's <strong>#1 Overall Pick</strong>.
-            </p>
-          </div>
-        `;
-      } else {
-        highlightsHtml += `
-          <div class="dashboard-card" style="grid-column: span 2;">
-            <h2>🏈 Active Regular Season & Playoff Race</h2>
-            <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-              Regular season standings below update in real time every Tuesday morning. Top 6 seeds punch tickets to the AFFL Championship Tournament, while Seeds 7–12 enter the Toilet Bowl bracket.
-            </p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
-              <span class="badge-clinch badge-bye">⭐ [BYE] 1st-Round Bye Clinched</span>
-              <span class="badge-clinch badge-playoffs">🟢 [X] Playoff Clinched</span>
-              <span class="badge-clinch badge-tb">🚽 [TB] Toilet Bowl Bound</span>
-              <span class="badge-clinch badge-bubble">🟡 In Contention</span>
-            </div>
-          </div>
-          <div class="dashboard-card">
-            <h2>🏆 Postseason Stakes</h2>
-            <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-              • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
-              • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
-              • Final podium places & Toilet Bowl winner lock upon conclusion of Week 17.
-            </p>
-          </div>
-        `;
-      }
-    }
 
-    highlightsContainer.innerHTML = highlightsHtml;
-
-    // Build Standings HTML
-    const clinchMap = isComplete ? {} : computeClinchStatus(season.standings);
-
-    let standingsHtml = `
-      <div class="dashboard-card" style="margin-top: 20px;">
-        <h2>${isComplete ? 'Full Final Standings' : 'Current Season Standings & Playoff Picture'}</h2>
-        <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
-          ${isComplete ? 'Final ranks determined by Playoff & Toilet Bowl Brackets' : 'Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 pick'}
-        </p>
-        <table class="high-contrast-table">
-          <thead>
-            <tr>
-              <th>${isComplete ? 'Final Rank' : 'Seed'}</th>
-              <th>Team</th>
-              <th>Manager</th>
-              <th>${isComplete ? 'Reg. Record (Seed)' : 'Record'}</th>
-              ${!isComplete && hasGames ? '<th>Clinch Status</th>' : ''}
-              <th>PF</th>
-              <th>PA</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
-    
-    season.standings.forEach((team, index) => {
-      const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+      // Standings Table for Completed Season
+      contentHtml = `
+        <div class="dashboard-card" style="margin-top: 20px;">
+          <h2>Full Final Standings</h2>
+          <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Final ranks determined by Playoff & Toilet Bowl Brackets</p>
+          <table class="high-contrast-table">
+            <thead>
+              <tr>
+                <th>Final Rank</th>
+                <th>Team</th>
+                <th>Manager</th>
+                <th>Reg. Record (Seed)</th>
+                <th>PF</th>
+                <th>PA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
       
-      let rankBadge = `${team.rank}`;
-      if (isComplete) {
+      season.standings.forEach(team => {
+        const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+        let rankBadge = `${team.rank}`;
         if (team.rank === 1) rankBadge = '🥇 1';
         else if (team.rank === 2) rankBadge = '🥈 2';
         else if (team.rank === 3) rankBadge = '🥉 3';
         else if (team.is_toilet_bowl_winner || team.rank === 7) rankBadge = '🚽 7';
-      } else {
-        rankBadge = `#${index + 1}`;
-      }
 
-      const seedLabel = isComplete && team.regular_season_rank ? `(#${team.regular_season_rank})` : '';
-      const clinch = clinchMap[team.user_id];
+        const seedLabel = team.regular_season_rank ? `(#${team.regular_season_rank})` : '';
 
-      // Add Playoff Cutoff Line divider after 6th place when season is active
-      if (!isComplete && index === 6) {
-        standingsHtml += `
-          <tr class="playoff-cutline-row">
-            <td colspan="${!isComplete && hasGames ? 7 : 6}">
-              ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
+        contentHtml += `
+          <tr>
+            <td style="font-weight: bold;">${rankBadge}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
+              <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
             </td>
+            <td>${team.username}</td>
+            <td>${team.record} <span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span></td>
+            <td>${team.points_for}</td>
+            <td>${team.points_against}</td>
           </tr>
         `;
-      }
+      });
+      
+      contentHtml += `</tbody></table></div>`;
 
-      standingsHtml += `
-        <tr>
-          <td style="font-weight: bold;">${rankBadge}</td>
-          <td style="display: flex; align-items: center; gap: 10px;">
-            <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
-            <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
-          </td>
-          <td>${team.username}</td>
-          <td>${team.record} ${seedLabel ? `<span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span>` : ''}</td>
-          ${!isComplete && hasGames ? `<td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>` : ''}
-          <td>${team.points_for}</td>
-          <td>${team.points_against}</td>
-        </tr>
+    } else if (!hasGames) {
+      // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)
+      highlightsHtml += `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
+          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
+            The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions. 
+            The slow snake draft commences on <strong>Sunday, August 30, 2026 at 09:00 AM EDT</strong>.
+          </p>
+          <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
+            <a href="{{ site.baseurl }}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Constitution & Rules</a>
+            <a href="{{ site.baseurl }}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestone Schedule</a>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h2>📋 League Configuration</h2>
+          <div style="font-size: 0.9em; opacity: 0.85; display: flex; flex-direction: column; gap: 8px;">
+            <div><strong>Roster:</strong> 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 K, 1 DEF, 5 BN</div>
+            <div><strong>Keepers:</strong> 1 Keeper per team (Forfeits Round 1 pick)</div>
+            <div><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</div>
+            <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>#1 Pick</strong></div>
+          </div>
+        </div>
       `;
-    });
-    
-    standingsHtml += `</tbody></table></div>`;
-    document.getElementById('standings-content').innerHTML = standingsHtml;
+
+      // Group teams by Division for Division View
+      const yinTeams = season.standings.filter(t => t.division === 1);
+      const yangTeams = season.standings.filter(t => t.division === 2);
+
+      contentHtml = `
+        <div style="margin-top: 25px;">
+          <h2 style="margin-bottom: 5px;">☯️ Division Alignments</h2>
+          <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 20px;">12 Franchises split across the Yin and Yang Divisions for the ${season.year} campaign</p>
+          
+          <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- Yin Division Card -->
+            <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yin Division</h3>
+                <span class="category-tag">6 Teams</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${yinTeams.map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                  return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
+                        <div>
+                          <p style="margin: 0; font-weight: bold;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                        </div>
+                      </div>
+                      ${draftBadge}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Yang Division Card -->
+            <div class="dashboard-card" style="border-top: 4px solid #ff9800;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yang Division</h3>
+                <span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800;">6 Teams</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${yangTeams.map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                  return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
+                        <div>
+                          <p style="margin: 0; font-weight: bold;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                        </div>
+                      </div>
+                      ${draftBadge}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Draft Order Board -->
+          <div class="dashboard-card" style="margin-top: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <div>
+                <h3 style="margin: 0; font-size: 1.2em;">🎯 ${season.year} Draft Order Board</h3>
+                <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • August 30 @ 9:00 AM EDT</p>
+              </div>
+              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
+            </div>
+            <table class="high-contrast-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Slot</th>
+                  <th>Team</th>
+                  <th>Manager</th>
+                  <th>Division</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${[...season.standings].sort((a, b) => (a.draft_slot || 99) - (b.draft_slot || 99)).map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  return `
+                    <tr>
+                      <td style="font-weight: 800; color: var(--link-color);">#${t.draft_slot || '-'}</td>
+                      <td style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;">
+                        <a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a>
+                      </td>
+                      <td>${t.username}</td>
+                      <td><span class="category-tag">${t.division_name || 'Yin'}</span></td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Note about live standings activation -->
+          <div style="margin-top: 20px; padding: 15px 20px; background: rgba(42, 122, 226, 0.08); border: 1px dashed var(--link-color); border-radius: 10px; font-size: 0.88em; color: var(--text-color); opacity: 0.9;">
+            ℹ️ <strong>Live Standings Notice:</strong> Win-loss standings, total points, weekly high scores, and mathematical playoff clinch trackers will automatically activate on this page once NFL Week 1 matchups kick off in September.
+          </div>
+        </div>
+      `;
+
+    } else {
+      // 🏈 ACTIVE REGULAR SEASON IN PROGRESS (GAMES PLAYED)
+      highlightsHtml += `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <h2>🏈 Active Regular Season & Playoff Race</h2>
+          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
+            Standings below update live every Tuesday morning. Top 6 seeds punch tickets to the Championship Playoffs (Seeds 1 & 2 earn byes), while Seeds 7–12 compete in the Toilet Bowl bracket.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+            <span class="badge-clinch badge-bye">⭐ [BYE] 1st-Round Bye Clinched</span>
+            <span class="badge-clinch badge-playoffs">🟢 [X] Playoff Clinched</span>
+            <span class="badge-clinch badge-tb">🚽 [TB] Toilet Bowl Bound</span>
+            <span class="badge-clinch badge-bubble">🟡 In Contention</span>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h2>🏆 Postseason Stakes</h2>
+          <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
+            • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
+            • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
+            • Final podium places & Toilet Bowl winner lock upon conclusion of Week 17.
+          </p>
+        </div>
+      `;
+
+      const clinchMap = computeClinchStatus(season.standings);
+
+      contentHtml = `
+        <div class="dashboard-card" style="margin-top: 20px;">
+          <h2>Current Season Standings & Playoff Picture</h2>
+          <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
+            Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 draft pick
+          </p>
+          <table class="high-contrast-table">
+            <thead>
+              <tr>
+                <th>Seed</th>
+                <th>Team</th>
+                <th>Manager</th>
+                <th>Record</th>
+                <th>Playoff Status</th>
+                <th>PF</th>
+                <th>PA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      season.standings.forEach((team, index) => {
+        const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+        const clinch = clinchMap[team.user_id];
+
+        if (index === 6) {
+          contentHtml += `
+            <tr class="playoff-cutline-row">
+              <td colspan="7">
+                ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
+              </td>
+            </tr>
+          `;
+        }
+
+        contentHtml += `
+          <tr>
+            <td style="font-weight: bold;">#${index + 1}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
+              <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
+            </td>
+            <td>${team.username}</td>
+            <td>${team.record}</td>
+            <td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>
+            <td>${team.points_for}</td>
+            <td>${team.points_against}</td>
+          </tr>
+        `;
+      });
+      
+      contentHtml += `</tbody></table></div>`;
+    }
+
+    highlightsContainer.innerHTML = highlightsHtml;
+    document.getElementById('standings-content').innerHTML = contentHtml;
   }
 
   seasonSelector.addEventListener('change', (e) => {
@@ -344,8 +497,8 @@ permalink: /seasons/
 
   window.addEventListener('load', () => {
     const hashYear = window.location.hash.substring(1);
-    const latestYear = Object.keys(seasonsData).sort().reverse()[0];
-    updateSeasonsDashboard(seasonsData[hashYear] ? hashYear : latestYear);
+    const initialYear = seasonsData[hashYear] ? hashYear : defaultSeasonYear;
+    updateSeasonsDashboard(initialYear);
   });
 </script>
 

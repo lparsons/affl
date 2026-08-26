@@ -92,34 +92,66 @@
       <label for="season-selector" style="font-weight: bold; font-size: 0.9em; opacity: 0.7;">Select Year:</label>
       <select id="season-selector" style="padding: 8px 15px; border-radius: 8px; background: var(--header-bg); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer;">
         
-          <option value="2026">2026 (Current)</option>
+          
+          
+          <option value="2026">
+            2026 (Upcoming / Pre-Draft)
+          </option>
         
-          <option value="2025">2025</option>
+          
+          
+          <option value="2025">
+            2025 (Latest Final)
+          </option>
         
-          <option value="2024">2024</option>
+          
+          
+          <option value="2024">
+            2024
+          </option>
         
-          <option value="2023">2023</option>
+          
+          
+          <option value="2023">
+            2023
+          </option>
         
-          <option value="2022">2022</option>
+          
+          
+          <option value="2022">
+            2022
+          </option>
         
-          <option value="2021">2021</option>
+          
+          
+          <option value="2021">
+            2021
+          </option>
         
-          <option value="2020">2020</option>
+          
+          
+          <option value="2020">
+            2020
+          </option>
         
-          <option value="2019">2019</option>
+          
+          
+          <option value="2019">
+            2019
+          </option>
         
       </select>
     </div>
   </div>
 
-  <!-- Season Awards & Podium -->
+  <!-- Season Awards & Podium / Phase Highlights -->
   <div id="season-highlights" class="dashboard-grid">
-    <!-- Will be injected by JS -->
+    <!-- Injected by JS -->
   </div>
 
-  <!-- Standings Table -->
+  <!-- Standings / Divisions Content -->
   <div id="standings-content">
-    <!-- Standings Table will be injected here by JS -->
+    <!-- Injected by JS -->
   </div>
 </div>
 
@@ -128,6 +160,7 @@
   const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
   const highlightsContainer = document.getElementById('season-highlights');
+  const defaultSeasonYear = "2025";
   
   const seasonsData = {
     
@@ -135,10 +168,12 @@
         "year": "2026",
         "name": "The Art of Fantasy Football League",
         "status": "pre_draft",
+        "draft_id": "1389359803838509057",
         "is_current": true,
         "awards": null,
         "podium": null,
         "toilet_bowl_winner": null,
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -148,7 +183,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 11,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -161,7 +201,12 @@
               "team_name": "Big EZ Blue",
               "username": "OrionGlorious",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 8,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -174,7 +219,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 1,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -187,7 +237,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 12,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -200,7 +255,12 @@
               "team_name": "BeerBicepsBiryani",
               "username": "icchipaad",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 4,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -213,7 +273,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 3,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -226,7 +291,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 6,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -239,7 +309,12 @@
               "team_name": "Birants",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 10,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -252,7 +327,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 2,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -265,7 +345,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -278,7 +363,12 @@
               "team_name": "CMC You Later",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 9,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -291,7 +381,12 @@
               "team_name": "Football Commandants",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "0-0",
+              "wins": 0,
+              "losses": 0,
               "points_for": "0.0",
               "points_against": "0.0",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -304,10 +399,12 @@
         "year": "2025",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "1257465132527661057",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":4,"user_id":"467051300257787904","matchup_id":2,"points":200.72,"username":"Eliminator","team_name":"Eliminator"},"regular_season_points_leader":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5","regular_season_rank":2,"rank":1}},
-        "podium": {"first":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5","regular_season_rank":2,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":9,"losses":5,"ties":0,"points_for":1752.52,"points_against":1544.32,"record":"9-5","regular_season_rank":4,"rank":2},"third":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","wins":7,"losses":7,"ties":0,"points_for":1697.3,"points_against":1730.82,"record":"7-7","regular_season_rank":6,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467597885412732928","roster_id":7,"username":"nightmare123","team_name":"nightmare123","avatar":"accfa8d733980b98db2fcb40cb98bc1b","wins":5,"losses":9,"ties":0,"points_for":1512.52,"points_against":1662.48,"record":"5-9","regular_season_rank":11,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":4,"user_id":"467051300257787904","matchup_id":2,"points":200.72,"username":"Eliminator","team_name":"Eliminator"},"regular_season_points_leader":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","division":2,"division_name":"Yang","draft_slot":11,"wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5","regular_season_rank":2,"rank":1}},
+        "podium": {"first":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","division":2,"division_name":"Yang","draft_slot":11,"wins":9,"losses":5,"ties":0,"points_for":1836.98,"points_against":1769.08,"record":"9-5","regular_season_rank":2,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","division":1,"division_name":"Yin","draft_slot":9,"wins":9,"losses":5,"ties":0,"points_for":1752.52,"points_against":1544.32,"record":"9-5","regular_season_rank":4,"rank":2},"third":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":12,"wins":7,"losses":7,"ties":0,"points_for":1697.3,"points_against":1730.82,"record":"7-7","regular_season_rank":6,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467597885412732928","roster_id":7,"username":"nightmare123","team_name":"nightmare123","avatar":"accfa8d733980b98db2fcb40cb98bc1b","division":2,"division_name":"Yang","draft_slot":6,"wins":5,"losses":9,"ties":0,"points_for":1512.52,"points_against":1662.48,"record":"5-9","regular_season_rank":11,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -317,7 +414,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 11,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1836.98",
               "points_against": "1769.08",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -330,7 +432,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 9,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1752.52",
               "points_against": "1544.32",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -343,7 +450,12 @@
               "team_name": "Birants",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 12,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1697.3",
               "points_against": "1730.82",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -356,7 +468,12 @@
               "team_name": "CMC You Later",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 4,
               "record": "11-3",
+              "wins": 11,
+              "losses": 3,
               "points_for": "1805.52",
               "points_against": "1559.94",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -369,7 +486,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 3,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1787.62",
               "points_against": "1787.56",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -382,7 +504,12 @@
               "team_name": "Football Commandants",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1798.64",
               "points_against": "1626.68",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -395,7 +522,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 6,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1512.52",
               "points_against": "1662.48",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -408,7 +540,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 1,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1714.64",
               "points_against": "1740.26",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -421,7 +558,12 @@
               "team_name": "BeerBicepsBiryani",
               "username": "icchipaad",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 5,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1549.18",
               "points_against": "1677.44",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -434,7 +576,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 8,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1613.26",
               "points_against": "1634.36",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -447,7 +594,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 2,
               "record": "4-10",
+              "wins": 4,
+              "losses": 10,
               "points_for": "1588.18",
               "points_against": "1797.38",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -460,7 +612,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 10,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1552.44",
               "points_against": "1678.48",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -473,10 +630,12 @@
         "year": "2024",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "1124837607272898561",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":2,"points":198.52,"username":"maheshbiradar","team_name":"Birants"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4","regular_season_rank":1,"rank":3}},
-        "podium": {"first":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","wins":10,"losses":4,"ties":0,"points_for":1733.84,"points_against":1597.4,"record":"10-4","regular_season_rank":2,"rank":1},"second":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","wins":8,"losses":6,"ties":0,"points_for":1690.04,"points_against":1579.74,"record":"8-6","regular_season_rank":4,"rank":2},"third":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4","regular_season_rank":1,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467597885412732928","roster_id":7,"username":"nightmare123","team_name":"nightmare123","avatar":"accfa8d733980b98db2fcb40cb98bc1b","wins":7,"losses":7,"ties":0,"points_for":1683.88,"points_against":1665.99,"record":"7-7","regular_season_rank":8,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":2,"points":198.52,"username":"maheshbiradar","team_name":"Birants"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","division":1,"division_name":"Yin","draft_slot":3,"wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4","regular_season_rank":1,"rank":3}},
+        "podium": {"first":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":11,"wins":10,"losses":4,"ties":0,"points_for":1733.84,"points_against":1597.4,"record":"10-4","regular_season_rank":2,"rank":1},"second":{"user_id":"467051300257787904","roster_id":4,"username":"Eliminator","team_name":"Eliminator","avatar":"e1e1a4b6f1058b266d2e8175179460ca","division":2,"division_name":"Yang","draft_slot":8,"wins":8,"losses":6,"ties":0,"points_for":1690.04,"points_against":1579.74,"record":"8-6","regular_season_rank":4,"rank":2},"third":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","division":1,"division_name":"Yin","draft_slot":3,"wins":10,"losses":4,"ties":0,"points_for":1823.98,"points_against":1708.02,"record":"10-4","regular_season_rank":1,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467597885412732928","roster_id":7,"username":"nightmare123","team_name":"nightmare123","avatar":"accfa8d733980b98db2fcb40cb98bc1b","division":2,"division_name":"Yang","draft_slot":5,"wins":7,"losses":7,"ties":0,"points_for":1683.88,"points_against":1665.99,"record":"7-7","regular_season_rank":8,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -486,7 +645,12 @@
               "team_name": "Birants",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 11,
               "record": "10-4",
+              "wins": 10,
+              "losses": 4,
               "points_for": "1733.84",
               "points_against": "1597.4",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -499,7 +663,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 8,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1690.04",
               "points_against": "1579.74",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -512,7 +681,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 3,
               "record": "10-4",
+              "wins": 10,
+              "losses": 4,
               "points_for": "1823.98",
               "points_against": "1708.02",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -525,7 +699,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 10,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1783.64",
               "points_against": "1629.42",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -538,7 +717,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1573.44",
               "points_against": "1522.88",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -551,7 +735,12 @@
               "team_name": "Football Commandants",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 2,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1699.3",
               "points_against": "1621.22",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -564,7 +753,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1683.88",
               "points_against": "1665.99",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -577,7 +771,12 @@
               "team_name": "BeerBicepsBiryani",
               "username": "icchipaad",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 1,
               "record": "4-10",
+              "wins": 4,
+              "losses": 10,
               "points_for": "1649.8",
               "points_against": "1784.92",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -590,7 +789,12 @@
               "team_name": "FF Dumpster Fire",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 9,
               "record": "2-12",
+              "wins": 2,
+              "losses": 12,
               "points_for": "1527.28",
               "points_against": "1902.94",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -603,7 +807,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 12,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1694.78",
               "points_against": "1796.06",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -616,7 +825,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 4,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1787.58",
               "points_against": "1740.22",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -629,7 +843,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 6,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1663.14",
               "points_against": "1761.88",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -642,10 +861,12 @@
         "year": "2023",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "992218090957766657",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":2,"points":191.16,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Sunday Shanahan-igans","avatar":"eefceb945b9159798eac0eb764d3fbc4","wins":9,"losses":5,"ties":0,"points_for":1917.78,"points_against":1724.44,"record":"9-5","regular_season_rank":3,"rank":4}},
-        "podium": {"first":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","wins":11,"losses":3,"ties":0,"points_for":1787.76,"points_against":1543.1,"record":"11-3","regular_season_rank":1,"rank":1},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":11,"losses":3,"ties":0,"points_for":1769.84,"points_against":1570.18,"record":"11-3","regular_season_rank":2,"rank":2},"third":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":9,"losses":5,"ties":0,"points_for":1802.86,"points_against":1721.6,"record":"9-5","regular_season_rank":4,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467887669452468224","roster_id":10,"username":"TheUntouchable","team_name":"TheUntouchable","avatar":"e4d90bf3a010debbcbef6993d3a5df1c","wins":6,"losses":8,"ties":0,"points_for":1541.36,"points_against":1672.28,"record":"6-8","regular_season_rank":8,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":2,"points":191.16,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"468106048058683392","roster_id":11,"username":"bsowden","team_name":"Sunday Shanahan-igans","avatar":"eefceb945b9159798eac0eb764d3fbc4","division":1,"division_name":"Yin","draft_slot":9,"wins":9,"losses":5,"ties":0,"points_for":1917.78,"points_against":1724.44,"record":"9-5","regular_season_rank":3,"rank":4}},
+        "podium": {"first":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","division":1,"division_name":"Yin","draft_slot":8,"wins":11,"losses":3,"ties":0,"points_for":1787.76,"points_against":1543.1,"record":"11-3","regular_season_rank":1,"rank":1},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":5,"wins":11,"losses":3,"ties":0,"points_for":1769.84,"points_against":1570.18,"record":"11-3","regular_season_rank":2,"rank":2},"third":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","division":1,"division_name":"Yin","draft_slot":11,"wins":9,"losses":5,"ties":0,"points_for":1802.86,"points_against":1721.6,"record":"9-5","regular_season_rank":4,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467887669452468224","roster_id":10,"username":"TheUntouchable","team_name":"TheUntouchable","avatar":"e4d90bf3a010debbcbef6993d3a5df1c","division":2,"division_name":"Yang","draft_slot":1,"wins":6,"losses":8,"ties":0,"points_for":1541.36,"points_against":1672.28,"record":"6-8","regular_season_rank":8,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -655,7 +876,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 8,
               "record": "11-3",
+              "wins": 11,
+              "losses": 3,
               "points_for": "1787.76",
               "points_against": "1543.1",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -668,7 +894,12 @@
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "11-3",
+              "wins": 11,
+              "losses": 3,
               "points_for": "1769.84",
               "points_against": "1570.18",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -681,7 +912,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 11,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1802.86",
               "points_against": "1721.6",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -694,7 +930,12 @@
               "team_name": "Sunday Shanahan-igans",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 9,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1917.78",
               "points_against": "1724.44",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -707,7 +948,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 4,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1639.78",
               "points_against": "1632.12",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -720,7 +966,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 3,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1720.54",
               "points_against": "1632.2",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -733,7 +984,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 1,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1541.36",
               "points_against": "1672.28",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -746,7 +1002,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 2,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1492.04",
               "points_against": "1624.76",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -759,7 +1020,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 7,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1627.94",
               "points_against": "1667.98",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -772,7 +1038,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 12,
               "record": "3-11",
+              "wins": 3,
+              "losses": 11,
               "points_for": "1609.74",
               "points_against": "1845.16",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -785,7 +1056,12 @@
               "team_name": "Football Commandants",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 10,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1682.78",
               "points_against": "1833.94",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -798,7 +1074,12 @@
               "team_name": "BeerBicepsBiryani",
               "username": "EcchiPaad",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 6,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1586.18",
               "points_against": "1710.84",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -811,10 +1092,12 @@
         "year": "2022",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "862175419485511681",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":2,"points":166.56,"username":"kolners","team_name":"Kolners"},"regular_season_points_leader":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3","regular_season_rank":1,"rank":3}},
-        "podium": {"first":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":8,"losses":6,"ties":0,"points_for":1692.02,"points_against":1437.38,"record":"8-6","regular_season_rank":4,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":9,"losses":5,"ties":0,"points_for":1581.86,"points_against":1630.44,"record":"9-5","regular_season_rank":3,"rank":2},"third":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3","regular_season_rank":1,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467071694998073344","roster_id":5,"username":"SteelDragons","team_name":"SteelDragons","avatar":"3ba9b13839d8aae42305608dfbb1bfe2","wins":3,"losses":11,"ties":0,"points_for":1372.22,"points_against":1571.32,"record":"3-11","regular_season_rank":12,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":2,"points":166.56,"username":"kolners","team_name":"Kolners"},"regular_season_points_leader":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","division":2,"division_name":"Yang","draft_slot":10,"wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3","regular_season_rank":1,"rank":3}},
+        "podium": {"first":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"Kolners","avatar":"742a9945bbbe992e56db3884006cd326","division":1,"division_name":"Yin","draft_slot":3,"wins":8,"losses":6,"ties":0,"points_for":1692.02,"points_against":1437.38,"record":"8-6","regular_season_rank":4,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","division":1,"division_name":"Yin","draft_slot":4,"wins":9,"losses":5,"ties":0,"points_for":1581.86,"points_against":1630.44,"record":"9-5","regular_season_rank":3,"rank":2},"third":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Football Commandants","avatar":"20324c98137101a90bd3396e7bc940cf","division":2,"division_name":"Yang","draft_slot":10,"wins":11,"losses":3,"ties":0,"points_for":1696.74,"points_against":1438.56,"record":"11-3","regular_season_rank":1,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467071694998073344","roster_id":5,"username":"SteelDragons","team_name":"SteelDragons","avatar":"3ba9b13839d8aae42305608dfbb1bfe2","division":1,"division_name":"Yin","draft_slot":1,"wins":3,"losses":11,"ties":0,"points_for":1372.22,"points_against":1571.32,"record":"3-11","regular_season_rank":12,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -824,7 +1107,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 3,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1692.02",
               "points_against": "1437.38",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -837,7 +1125,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 4,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1581.86",
               "points_against": "1630.44",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -850,7 +1143,12 @@
               "team_name": "Football Commandants",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 10,
               "record": "11-3",
+              "wins": 11,
+              "losses": 3,
               "points_for": "1696.74",
               "points_against": "1438.56",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -863,7 +1161,12 @@
               "team_name": "Sunday Shanahan-igans",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 8,
               "record": "10-4",
+              "wins": 10,
+              "losses": 4,
               "points_for": "1555.72",
               "points_against": "1464.5",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -876,7 +1179,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 2,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1499.28",
               "points_against": "1446.9",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -889,7 +1197,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 12,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1405.6",
               "points_against": "1335.38",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -902,7 +1215,12 @@
               "team_name": "SteelDragons",
               "username": "SteelDragons",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 1,
               "record": "3-11",
+              "wins": 3,
+              "losses": 11,
               "points_for": "1372.22",
               "points_against": "1571.32",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -915,7 +1233,12 @@
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 11,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1435.3",
               "points_against": "1496.7",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -928,7 +1251,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 9,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1469.06",
               "points_against": "1398.72",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -941,7 +1269,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 6,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1431.62",
               "points_against": "1575.14",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -954,7 +1287,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1331.38",
               "points_against": "1458.46",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -967,7 +1305,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "4-10",
+              "wins": 4,
+              "losses": 10,
               "points_for": "1354.02",
               "points_against": "1571.32",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -980,10 +1323,12 @@
         "year": "2021",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "729741807755341825",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":3,"points":176.2,"username":"maheshbiradar","team_name":"maheshbiradar"},"regular_season_points_leader":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":7,"losses":7,"ties":0,"points_for":1757.2,"points_against":1611.4,"record":"7-7","regular_season_rank":6,"rank":2}},
-        "podium": {"first":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":5,"ties":0,"points_for":1682.46,"points_against":1559.42,"record":"9-5","regular_season_rank":1,"rank":1},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":7,"losses":7,"ties":0,"points_for":1757.2,"points_against":1611.4,"record":"7-7","regular_season_rank":6,"rank":2},"third":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Fantasy Football Team","avatar":"20324c98137101a90bd3396e7bc940cf","wins":8,"losses":6,"ties":0,"points_for":1604.38,"points_against":1552.3,"record":"8-6","regular_season_rank":5,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467551024677122048","roster_id":6,"username":"VAPatsNation","team_name":"VAPatsNation","avatar":"f05c41681f8c74fb2777b07c7754be35","wins":5,"losses":9,"ties":0,"points_for":1483.82,"points_against":1644.3,"record":"5-9","regular_season_rank":10,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":8,"user_id":"467698630166310912","matchup_id":3,"points":176.2,"username":"maheshbiradar","team_name":"maheshbiradar"},"regular_season_points_leader":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":6,"wins":7,"losses":7,"ties":0,"points_for":1757.2,"points_against":1611.4,"record":"7-7","regular_season_rank":6,"rank":2}},
+        "podium": {"first":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","division":1,"division_name":"Yin","draft_slot":12,"wins":9,"losses":5,"ties":0,"points_for":1682.46,"points_against":1559.42,"record":"9-5","regular_season_rank":1,"rank":1},"second":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":6,"wins":7,"losses":7,"ties":0,"points_for":1757.2,"points_against":1611.4,"record":"7-7","regular_season_rank":6,"rank":2},"third":{"user_id":"468149345745629184","roster_id":12,"username":"trolldrengi","team_name":"Fantasy Football Team","avatar":"20324c98137101a90bd3396e7bc940cf","division":2,"division_name":"Yang","draft_slot":7,"wins":8,"losses":6,"ties":0,"points_for":1604.38,"points_against":1552.3,"record":"8-6","regular_season_rank":5,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467551024677122048","roster_id":6,"username":"VAPatsNation","team_name":"VAPatsNation","avatar":"f05c41681f8c74fb2777b07c7754be35","division":2,"division_name":"Yang","draft_slot":9,"wins":5,"losses":9,"ties":0,"points_for":1483.82,"points_against":1644.3,"record":"5-9","regular_season_rank":10,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -993,7 +1338,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 12,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1682.46",
               "points_against": "1559.42",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -1006,7 +1356,12 @@
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 6,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1757.2",
               "points_against": "1611.4",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -1019,7 +1374,12 @@
               "team_name": "Fantasy Football Team",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1604.38",
               "points_against": "1552.3",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -1032,7 +1392,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 4,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1575.6",
               "points_against": "1445.06",
               "avatar": "e1e1a4b6f1058b266d2e8175179460ca"
@@ -1045,7 +1410,12 @@
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 8,
               "record": "8-6",
+              "wins": 8,
+              "losses": 6,
               "points_for": "1713.24",
               "points_against": "1653.06",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -1058,7 +1428,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 1,
               "record": "9-5",
+              "wins": 9,
+              "losses": 5,
               "points_for": "1564.8",
               "points_against": "1511.92",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -1071,7 +1446,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 9,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1483.82",
               "points_against": "1644.3",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -1084,7 +1464,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 11,
               "record": "6-8",
+              "wins": 6,
+              "losses": 8,
               "points_for": "1588.64",
               "points_against": "1658.04",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -1097,7 +1482,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 5,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1557.84",
               "points_against": "1524.08",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -1110,7 +1500,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 3,
               "record": "7-7",
+              "wins": 7,
+              "losses": 7,
               "points_for": "1719.96",
               "points_against": "1648.92",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -1123,7 +1518,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 10,
               "record": "5-9",
+              "wins": 5,
+              "losses": 9,
               "points_for": "1384.0",
               "points_against": "1616.18",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -1136,7 +1536,12 @@
               "team_name": "SteelDragons",
               "username": "SteelDragons",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 2,
               "record": "4-10",
+              "wins": 4,
+              "losses": 10,
               "points_for": "1270.42",
               "points_against": "1477.68",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -1149,10 +1554,12 @@
         "year": "2020",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "597128705315233793",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":4,"points":189.12,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4","regular_season_rank":2,"rank":1}},
-        "podium": {"first":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4","regular_season_rank":2,"rank":1},"second":{"user_id":"467887669452468224","roster_id":10,"username":"TheUntouchable","team_name":"TheUntouchable","avatar":"e4d90bf3a010debbcbef6993d3a5df1c","wins":8,"losses":5,"ties":0,"points_for":1574.46,"points_against":1445.44,"record":"8-5","regular_season_rank":5,"rank":2},"third":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","wins":11,"losses":2,"ties":0,"points_for":1587.96,"points_against":1258.64,"record":"11-2","regular_season_rank":1,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","wins":4,"losses":9,"ties":0,"points_for":1444.94,"points_against":1488.9,"record":"4-9","regular_season_rank":10,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":6,"user_id":"467551024677122048","matchup_id":4,"points":189.12,"username":"VAPatsNation","team_name":"VAPatsNation"},"regular_season_points_leader":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","division":1,"division_name":"Yin","draft_slot":8,"wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4","regular_season_rank":2,"rank":1}},
+        "podium": {"first":{"user_id":"467713945692532736","roster_id":9,"username":"TheBrawlers","team_name":"TheBrawlers","avatar":"76cc8b5ae0332a91c67349dcb590bc7e","division":1,"division_name":"Yin","draft_slot":8,"wins":9,"losses":4,"ties":0,"points_for":1654.24,"points_against":1408.06,"record":"9-4","regular_season_rank":2,"rank":1},"second":{"user_id":"467887669452468224","roster_id":10,"username":"TheUntouchable","team_name":"TheUntouchable","avatar":"e4d90bf3a010debbcbef6993d3a5df1c","division":2,"division_name":"Yang","draft_slot":3,"wins":8,"losses":5,"ties":0,"points_for":1574.46,"points_against":1445.44,"record":"8-5","regular_season_rank":5,"rank":2},"third":{"user_id":"601971095054725120","roster_id":2,"username":"CaseyWhite","team_name":"Big EZ Blue","avatar":"3dd5a49b6e8b46b474e36af0acaf7914","division":1,"division_name":"Yin","draft_slot":9,"wins":11,"losses":2,"ties":0,"points_for":1587.96,"points_against":1258.64,"record":"11-2","regular_season_rank":1,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"maheshbiradar","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":12,"wins":4,"losses":9,"ties":0,"points_for":1444.94,"points_against":1488.9,"record":"4-9","regular_season_rank":10,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -1162,7 +1569,12 @@
               "team_name": "TheBrawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 8,
               "record": "9-4",
+              "wins": 9,
+              "losses": 4,
               "points_for": "1654.24",
               "points_against": "1408.06",
               "avatar": "76cc8b5ae0332a91c67349dcb590bc7e"
@@ -1175,7 +1587,12 @@
               "team_name": "TheUntouchable",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 3,
               "record": "8-5",
+              "wins": 8,
+              "losses": 5,
               "points_for": "1574.46",
               "points_against": "1445.44",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -1188,7 +1605,12 @@
               "team_name": "Big EZ Blue",
               "username": "CaseyWhite",
               "user_id": "601971095054725120",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 9,
               "record": "11-2",
+              "wins": 11,
+              "losses": 2,
               "points_for": "1587.96",
               "points_against": "1258.64",
               "avatar": "3dd5a49b6e8b46b474e36af0acaf7914"
@@ -1201,7 +1623,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "8-5",
+              "wins": 8,
+              "losses": 5,
               "points_for": "1596.9",
               "points_against": "1488.32",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -1214,7 +1641,12 @@
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 1,
               "record": "9-4",
+              "wins": 9,
+              "losses": 4,
               "points_for": "1503.52",
               "points_against": "1407.94",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -1227,7 +1659,12 @@
               "team_name": "Fantasy Football Team",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 2,
               "record": "8-5",
+              "wins": 8,
+              "losses": 5,
               "points_for": "1478.16",
               "points_against": "1456.82",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -1240,7 +1677,12 @@
               "team_name": "maheshbiradar",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 12,
               "record": "4-9",
+              "wins": 4,
+              "losses": 9,
               "points_for": "1444.94",
               "points_against": "1488.9",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -1253,7 +1695,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 11,
               "record": "5-8",
+              "wins": 5,
+              "losses": 8,
               "points_for": "1455.66",
               "points_against": "1456.44",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -1266,7 +1713,12 @@
               "team_name": "Eliminator",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 4,
               "record": "7-6",
+              "wins": 7,
+              "losses": 6,
               "points_for": "1579.78",
               "points_against": "1612.12",
               "avatar": "4c36f6cc68ca5fb2daae149ee6bbee44"
@@ -1279,7 +1731,12 @@
               "team_name": "Kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 10,
               "record": "5-8",
+              "wins": 5,
+              "losses": 8,
               "points_for": "1348.48",
               "points_against": "1454.78",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -1292,7 +1749,12 @@
               "team_name": "SteelDragons",
               "username": "SteelDragons",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 6,
               "record": "1-12",
+              "wins": 1,
+              "losses": 12,
               "points_for": "1157.46",
               "points_against": "1464.92",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -1305,7 +1767,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "3-10",
+              "wins": 3,
+              "losses": 10,
               "points_for": "1101.98",
               "points_against": "1541.16",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -1318,10 +1785,12 @@
         "year": "2019",
         "name": "The Art of Fantasy Football League",
         "status": "complete",
+        "draft_id": "467725290068504576",
         "is_current": false,
-        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":1,"points":193.02,"username":"kolners","team_name":"kolners"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3","regular_season_rank":2,"rank":3}},
-        "podium": {"first":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","wins":10,"losses":3,"ties":0,"points_for":1389.56,"points_against":1289.14,"record":"10-3","regular_season_rank":3,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","wins":11,"losses":2,"ties":0,"points_for":1581.52,"points_against":1336.36,"record":"11-2","regular_season_rank":1,"rank":2},"third":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3","regular_season_rank":2,"rank":3}},
-        "toilet_bowl_winner": {"user_id":"467071694998073344","roster_id":5,"username":"SteelDragons","team_name":"SteelDragons","avatar":"3ba9b13839d8aae42305608dfbb1bfe2","wins":6,"losses":7,"ties":0,"points_for":1472.14,"points_against":1463.98,"record":"6-7","regular_season_rank":7,"rank":7,"is_toilet_bowl_winner":true},
+        "awards": {"highest_game":{"roster_id":3,"user_id":"466831529767596032","matchup_id":1,"points":193.02,"username":"kolners","team_name":"kolners"},"regular_season_points_leader":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","division":1,"division_name":"Yin","draft_slot":6,"wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3","regular_season_rank":2,"rank":3}},
+        "podium": {"first":{"user_id":"467698630166310912","roster_id":8,"username":"maheshbiradar","team_name":"Birants","avatar":"075fe66610341350b439e893ba517e2e","division":2,"division_name":"Yang","draft_slot":8,"wins":10,"losses":3,"ties":0,"points_for":1389.56,"points_against":1289.14,"record":"10-3","regular_season_rank":3,"rank":1},"second":{"user_id":"463028232669622272","roster_id":1,"username":"CodeBrewer","team_name":"Desert Scorpions","avatar":"91be7277060d885a5752feb0894283ea","division":1,"division_name":"Yin","draft_slot":10,"wins":11,"losses":2,"ties":0,"points_for":1581.52,"points_against":1336.36,"record":"11-2","regular_season_rank":1,"rank":2},"third":{"user_id":"466831529767596032","roster_id":3,"username":"kolners","team_name":"kolners","avatar":"742a9945bbbe992e56db3884006cd326","division":1,"division_name":"Yin","draft_slot":6,"wins":10,"losses":3,"ties":0,"points_for":1665.3,"points_against":1335.8,"record":"10-3","regular_season_rank":2,"rank":3}},
+        "toilet_bowl_winner": {"user_id":"467071694998073344","roster_id":5,"username":"SteelDragons","team_name":"SteelDragons","avatar":"3ba9b13839d8aae42305608dfbb1bfe2","division":1,"division_name":"Yin","draft_slot":2,"wins":6,"losses":7,"ties":0,"points_for":1472.14,"points_against":1463.98,"record":"6-7","regular_season_rank":7,"rank":7,"is_toilet_bowl_winner":true},
+        "divisions": {"1":{"name":"Yin","avatar":"https://sleepercdn.com/uploads/ba96dd3bf6fecdabba2ec76339dbdc2a"},"2":{"name":"Yang","avatar":"https://sleepercdn.com/uploads/ae79bf07ec514db06e20fbc9aaf61d52"}},
         "standings": [
           
             {
@@ -1331,7 +1800,12 @@
               "team_name": "Birants",
               "username": "maheshbiradar",
               "user_id": "467698630166310912",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 8,
               "record": "10-3",
+              "wins": 10,
+              "losses": 3,
               "points_for": "1389.56",
               "points_against": "1289.14",
               "avatar": "075fe66610341350b439e893ba517e2e"
@@ -1344,7 +1818,12 @@
               "team_name": "Desert Scorpions",
               "username": "CodeBrewer",
               "user_id": "463028232669622272",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 10,
               "record": "11-2",
+              "wins": 11,
+              "losses": 2,
               "points_for": "1581.52",
               "points_against": "1336.36",
               "avatar": "91be7277060d885a5752feb0894283ea"
@@ -1357,7 +1836,12 @@
               "team_name": "kolners",
               "username": "kolners",
               "user_id": "466831529767596032",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 6,
               "record": "10-3",
+              "wins": 10,
+              "losses": 3,
               "points_for": "1665.3",
               "points_against": "1335.8",
               "avatar": "742a9945bbbe992e56db3884006cd326"
@@ -1370,7 +1854,12 @@
               "team_name": "Erie-Mason Eagles",
               "username": "wichart",
               "user_id": "466828458412994560",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 1,
               "record": "7-6",
+              "wins": 7,
+              "losses": 6,
               "points_for": "1508.78",
               "points_against": "1503.54",
               "avatar": ""
@@ -1383,7 +1872,12 @@
               "team_name": "Beantown Brawlers",
               "username": "TheBrawlers",
               "user_id": "467713945692532736",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 4,
               "record": "6-7",
+              "wins": 6,
+              "losses": 7,
               "points_for": "1549.02",
               "points_against": "1513.46",
               "avatar": "4c36f6cc68ca5fb2daae149ee6bbee44"
@@ -1396,7 +1890,12 @@
               "team_name": "nightmare123",
               "username": "nightmare123",
               "user_id": "467597885412732928",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 5,
               "record": "6-7",
+              "wins": 6,
+              "losses": 7,
               "points_for": "1490.32",
               "points_against": "1569.8",
               "avatar": "accfa8d733980b98db2fcb40cb98bc1b"
@@ -1409,7 +1908,12 @@
               "team_name": "SteelDragons",
               "username": "SteelDragons",
               "user_id": "467071694998073344",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 2,
               "record": "6-7",
+              "wins": 6,
+              "losses": 7,
               "points_for": "1472.14",
               "points_against": "1463.98",
               "avatar": "3ba9b13839d8aae42305608dfbb1bfe2"
@@ -1422,7 +1926,12 @@
               "team_name": "VAPatsNation",
               "username": "VAPatsNation",
               "user_id": "467551024677122048",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 7,
               "record": "6-7",
+              "wins": 6,
+              "losses": 7,
               "points_for": "1472.06",
               "points_against": "1422.76",
               "avatar": "f05c41681f8c74fb2777b07c7754be35"
@@ -1435,7 +1944,12 @@
               "team_name": "Eliminator19",
               "username": "Eliminator",
               "user_id": "467051300257787904",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 9,
               "record": "4-9",
+              "wins": 4,
+              "losses": 9,
               "points_for": "1297.26",
               "points_against": "1483.26",
               "avatar": "4c36f6cc68ca5fb2daae149ee6bbee44"
@@ -1448,7 +1962,12 @@
               "team_name": "Untouchable ",
               "username": "TheUntouchable",
               "user_id": "467887669452468224",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 3,
               "record": "6-7",
+              "wins": 6,
+              "losses": 7,
               "points_for": "1327.32",
               "points_against": "1407.7",
               "avatar": "e4d90bf3a010debbcbef6993d3a5df1c"
@@ -1461,7 +1980,12 @@
               "team_name": "Who Dats",
               "username": "trolldrengi",
               "user_id": "468149345745629184",
+              "division": 2,
+              "division_name": "Yang",
+              "draft_slot": 12,
               "record": "2-11",
+              "wins": 2,
+              "losses": 11,
               "points_for": "1204.06",
               "points_against": "1479.78",
               "avatar": "20324c98137101a90bd3396e7bc940cf"
@@ -1474,7 +1998,12 @@
               "team_name": "Easy Breesy Sunday",
               "username": "bsowden",
               "user_id": "468106048058683392",
+              "division": 1,
+              "division_name": "Yin",
+              "draft_slot": 11,
               "record": "4-9",
+              "wins": 4,
+              "losses": 9,
               "points_for": "1330.96",
               "points_against": "1482.72",
               "avatar": "eefceb945b9159798eac0eb764d3fbc4"
@@ -1488,7 +2017,6 @@
   function computeClinchStatus(standings, totalWeeks = 14) {
     if (!standings || standings.length === 0) return {};
     
-    // Check total games played by top team
     const gamesPlayed = Math.max(...standings.map(t => {
       const parts = (t.record || "0-0").split("-");
       return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0);
@@ -1511,20 +2039,16 @@
       };
     });
 
-    // Sorted by current wins desc, pf desc
     const sorted = [...teamsWithBounds].sort((a, b) => (b.wins - a.wins) || (b.pf - a.pf));
 
     const clinchMap = {};
     sorted.forEach((team, index) => {
-      // 1. Bye clinch (Top 2 guaranteed): team's current wins > 3rd place team's max wins
       const thirdTeam = sorted[2];
       const isByeClinched = thirdTeam && (team.wins > thirdTeam.max_wins);
 
-      // 2. Playoff clinch (Top 6 guaranteed): team's current wins > 7th place team's max wins
       const seventhTeam = sorted[6];
       const isPlayoffClinched = seventhTeam && (team.wins > seventhTeam.max_wins);
 
-      // 3. Toilet Bowl Bound (Eliminated from Top 6): team's max wins < 6th place team's current wins
       const sixthTeam = sorted[5];
       const isEliminated = sixthTeam && (team.max_wins < sixthTeam.wins);
 
@@ -1550,15 +2074,15 @@
 
     const isComplete = season.status === 'complete';
     const hasGames = season.standings && season.standings.some(t => {
-      const parts = (t.record || "0-0").split("-");
-      return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0) > 0;
+      return (parseInt(t.wins) || 0) + (parseInt(t.losses) || 0) > 0;
     });
 
     title.textContent = `${year} Season Dashboard`;
-    label.textContent = isComplete ? `${season.name} • Final Results` : `${season.name} • Season in Progress`;
+    label.textContent = isComplete ? `${season.name} • Final Results` : `${season.name} • ${hasGames ? 'Regular Season in Progress' : 'Pre-Draft & Rosters'}`;
     seasonSelector.value = year;
 
     let highlightsHtml = '';
+    let contentHtml = '';
     
     if (isComplete) {
       // 🏆 Final Podium Card
@@ -1633,126 +2157,269 @@
           </div>
         `;
       }
-    } else {
-      // ⏳ Active / Pre-Draft Season Highlights
-      if (!hasGames) {
-        highlightsHtml += `
-          <div class="dashboard-card" style="grid-column: span 2;">
-            <h2>⏳ Pre-Draft Season Phase</h2>
-            <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-              The <strong>${season.year} season</strong> is currently in the pre-draft stage. 
-              Draft day is scheduled for <strong>August 30, 2026 at 09:00 AM</strong>.
-            </p>
-            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-              <a href="/rules/" class="btn">View Draft & Keeper Rules</a>
-              <a href="/schedule/" class="btn">Milestone Timeline</a>
-            </div>
-          </div>
-          <div class="dashboard-card">
-            <h2>ℹ️ Playoff Qualification</h2>
-            <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-              • <strong>Top 6 Teams:</strong> Advance to Championship Playoffs (Top 2 division leaders earn 1st-round byes).<br>
-              • <strong>Bottom 6 Teams:</strong> Compete in Toilet Bowl for next year's <strong>#1 Overall Pick</strong>.
-            </p>
-          </div>
-        `;
-      } else {
-        highlightsHtml += `
-          <div class="dashboard-card" style="grid-column: span 2;">
-            <h2>🏈 Active Regular Season & Playoff Race</h2>
-            <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-              Regular season standings below update in real time every Tuesday morning. Top 6 seeds punch tickets to the AFFL Championship Tournament, while Seeds 7–12 enter the Toilet Bowl bracket.
-            </p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
-              <span class="badge-clinch badge-bye">⭐ [BYE] 1st-Round Bye Clinched</span>
-              <span class="badge-clinch badge-playoffs">🟢 [X] Playoff Clinched</span>
-              <span class="badge-clinch badge-tb">🚽 [TB] Toilet Bowl Bound</span>
-              <span class="badge-clinch badge-bubble">🟡 In Contention</span>
-            </div>
-          </div>
-          <div class="dashboard-card">
-            <h2>🏆 Postseason Stakes</h2>
-            <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-              • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
-              • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
-              • Final podium places & Toilet Bowl winner lock upon conclusion of Week 17.
-            </p>
-          </div>
-        `;
-      }
-    }
 
-    highlightsContainer.innerHTML = highlightsHtml;
-
-    // Build Standings HTML
-    const clinchMap = isComplete ? {} : computeClinchStatus(season.standings);
-
-    let standingsHtml = `
-      <div class="dashboard-card" style="margin-top: 20px;">
-        <h2>${isComplete ? 'Full Final Standings' : 'Current Season Standings & Playoff Picture'}</h2>
-        <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
-          ${isComplete ? 'Final ranks determined by Playoff & Toilet Bowl Brackets' : 'Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 pick'}
-        </p>
-        <table class="high-contrast-table">
-          <thead>
-            <tr>
-              <th>${isComplete ? 'Final Rank' : 'Seed'}</th>
-              <th>Team</th>
-              <th>Manager</th>
-              <th>${isComplete ? 'Reg. Record (Seed)' : 'Record'}</th>
-              ${!isComplete && hasGames ? '<th>Clinch Status</th>' : ''}
-              <th>PF</th>
-              <th>PA</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
-    
-    season.standings.forEach((team, index) => {
-      const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+      // Standings Table for Completed Season
+      contentHtml = `
+        <div class="dashboard-card" style="margin-top: 20px;">
+          <h2>Full Final Standings</h2>
+          <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Final ranks determined by Playoff & Toilet Bowl Brackets</p>
+          <table class="high-contrast-table">
+            <thead>
+              <tr>
+                <th>Final Rank</th>
+                <th>Team</th>
+                <th>Manager</th>
+                <th>Reg. Record (Seed)</th>
+                <th>PF</th>
+                <th>PA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
       
-      let rankBadge = `${team.rank}`;
-      if (isComplete) {
+      season.standings.forEach(team => {
+        const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+        let rankBadge = `${team.rank}`;
         if (team.rank === 1) rankBadge = '🥇 1';
         else if (team.rank === 2) rankBadge = '🥈 2';
         else if (team.rank === 3) rankBadge = '🥉 3';
         else if (team.is_toilet_bowl_winner || team.rank === 7) rankBadge = '🚽 7';
-      } else {
-        rankBadge = `#${index + 1}`;
-      }
 
-      const seedLabel = isComplete && team.regular_season_rank ? `(#${team.regular_season_rank})` : '';
-      const clinch = clinchMap[team.user_id];
+        const seedLabel = team.regular_season_rank ? `(#${team.regular_season_rank})` : '';
 
-      // Add Playoff Cutoff Line divider after 6th place when season is active
-      if (!isComplete && index === 6) {
-        standingsHtml += `
-          <tr class="playoff-cutline-row">
-            <td colspan="${!isComplete && hasGames ? 7 : 6}">
-              ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
+        contentHtml += `
+          <tr>
+            <td style="font-weight: bold;">${rankBadge}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
+              <a href="/teams/${team.user_id}/">${team.team_name}</a>
             </td>
+            <td>${team.username}</td>
+            <td>${team.record} <span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span></td>
+            <td>${team.points_for}</td>
+            <td>${team.points_against}</td>
           </tr>
         `;
-      }
+      });
+      
+      contentHtml += `</tbody></table></div>`;
 
-      standingsHtml += `
-        <tr>
-          <td style="font-weight: bold;">${rankBadge}</td>
-          <td style="display: flex; align-items: center; gap: 10px;">
-            <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
-            <a href="/teams/${team.user_id}/">${team.team_name}</a>
-          </td>
-          <td>${team.username}</td>
-          <td>${team.record} ${seedLabel ? `<span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span>` : ''}</td>
-          ${!isComplete && hasGames ? `<td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>` : ''}
-          <td>${team.points_for}</td>
-          <td>${team.points_against}</td>
-        </tr>
+    } else if (!hasGames) {
+      // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)
+      highlightsHtml += `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
+          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
+            The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions. 
+            The slow snake draft commences on <strong>Sunday, August 30, 2026 at 09:00 AM EDT</strong>.
+          </p>
+          <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://sleeper.com/draft/nfl/${season.draft_id || '1389359803838509057'}" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
+            <a href="/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Constitution & Rules</a>
+            <a href="/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestone Schedule</a>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h2>📋 League Configuration</h2>
+          <div style="font-size: 0.9em; opacity: 0.85; display: flex; flex-direction: column; gap: 8px;">
+            <div><strong>Roster:</strong> 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 K, 1 DEF, 5 BN</div>
+            <div><strong>Keepers:</strong> 1 Keeper per team (Forfeits Round 1 pick)</div>
+            <div><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</div>
+            <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>#1 Pick</strong></div>
+          </div>
+        </div>
       `;
-    });
-    
-    standingsHtml += `</tbody></table></div>`;
-    document.getElementById('standings-content').innerHTML = standingsHtml;
+
+      // Group teams by Division for Division View
+      const yinTeams = season.standings.filter(t => t.division === 1);
+      const yangTeams = season.standings.filter(t => t.division === 2);
+
+      contentHtml = `
+        <div style="margin-top: 25px;">
+          <h2 style="margin-bottom: 5px;">☯️ Division Alignments</h2>
+          <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 20px;">12 Franchises split across the Yin and Yang Divisions for the ${season.year} campaign</p>
+          
+          <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- Yin Division Card -->
+            <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yin Division</h3>
+                <span class="category-tag">6 Teams</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${yinTeams.map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                  return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
+                        <div>
+                          <p style="margin: 0; font-weight: bold;"><a href="/teams/${t.user_id}/">${t.team_name}</a></p>
+                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                        </div>
+                      </div>
+                      ${draftBadge}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Yang Division Card -->
+            <div class="dashboard-card" style="border-top: 4px solid #ff9800;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yang Division</h3>
+                <span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800;">6 Teams</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${yangTeams.map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                  return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                      <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
+                        <div>
+                          <p style="margin: 0; font-weight: bold;"><a href="/teams/${t.user_id}/">${t.team_name}</a></p>
+                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                        </div>
+                      </div>
+                      ${draftBadge}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Draft Order Board -->
+          <div class="dashboard-card" style="margin-top: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <div>
+                <h3 style="margin: 0; font-size: 1.2em;">🎯 ${season.year} Draft Order Board</h3>
+                <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • August 30 @ 9:00 AM EDT</p>
+              </div>
+              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '1389359803838509057'}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
+            </div>
+            <table class="high-contrast-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Slot</th>
+                  <th>Team</th>
+                  <th>Manager</th>
+                  <th>Division</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${[...season.standings].sort((a, b) => (a.draft_slot || 99) - (b.draft_slot || 99)).map(t => {
+                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                  return `
+                    <tr>
+                      <td style="font-weight: 800; color: var(--link-color);">#${t.draft_slot || '-'}</td>
+                      <td style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;">
+                        <a href="/teams/${t.user_id}/">${t.team_name}</a>
+                      </td>
+                      <td>${t.username}</td>
+                      <td><span class="category-tag">${t.division_name || 'Yin'}</span></td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Note about live standings activation -->
+          <div style="margin-top: 20px; padding: 15px 20px; background: rgba(42, 122, 226, 0.08); border: 1px dashed var(--link-color); border-radius: 10px; font-size: 0.88em; color: var(--text-color); opacity: 0.9;">
+            ℹ️ <strong>Live Standings Notice:</strong> Win-loss standings, total points, weekly high scores, and mathematical playoff clinch trackers will automatically activate on this page once NFL Week 1 matchups kick off in September.
+          </div>
+        </div>
+      `;
+
+    } else {
+      // 🏈 ACTIVE REGULAR SEASON IN PROGRESS (GAMES PLAYED)
+      highlightsHtml += `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <h2>🏈 Active Regular Season & Playoff Race</h2>
+          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
+            Standings below update live every Tuesday morning. Top 6 seeds punch tickets to the Championship Playoffs (Seeds 1 & 2 earn byes), while Seeds 7–12 compete in the Toilet Bowl bracket.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+            <span class="badge-clinch badge-bye">⭐ [BYE] 1st-Round Bye Clinched</span>
+            <span class="badge-clinch badge-playoffs">🟢 [X] Playoff Clinched</span>
+            <span class="badge-clinch badge-tb">🚽 [TB] Toilet Bowl Bound</span>
+            <span class="badge-clinch badge-bubble">🟡 In Contention</span>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h2>🏆 Postseason Stakes</h2>
+          <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
+            • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
+            • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
+            • Final podium places & Toilet Bowl winner lock upon conclusion of Week 17.
+          </p>
+        </div>
+      `;
+
+      const clinchMap = computeClinchStatus(season.standings);
+
+      contentHtml = `
+        <div class="dashboard-card" style="margin-top: 20px;">
+          <h2>Current Season Standings & Playoff Picture</h2>
+          <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
+            Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 draft pick
+          </p>
+          <table class="high-contrast-table">
+            <thead>
+              <tr>
+                <th>Seed</th>
+                <th>Team</th>
+                <th>Manager</th>
+                <th>Record</th>
+                <th>Playoff Status</th>
+                <th>PF</th>
+                <th>PA</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+      
+      season.standings.forEach((team, index) => {
+        const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+        const clinch = clinchMap[team.user_id];
+
+        if (index === 6) {
+          contentHtml += `
+            <tr class="playoff-cutline-row">
+              <td colspan="7">
+                ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
+              </td>
+            </tr>
+          `;
+        }
+
+        contentHtml += `
+          <tr>
+            <td style="font-weight: bold;">#${index + 1}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
+              <a href="/teams/${team.user_id}/">${team.team_name}</a>
+            </td>
+            <td>${team.username}</td>
+            <td>${team.record}</td>
+            <td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>
+            <td>${team.points_for}</td>
+            <td>${team.points_against}</td>
+          </tr>
+        `;
+      });
+      
+      contentHtml += `</tbody></table></div>`;
+    }
+
+    highlightsContainer.innerHTML = highlightsHtml;
+    document.getElementById('standings-content').innerHTML = contentHtml;
   }
 
   seasonSelector.addEventListener('change', (e) => {
@@ -1762,8 +2429,8 @@
 
   window.addEventListener('load', () => {
     const hashYear = window.location.hash.substring(1);
-    const latestYear = Object.keys(seasonsData).sort().reverse()[0];
-    updateSeasonsDashboard(seasonsData[hashYear] ? hashYear : latestYear);
+    const initialYear = seasonsData[hashYear] ? hashYear : defaultSeasonYear;
+    updateSeasonsDashboard(initialYear);
   });
 </script>
 

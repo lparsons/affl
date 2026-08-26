@@ -42,7 +42,13 @@ class SleeperAPI
     JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
   end
   
-  def generate_standings(id = @league_id)
+  def get_draft(draft_id)
+    return nil unless draft_id
+    response = make_request("/draft/#{draft_id}")
+    JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
+  end
+
+  def generate_standings(id = @league_id, league_info = nil, draft_info = nil)
     rosters = get_rosters(id)
     users = get_league_users(id)
     
@@ -57,10 +63,19 @@ class SleeperAPI
       hash[roster['roster_id']] = roster['owner_id']
     end
     
+    draft_order = draft_info ? (draft_info['draft_order'] || {}) : {}
+    meta = league_info ? (league_info['metadata'] || {}) : {}
+    div_names = {
+      1 => meta['division_1'] || 'Yin',
+      2 => meta['division_2'] || 'Yang'
+    }
+
     roster_map = {}
     rosters.each do |roster|
       user = user_lookup[roster['owner_id']]
       team_name = user&.dig('metadata', 'team_name') || user&.dig('display_name') || 'Unknown Team'
+      div_num = (roster.dig('settings', 'division') || 1).to_i
+      draft_slot = user ? draft_order[user['user_id']] : nil
       
       roster_map[roster['roster_id']] = {
         'user_id' => roster['owner_id'],
@@ -68,6 +83,9 @@ class SleeperAPI
         'username' => user ? user['display_name'] : 'Unknown',
         'team_name' => team_name,
         'avatar' => user ? user['avatar'] : nil,
+        'division' => div_num,
+        'division_name' => div_names[div_num] || (div_num == 2 ? 'Yang' : 'Yin'),
+        'draft_slot' => draft_slot,
         'wins' => (roster['settings']['wins'] || 0).to_i,
         'losses' => (roster['settings']['losses'] || 0).to_i,
         'ties' => (roster['settings']['ties'] || 0).to_i,
@@ -192,7 +210,8 @@ def update_all_seasons
     year = info['season']
     puts "Found Season: #{year} (ID: #{current_ptr})"
     
-    standings, roster_to_owner = api.generate_standings(current_ptr)
+    draft_info = api.get_draft(info['draft_id'])
+    standings, roster_to_owner = api.generate_standings(current_ptr, info, draft_info)
     
     # Fetch all matchups for this season
     puts "  Fetching matchups for #{year}..."
@@ -218,6 +237,10 @@ def update_all_seasons
       'draft_id' => info['draft_id'],
       'name' => info['name'],
       'status' => info['status'],
+      'divisions' => {
+        '1' => { 'name' => info.dig('metadata', 'division_1') || 'Yin', 'avatar' => info.dig('metadata', 'division_1_avatar') },
+        '2' => { 'name' => info.dig('metadata', 'division_2') || 'Yang', 'avatar' => info.dig('metadata', 'division_2_avatar') }
+      },
       'standings' => standings,
       'matchups' => matchups_by_week
     }

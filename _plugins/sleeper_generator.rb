@@ -115,8 +115,11 @@ module Jekyll
       end
 
       # Sort seasons by year descending
-      seasons.sort_by! { |s| -s['year'] }
+      seasons.sort_by! { |s| -s['year'].to_i }
       site.data['all_seasons'] = seasons
+
+      latest_comp = seasons.find { |s| s['status'] == 'complete' || (s['standings'] && s['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 }) }
+      site.data['latest_completed_season'] = latest_comp ? latest_comp['year'] : (seasons.first ? seasons.first['year'] : 2025)
 
       if (site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?) && seasons.first && seasons.first['draft_id']
         site.config['current_draft_id'] = seasons.first['draft_id']
