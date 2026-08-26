@@ -495,80 +495,123 @@ permalink: /seasons/
 
   function renderSeasonRecords(season) {
     if (!season.records) return '';
+    const r = season.records;
     return `
-      <div class="dashboard-grid" style="margin-top: 25px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-        <!-- Top Single-Game Scores of Season -->
-        ${season.records.top_game_scores && season.records.top_game_scores.length > 0 ? `
-          <div class="dashboard-card" style="grid-column: span 2;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
-              <span class="category-tag">Single-Week Highs</span>
+      <div style="margin-top: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+          <h2 style="margin: 0;">📊 ${season.year} Season Records & Superlatives</h2>
+          <span class="category-tag">${season.year} Milestones</span>
+        </div>
+
+        <!-- Superlatives Summary Grid -->
+        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px;">
+          ${r.high_score ? `
+            <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #4caf50;">
+              <p style="margin: 0; font-size: 0.75em; color: #4caf50; text-transform: uppercase; font-weight: 800;">🚀 Season High Score</p>
+              <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: #4caf50;">${parseFloat(r.high_score.points).toFixed(2)} pts</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.high_score.user_id}/"><strong>${r.high_score.username}</strong></a> (${r.high_score.team_name}, Wk ${r.high_score.week})</p>
             </div>
-            <table class="high-contrast-table">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Score</th>
-                  <th>Manager</th>
-                  <th>Team</th>
-                  <th>Week</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${season.records.top_game_scores.map((g, idx) => {
-                  const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
-                  return `
-                    <tr>
-                      <td style="font-weight: bold;">${rankLabel}</td>
-                      <td style="font-weight: 800; color: #4caf50; font-size: 1.05em;">${parseFloat(g.points).toFixed(2)}</td>
-                      <td>
-                        <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
-                      </td>
-                      <td>${g.team_name}</td>
-                      <td style="font-size: 0.85em; opacity: 0.8;">Week ${g.week}</td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
+          ` : ''}
+
+          ${r.points_leader ? `
+            <div class="dashboard-card" style="padding: 15px; border-left: 4px solid var(--link-color);">
+              <p style="margin: 0; font-size: 0.75em; color: var(--link-color); text-transform: uppercase; font-weight: 800;">👑 Total Points Leader</p>
+              <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: var(--link-color);">${parseFloat(r.points_leader.points_for).toFixed(2)} pts</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.points_leader.user_id}/"><strong>${r.points_leader.username}</strong></a> (${r.points_leader.team_name})</p>
+            </div>
+          ` : ''}
+
+          ${r.best_record ? `
+            <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #ffd700;">
+              <p style="margin: 0; font-size: 0.75em; color: #ffd700; text-transform: uppercase; font-weight: 800;">⭐ Best Regular Record</p>
+              <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${r.best_record.record}</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.best_record.user_id}/"><strong>${r.best_record.username}</strong></a> (${r.best_record.team_name})</p>
+            </div>
+          ` : ''}
+
+          ${r.pa_leader ? `
+            <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #f44336;">
+              <p style="margin: 0; font-size: 0.75em; color: #f44336; text-transform: uppercase; font-weight: 800;">🛡️ Toughest Schedule (Most PA)</p>
+              <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${parseFloat(r.pa_leader.points_against).toFixed(2)} pts</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.pa_leader.user_id}/"><strong>${r.pa_leader.username}</strong></a> (${r.pa_leader.team_name})</p>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+          <!-- Top Single-Game Scores of Season -->
+          ${r.top_game_scores && r.top_game_scores.length > 0 ? `
+            <div class="dashboard-card" style="grid-column: span 2;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
+                <span class="category-tag">Single-Week Highs</span>
+              </div>
+              <table class="high-contrast-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Score</th>
+                    <th>Manager</th>
+                    <th>Team</th>
+                    <th>Week</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${r.top_game_scores.map((g, idx) => {
+                    const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
+                    return `
+                      <tr>
+                        <td style="font-weight: bold;">${rankLabel}</td>
+                        <td style="font-weight: 800; color: #4caf50; font-size: 1.05em;">${parseFloat(g.points).toFixed(2)}</td>
+                        <td>
+                          <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
+                        </td>
+                        <td>${g.team_name}</td>
+                        <td style="font-size: 0.85em; opacity: 0.8;">Week ${g.week}</td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          ` : ''}
+
+          <!-- Matchup Highlights (Highest Combined & Closest) -->
+          <div class="dashboard-card" style="display: flex; flex-direction: column; gap: 20px;">
+            ${r.highest_scoring_matchups && r.highest_scoring_matchups.length > 0 ? `
+              <div>
+                <h3 style="margin: 0 0 10px; font-size: 1.1em;">⚔️ Wildest Shootouts</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  ${r.highest_scoring_matchups.map(m => `
+                    <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                        <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
+                        <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
+                      </div>
+                      <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${r.closest_matchups && r.closest_matchups.length > 0 ? `
+              <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <h3 style="margin: 0 0 10px; font-size: 1.1em;">🎯 Closest Nail-Biters</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  ${r.closest_matchups.map(m => `
+                    <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                        <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
+                        <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
+                      </div>
+                      <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
           </div>
-        ` : ''}
-
-        <!-- Matchup Highlights (Highest Combined & Closest) -->
-        <div class="dashboard-card" style="display: flex; flex-direction: column; gap: 20px;">
-          ${season.records.highest_scoring_matchups && season.records.highest_scoring_matchups.length > 0 ? `
-            <div>
-              <h3 style="margin: 0 0 10px; font-size: 1.1em;">⚔️ Wildest Shootouts</h3>
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                ${season.records.highest_scoring_matchups.map(m => `
-                  <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                      <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
-                      <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
-                    </div>
-                    <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          ` : ''}
-
-          ${season.records.closest_matchups && season.records.closest_matchups.length > 0 ? `
-            <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
-              <h3 style="margin: 0 0 10px; font-size: 1.1em;">🎯 Closest Nail-Biters</h3>
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                ${season.records.closest_matchups.map(m => `
-                  <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                      <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
-                      <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
-                    </div>
-                    <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          ` : ''}
         </div>
       </div>
     `;

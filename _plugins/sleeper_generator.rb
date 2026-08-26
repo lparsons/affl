@@ -81,12 +81,29 @@ module Jekyll
             end
             
             if !all_season_matchups.empty?
+              high_score = all_season_matchups.max_by { |m| m['points'].to_f }
+              low_score = all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f }
+              points_leader = season_data['standings'].max_by { |s| s['points_for'].to_f }
+              pa_leader = season_data['standings'].max_by { |s| s['points_against'].to_f }
+              best_rec = season_data['standings'].max_by { |s| [s['wins'].to_i, -s['losses'].to_i, s['points_for'].to_f] }
+              top_matchup = head_to_head_games.max_by { |h| h['total_points'] }
+              blowout = head_to_head_games.max_by { |h| h['diff'] }
+              closest = head_to_head_games.min_by { |h| h['diff'] }
+
               season_data['awards'] = {
-                'highest_game' => all_season_matchups.max_by { |m| m['points'].to_f },
-                'lowest_game' => all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f },
-                'regular_season_points_leader' => season_data['standings'].max_by { |s| s['points_for'].to_f }
+                'highest_game' => high_score,
+                'lowest_game' => low_score,
+                'regular_season_points_leader' => points_leader
               }
               season_data['records'] = {
+                'high_score' => high_score,
+                'low_score' => low_score,
+                'points_leader' => points_leader,
+                'pa_leader' => pa_leader,
+                'best_record' => best_rec,
+                'top_matchup' => top_matchup,
+                'blowout' => blowout,
+                'closest' => closest,
                 'top_game_scores' => all_season_matchups.sort_by { |m| -m['points'].to_f }.first(5),
                 'highest_scoring_matchups' => head_to_head_games.sort_by { |h| -h['total_points'] }.first(3),
                 'largest_blowouts' => head_to_head_games.sort_by { |h| -h['diff'] }.first(3),
