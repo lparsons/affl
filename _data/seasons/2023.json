@@ -16,7 +16,9 @@
       "ties": 0,
       "points_for": 1787.76,
       "points_against": 1543.1,
-      "record": "11-3"
+      "record": "11-3",
+      "regular_season_rank": 1,
+      "rank": 1
     },
     {
       "user_id": "467698630166310912",
@@ -29,20 +31,9 @@
       "ties": 0,
       "points_for": 1769.84,
       "points_against": 1570.18,
-      "record": "11-3"
-    },
-    {
-      "user_id": "468106048058683392",
-      "roster_id": 11,
-      "username": "bsowden",
-      "team_name": "Sunday Shanahan-igans",
-      "avatar": "eefceb945b9159798eac0eb764d3fbc4",
-      "wins": 9,
-      "losses": 5,
-      "ties": 0,
-      "points_for": 1917.78,
-      "points_against": 1724.44,
-      "record": "9-5"
+      "record": "11-3",
+      "regular_season_rank": 2,
+      "rank": 2
     },
     {
       "user_id": "463028232669622272",
@@ -55,20 +46,24 @@
       "ties": 0,
       "points_for": 1802.86,
       "points_against": 1721.6,
-      "record": "9-5"
+      "record": "9-5",
+      "regular_season_rank": 4,
+      "rank": 3
     },
     {
-      "user_id": "467551024677122048",
-      "roster_id": 6,
-      "username": "VAPatsNation",
-      "team_name": "VAPatsNation",
-      "avatar": "f05c41681f8c74fb2777b07c7754be35",
-      "wins": 7,
-      "losses": 7,
+      "user_id": "468106048058683392",
+      "roster_id": 11,
+      "username": "bsowden",
+      "team_name": "Sunday Shanahan-igans",
+      "avatar": "eefceb945b9159798eac0eb764d3fbc4",
+      "wins": 9,
+      "losses": 5,
       "ties": 0,
-      "points_for": 1720.54,
-      "points_against": 1632.2,
-      "record": "7-7"
+      "points_for": 1917.78,
+      "points_against": 1724.44,
+      "record": "9-5",
+      "regular_season_rank": 3,
+      "rank": 4
     },
     {
       "user_id": "467051300257787904",
@@ -81,20 +76,24 @@
       "ties": 0,
       "points_for": 1639.78,
       "points_against": 1632.12,
-      "record": "7-7"
+      "record": "7-7",
+      "regular_season_rank": 6,
+      "rank": 5
     },
     {
-      "user_id": "467713945692532736",
-      "roster_id": 9,
-      "username": "TheBrawlers",
-      "team_name": "TheBrawlers",
-      "avatar": "76cc8b5ae0332a91c67349dcb590bc7e",
-      "wins": 6,
-      "losses": 8,
+      "user_id": "467551024677122048",
+      "roster_id": 6,
+      "username": "VAPatsNation",
+      "team_name": "VAPatsNation",
+      "avatar": "f05c41681f8c74fb2777b07c7754be35",
+      "wins": 7,
+      "losses": 7,
       "ties": 0,
-      "points_for": 1627.94,
-      "points_against": 1667.98,
-      "record": "6-8"
+      "points_for": 1720.54,
+      "points_against": 1632.2,
+      "record": "7-7",
+      "regular_season_rank": 5,
+      "rank": 6
     },
     {
       "user_id": "467887669452468224",
@@ -107,33 +106,10 @@
       "ties": 0,
       "points_for": 1541.36,
       "points_against": 1672.28,
-      "record": "6-8"
-    },
-    {
-      "user_id": "468149345745629184",
-      "roster_id": 12,
-      "username": "trolldrengi",
-      "team_name": "Football Commandants",
-      "avatar": "20324c98137101a90bd3396e7bc940cf",
-      "wins": 5,
-      "losses": 9,
-      "ties": 0,
-      "points_for": 1682.78,
-      "points_against": 1833.94,
-      "record": "5-9"
-    },
-    {
-      "user_id": "467071694998073344",
-      "roster_id": 5,
-      "username": "EcchiPaad",
-      "team_name": "BeerBicepsBiryani",
-      "avatar": "3ba9b13839d8aae42305608dfbb1bfe2",
-      "wins": 5,
-      "losses": 9,
-      "ties": 0,
-      "points_for": 1586.18,
-      "points_against": 1710.84,
-      "record": "5-9"
+      "record": "6-8",
+      "regular_season_rank": 8,
+      "rank": 7,
+      "is_toilet_bowl_winner": true
     },
     {
       "user_id": "467597885412732928",
@@ -146,7 +122,24 @@
       "ties": 0,
       "points_for": 1492.04,
       "points_against": 1624.76,
-      "record": "5-9"
+      "record": "5-9",
+      "regular_season_rank": 11,
+      "rank": 8
+    },
+    {
+      "user_id": "467713945692532736",
+      "roster_id": 9,
+      "username": "TheBrawlers",
+      "team_name": "TheBrawlers",
+      "avatar": "76cc8b5ae0332a91c67349dcb590bc7e",
+      "wins": 6,
+      "losses": 8,
+      "ties": 0,
+      "points_for": 1627.94,
+      "points_against": 1667.98,
+      "record": "6-8",
+      "regular_season_rank": 7,
+      "rank": 9
     },
     {
       "user_id": "466831529767596032",
@@ -159,7 +152,39 @@
       "ties": 0,
       "points_for": 1609.74,
       "points_against": 1845.16,
-      "record": "3-11"
+      "record": "3-11",
+      "regular_season_rank": 12,
+      "rank": 10
+    },
+    {
+      "user_id": "468149345745629184",
+      "roster_id": 12,
+      "username": "trolldrengi",
+      "team_name": "Football Commandants",
+      "avatar": "20324c98137101a90bd3396e7bc940cf",
+      "wins": 5,
+      "losses": 9,
+      "ties": 0,
+      "points_for": 1682.78,
+      "points_against": 1833.94,
+      "record": "5-9",
+      "regular_season_rank": 9,
+      "rank": 11
+    },
+    {
+      "user_id": "467071694998073344",
+      "roster_id": 5,
+      "username": "EcchiPaad",
+      "team_name": "BeerBicepsBiryani",
+      "avatar": "3ba9b13839d8aae42305608dfbb1bfe2",
+      "wins": 5,
+      "losses": 9,
+      "ties": 0,
+      "points_for": 1586.18,
+      "points_against": 1710.84,
+      "record": "5-9",
+      "regular_season_rank": 10,
+      "rank": 12
     }
   ],
   "matchups": {

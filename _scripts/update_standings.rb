@@ -31,6 +31,16 @@ class SleeperAPI
     response = make_request("/league/#{id}/matchups/#{week}")
     JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
   end
+
+  def get_winners_bracket(id = @league_id)
+    response = make_request("/league/#{id}/winners_bracket")
+    JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
+  end
+
+  def get_losers_bracket(id = @league_id)
+    response = make_request("/league/#{id}/losers_bracket")
+    JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
+  end
   
   def generate_standings(id = @league_id)
     rosters = get_rosters(id)
@@ -47,11 +57,12 @@ class SleeperAPI
       hash[roster['roster_id']] = roster['owner_id']
     end
     
-    standings = rosters.map do |roster|
+    roster_map = {}
+    rosters.each do |roster|
       user = user_lookup[roster['owner_id']]
       team_name = user&.dig('metadata', 'team_name') || user&.dig('display_name') || 'Unknown Team'
       
-      {
+      roster_map[roster['roster_id']] = {
         'user_id' => roster['owner_id'],
         'roster_id' => roster['roster_id'],
         'username' => user ? user['display_name'] : 'Unknown',
@@ -65,8 +76,89 @@ class SleeperAPI
         'record' => "#{roster['settings']['wins'] || 0}-#{roster['settings']['losses'] || 0}"
       }
     end
+
+    # Calculate regular season ranking
+    reg_sorted = roster_map.values.sort_by { |team| [-team['wins'], -team['points_for']] }
+    reg_sorted.each_with_index do |team, idx|
+      roster_map[team['roster_id']]['regular_season_rank'] = idx + 1
+    end
+
+    wb = get_winners_bracket(id) || []
+    lb = get_losers_bracket(id) || []
+
+    ranks = {}
+    tb_winner_roster_id = nil
+
+    # Check if winners bracket has completed championship match
+    champ_m = wb.find { |m| m['p'] == 1 && m['w'] && m['l'] } || (wb.last if wb.last && wb.last['w'] && wb.last['l'])
+    if champ_m
+      ranks[1] = champ_m['w']
+      ranks[2] = champ_m['l']
+
+      third_m = wb.find { |m| m['p'] == 3 && m['w'] && m['l'] }
+      if third_m
+        ranks[3] = third_m['w']
+        ranks[4] = third_m['l']
+      end
+
+      fifth_m = wb.find { |m| m['p'] == 5 && m['w'] && m['l'] }
+      if fifth_m
+        ranks[5] = fifth_m['w']
+        ranks[6] = fifth_m['l']
+      end
+
+      # Losers / Toilet Bowl bracket
+      tb_1 = lb.find { |m| m['p'] == 1 && m['w'] && m['l'] }
+      if tb_1
+        ranks[7] = tb_1['w']
+        ranks[8] = tb_1['l']
+        tb_winner_roster_id = tb_1['w']
+      end
+
+      tb_3 = lb.find { |m| m['p'] == 3 && m['w'] && m['l'] }
+      if tb_3
+        ranks[9] = tb_3['w']
+        ranks[10] = tb_3['l']
+      end
+
+      tb_5 = lb.find { |m| m['p'] == 5 && m['w'] && m['l'] }
+      if tb_5
+        ranks[11] = tb_5['w']
+        ranks[12] = tb_5['l']
+      end
+
+      assigned_rosters = ranks.values
+      unassigned = roster_map.keys.reject { |rid| assigned_rosters.include?(rid) }
+      unassigned_sorted = unassigned.sort_by do |rid|
+        r = roster_map[rid]
+        [-r['wins'], -r['points_for']]
+      end
+
+      final_standings = []
+      total_teams = roster_map.size
+      (1..total_teams).each do |rank|
+        rid = ranks[rank] || unassigned_sorted.shift
+        if rid && roster_map[rid]
+          team_info = roster_map[rid].dup
+          team_info['rank'] = rank
+          if rid == tb_winner_roster_id
+            team_info['is_toilet_bowl_winner'] = true
+          end
+          final_standings << team_info
+        end
+      end
+
+      return [final_standings, roster_lookup]
+    end
     
-    [standings.sort_by { |team| [-team['wins'], -team['points_for']] }, roster_lookup]
+    # Fallback to regular season order if playoffs have not concluded
+    standings = reg_sorted.map.with_index do |team, idx|
+      t = team.dup
+      t['rank'] = idx + 1
+      t
+    end
+
+    [standings, roster_lookup]
   end
   
   private

@@ -44,10 +44,13 @@ permalink: /seasons/
         "name": "{{ season.name }}",
         "awards": {{ season.awards | jsonify }},
         "podium": {{ season.podium | jsonify }},
+        "toilet_bowl_winner": {{ season.toilet_bowl_winner | jsonify }},
         "standings": [
           {% for team in season.standings %}
             {
-              "rank": {{ forloop.index }},
+              "rank": {{ team.rank | default: forloop.index }},
+              "regular_season_rank": {{ team.regular_season_rank | default: forloop.index }},
+              "is_toilet_bowl_winner": {{ team.is_toilet_bowl_winner | default: false }},
               "team_name": {{ team.team_name | jsonify }},
               "username": "{{ team.username }}",
               "user_id": "{{ team.user_id }}",
@@ -83,38 +86,64 @@ permalink: /seasons/
               <p style="font-size: 2em; margin: 0;">🥇</p>
               <img src="${season.podium.first.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.first.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #ffd700;">
               <p style="margin: 5px 0 0; font-weight: 800;"><a href="{{ site.baseurl }}/teams/${season.podium.first.user_id}/">${season.podium.first.team_name}</a></p>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Champion (${season.podium.first.record})</p>
             </div>
             <div style="text-align: center; flex: 1; order: 1; opacity: 0.9;">
               <p style="font-size: 1.5em; margin: 0;">🥈</p>
               <img src="${season.podium.second.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.second.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid #c0c0c0;">
               <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.9em;"><a href="{{ site.baseurl }}/teams/${season.podium.second.user_id}/">${season.podium.second.team_name}</a></p>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Runner-Up (${season.podium.second.record})</p>
             </div>
             <div style="text-align: center; flex: 1; order: 3; opacity: 0.8;">
               <p style="font-size: 1.3em; margin: 0;">🥉</p>
               <img src="${season.podium.third.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.third.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #cd7f32;">
               <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.8em;"><a href="{{ site.baseurl }}/teams/${season.podium.third.user_id}/">${season.podium.third.team_name}</a></p>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">3rd Place (${season.podium.third.record})</p>
             </div>
           </div>
         </div>
       `;
     }
 
-    // Awards Card
-    if (season.awards) {
+    // Awards & Honors Card
+    if (season.awards || season.toilet_bowl_winner) {
       highlightsHtml += `
         <div class="dashboard-card">
           <h2>🌟 Season Honors</h2>
-          <div style="display: flex; flex-direction: column; gap: 15px;">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+      `;
+
+      if (season.toilet_bowl_winner) {
+        highlightsHtml += `
             <div>
-              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">High Score of Year</p>
-              <p style="margin: 0; font-weight: bold; color: #4caf50;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
-              <p style="margin: 0; font-size: 0.9em;"><a href="{{ site.baseurl }}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1)</p>
+              <p style="margin: 0; font-weight: bold; color: #ff9800;"><a href="{{ site.baseurl }}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
+              <p style="margin: 0; font-size: 0.85em; opacity: 0.8;">${season.toilet_bowl_winner.username} (${season.toilet_bowl_winner.record})</p>
             </div>
+        `;
+      }
+
+      if (season.awards && season.awards.highest_game) {
+        highlightsHtml += `
             <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
-              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">Regular Season Points King</p>
-              <p style="margin: 0; font-weight: bold; color: var(--link-color);">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
-              <p style="margin: 0; font-size: 0.9em;"><a href="{{ site.baseurl }}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">🚀 High Score of Year</p>
+              <p style="margin: 0; font-weight: bold; color: #4caf50;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
+              <p style="margin: 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
             </div>
+        `;
+      }
+
+      if (season.awards && season.awards.regular_season_points_leader) {
+        highlightsHtml += `
+            <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
+              <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">👑 Regular Season Points King</p>
+              <p style="margin: 0; font-weight: bold; color: var(--link-color);">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
+              <p style="margin: 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
+            </div>
+        `;
+      }
+
+      highlightsHtml += `
           </div>
         </div>
       `;
@@ -125,14 +154,15 @@ permalink: /seasons/
     // Build Standings HTML
     let standingsHtml = `
       <div class="dashboard-card" style="margin-top: 20px;">
-        <h2>Full Standings</h2>
+        <h2>Full Final Standings</h2>
+        <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Final ranks determined by Playoff & Toilet Bowl Brackets</p>
         <table class="high-contrast-table">
           <thead>
             <tr>
-              <th>Rank</th>
+              <th>Final Rank</th>
               <th>Team</th>
               <th>Manager</th>
-              <th>Record</th>
+              <th>Reg. Record (Seed)</th>
               <th>PF</th>
               <th>PA</th>
             </tr>
@@ -142,15 +172,23 @@ permalink: /seasons/
     
     season.standings.forEach(team => {
       const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+      let rankBadge = `${team.rank}`;
+      if (team.rank === 1) rankBadge = '🥇 1';
+      else if (team.rank === 2) rankBadge = '🥈 2';
+      else if (team.rank === 3) rankBadge = '🥉 3';
+      else if (team.is_toilet_bowl_winner || team.rank === 7) rankBadge = '🚽 7';
+
+      const seedLabel = team.regular_season_rank ? `(#${team.regular_season_rank})` : '';
+
       standingsHtml += `
         <tr>
-          <td>${team.rank}</td>
+          <td style="font-weight: bold;">${rankBadge}</td>
           <td style="display: flex; align-items: center; gap: 10px;">
             <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
             <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
           </td>
           <td>${team.username}</td>
-          <td>${team.record}</td>
+          <td>${team.record} <span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span></td>
           <td>${team.points_for}</td>
           <td>${team.points_against}</td>
         </tr>

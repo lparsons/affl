@@ -6,19 +6,6 @@
   "status": "complete",
   "standings": [
     {
-      "user_id": "466831529767596032",
-      "roster_id": 3,
-      "username": "kolners",
-      "team_name": "Kolners",
-      "avatar": "742a9945bbbe992e56db3884006cd326",
-      "wins": 10,
-      "losses": 4,
-      "ties": 0,
-      "points_for": 1823.98,
-      "points_against": 1708.02,
-      "record": "10-4"
-    },
-    {
       "user_id": "467698630166310912",
       "roster_id": 8,
       "username": "maheshbiradar",
@@ -29,20 +16,9 @@
       "ties": 0,
       "points_for": 1733.84,
       "points_against": 1597.4,
-      "record": "10-4"
-    },
-    {
-      "user_id": "463028232669622272",
-      "roster_id": 1,
-      "username": "CodeBrewer",
-      "team_name": "Desert Scorpions",
-      "avatar": "91be7277060d885a5752feb0894283ea",
-      "wins": 9,
-      "losses": 5,
-      "ties": 0,
-      "points_for": 1783.64,
-      "points_against": 1629.42,
-      "record": "9-5"
+      "record": "10-4",
+      "regular_season_rank": 2,
+      "rank": 1
     },
     {
       "user_id": "467051300257787904",
@@ -55,7 +31,39 @@
       "ties": 0,
       "points_for": 1690.04,
       "points_against": 1579.74,
-      "record": "8-6"
+      "record": "8-6",
+      "regular_season_rank": 4,
+      "rank": 2
+    },
+    {
+      "user_id": "466831529767596032",
+      "roster_id": 3,
+      "username": "kolners",
+      "team_name": "Kolners",
+      "avatar": "742a9945bbbe992e56db3884006cd326",
+      "wins": 10,
+      "losses": 4,
+      "ties": 0,
+      "points_for": 1823.98,
+      "points_against": 1708.02,
+      "record": "10-4",
+      "regular_season_rank": 1,
+      "rank": 3
+    },
+    {
+      "user_id": "463028232669622272",
+      "roster_id": 1,
+      "username": "CodeBrewer",
+      "team_name": "Desert Scorpions",
+      "avatar": "91be7277060d885a5752feb0894283ea",
+      "wins": 9,
+      "losses": 5,
+      "ties": 0,
+      "points_for": 1783.64,
+      "points_against": 1629.42,
+      "record": "9-5",
+      "regular_season_rank": 3,
+      "rank": 4
     },
     {
       "user_id": "467551024677122048",
@@ -68,7 +76,9 @@
       "ties": 0,
       "points_for": 1573.44,
       "points_against": 1522.88,
-      "record": "8-6"
+      "record": "8-6",
+      "regular_season_rank": 5,
+      "rank": 5
     },
     {
       "user_id": "468149345745629184",
@@ -81,20 +91,9 @@
       "ties": 0,
       "points_for": 1699.3,
       "points_against": 1621.22,
-      "record": "7-7"
-    },
-    {
-      "user_id": "601971095054725120",
-      "roster_id": 2,
-      "username": "CaseyWhite",
-      "team_name": "Big EZ Blue",
-      "avatar": "3dd5a49b6e8b46b474e36af0acaf7914",
-      "wins": 7,
-      "losses": 7,
-      "ties": 0,
-      "points_for": 1694.78,
-      "points_against": 1796.06,
-      "record": "7-7"
+      "record": "7-7",
+      "regular_season_rank": 6,
+      "rank": 6
     },
     {
       "user_id": "467597885412732928",
@@ -107,33 +106,10 @@
       "ties": 0,
       "points_for": 1683.88,
       "points_against": 1665.99,
-      "record": "7-7"
-    },
-    {
-      "user_id": "467713945692532736",
-      "roster_id": 9,
-      "username": "TheBrawlers",
-      "team_name": "TheBrawlers",
-      "avatar": "76cc8b5ae0332a91c67349dcb590bc7e",
-      "wins": 6,
-      "losses": 8,
-      "ties": 0,
-      "points_for": 1787.58,
-      "points_against": 1740.22,
-      "record": "6-8"
-    },
-    {
-      "user_id": "467887669452468224",
-      "roster_id": 10,
-      "username": "TheUntouchable",
-      "team_name": "TheUntouchable",
-      "avatar": "e4d90bf3a010debbcbef6993d3a5df1c",
-      "wins": 6,
-      "losses": 8,
-      "ties": 0,
-      "points_for": 1663.14,
-      "points_against": 1761.88,
-      "record": "6-8"
+      "record": "7-7",
+      "regular_season_rank": 8,
+      "rank": 7,
+      "is_toilet_bowl_winner": true
     },
     {
       "user_id": "467071694998073344",
@@ -146,7 +122,9 @@
       "ties": 0,
       "points_for": 1649.8,
       "points_against": 1784.92,
-      "record": "4-10"
+      "record": "4-10",
+      "regular_season_rank": 11,
+      "rank": 8
     },
     {
       "user_id": "468106048058683392",
@@ -159,7 +137,54 @@
       "ties": 0,
       "points_for": 1527.28,
       "points_against": 1902.94,
-      "record": "2-12"
+      "record": "2-12",
+      "regular_season_rank": 12,
+      "rank": 9
+    },
+    {
+      "user_id": "601971095054725120",
+      "roster_id": 2,
+      "username": "CaseyWhite",
+      "team_name": "Big EZ Blue",
+      "avatar": "3dd5a49b6e8b46b474e36af0acaf7914",
+      "wins": 7,
+      "losses": 7,
+      "ties": 0,
+      "points_for": 1694.78,
+      "points_against": 1796.06,
+      "record": "7-7",
+      "regular_season_rank": 7,
+      "rank": 10
+    },
+    {
+      "user_id": "467713945692532736",
+      "roster_id": 9,
+      "username": "TheBrawlers",
+      "team_name": "TheBrawlers",
+      "avatar": "76cc8b5ae0332a91c67349dcb590bc7e",
+      "wins": 6,
+      "losses": 8,
+      "ties": 0,
+      "points_for": 1787.58,
+      "points_against": 1740.22,
+      "record": "6-8",
+      "regular_season_rank": 9,
+      "rank": 11
+    },
+    {
+      "user_id": "467887669452468224",
+      "roster_id": 10,
+      "username": "TheUntouchable",
+      "team_name": "TheUntouchable",
+      "avatar": "e4d90bf3a010debbcbef6993d3a5df1c",
+      "wins": 6,
+      "losses": 8,
+      "ties": 0,
+      "points_for": 1663.14,
+      "points_against": 1761.88,
+      "record": "6-8",
+      "regular_season_rank": 10,
+      "rank": 12
     }
   ],
   "matchups": {

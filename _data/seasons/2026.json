@@ -16,7 +16,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 1,
+      "rank": 1
     },
     {
       "user_id": "601971095054725120",
@@ -29,7 +31,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 2,
+      "rank": 2
     },
     {
       "user_id": "466831529767596032",
@@ -42,7 +46,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 3,
+      "rank": 3
     },
     {
       "user_id": "467051300257787904",
@@ -55,7 +61,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 4,
+      "rank": 4
     },
     {
       "user_id": "467071694998073344",
@@ -68,7 +76,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 5,
+      "rank": 5
     },
     {
       "user_id": "467551024677122048",
@@ -81,7 +91,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 6,
+      "rank": 6
     },
     {
       "user_id": "467597885412732928",
@@ -94,7 +106,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 7,
+      "rank": 7
     },
     {
       "user_id": "467698630166310912",
@@ -107,7 +121,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 8,
+      "rank": 8
     },
     {
       "user_id": "467713945692532736",
@@ -120,7 +136,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 9,
+      "rank": 9
     },
     {
       "user_id": "467887669452468224",
@@ -133,7 +151,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 10,
+      "rank": 10
     },
     {
       "user_id": "468106048058683392",
@@ -146,7 +166,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 11,
+      "rank": 11
     },
     {
       "user_id": "468149345745629184",
@@ -159,7 +181,9 @@
       "ties": 0,
       "points_for": 0.0,
       "points_against": 0.0,
-      "record": "0-0"
+      "record": "0-0",
+      "regular_season_rank": 12,
+      "rank": 12
     }
   ],
   "matchups": {}

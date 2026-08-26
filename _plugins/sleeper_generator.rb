@@ -25,7 +25,7 @@ module Jekyll
           # Identify winners
           if is_complete && season_data['standings'] && !season_data['standings'].empty?
             season_data['champion'] = season_data['standings'].first
-            season_data['toilet_bowl_winner'] = season_data['standings'].last
+            season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
             
             # Podiums
             season_data['podium'] = {
@@ -83,7 +83,8 @@ module Jekyll
               teams_by_user[user_id]['seasons'] << {
                 'year' => season_data['year'],
                 'team_name' => team['team_name'],
-                'rank' => index + 1,
+                'rank' => team['rank'] || (index + 1),
+                'is_toilet_bowl_winner' => team['is_toilet_bowl_winner'] || false,
                 'wins' => team['wins'],
                 'losses' => team['losses'],
                 'points_for' => team['points_for'],
@@ -128,7 +129,7 @@ module Jekyll
         points_for = data['seasons'].sum { |s| s['points_for'] }
         points_against = data['seasons'].sum { |s| s['points_against'] }
         championships = data['seasons'].count { |s| s['rank'] == 1 }
-        toilet_bowls = data['seasons'].count { |s| s['rank'] == 12 }
+        toilet_bowls = data['seasons'].count { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 }
         
         max_score = data['matchups'].max_by { |m| m['points'] } || { 'points' => 0, 'week' => 0, 'year' => 0 }
         
