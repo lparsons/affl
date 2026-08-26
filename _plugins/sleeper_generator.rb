@@ -169,16 +169,43 @@ module Jekyll
       all_matchups = []
       teams_by_user.each do |user_id, team|
         team['matchups'].each do |m|
-          all_matchups << m.merge('username' => team['username'], 'team_name' => team['current_team_name'], 'user_id' => user_id)
+          all_matchups << m.merge(
+            'username' => team['username'],
+            'team_name' => team['current_team_name'],
+            'avatar' => team['current_avatar'],
+            'user_id' => user_id
+          )
         end
+      end
+
+      all_team_seasons = []
+      site.data['all_seasons'].each do |season|
+        next unless season['status'] == 'complete' || (season['standings'] && season['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 })
+        season['standings'].each do |team|
+          all_team_seasons << team.merge(
+            'year' => season['year'],
+            'points_for_f' => team['points_for'].to_f,
+            'points_against_f' => team['points_against'].to_f,
+            'wins_i' => team['wins'].to_i,
+            'losses_i' => team['losses'].to_i
+          )
+        end
+      end
+
+      completed_seasons = site.data['all_seasons'].select do |s|
+        s['status'] == 'complete' || (s['standings'] && s['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 })
       end
 
       site.data['records'] = {
         'highest_scores' => all_matchups.sort_by { |m| -m['points'] }.first(10),
         'lowest_scores' => all_matchups.select { |m| m['points'] > 0 }.sort_by { |m| m['points'] }.first(10),
+        'most_season_points' => all_team_seasons.sort_by { |ts| -ts['points_for_f'] }.first(10),
+        'best_season_records' => all_team_seasons.sort_by { |ts| [-ts['wins_i'], ts['losses_i'], -ts['points_for_f']] }.first(10),
         'most_championships' => teams_by_user.values.select { |t| t['stats']['championships'] > 0 }.sort_by { |t| -t['stats']['championships'] },
+        'most_toilet_bowls' => teams_by_user.values.select { |t| t['stats']['toilet_bowls'] > 0 }.sort_by { |t| -t['stats']['toilet_bowls'] },
         'most_wins' => teams_by_user.values.sort_by { |t| -t['stats']['wins'] }.first(10),
-        'highest_avg_points' => teams_by_user.values.select { |t| t['seasons'].size > 1 }.sort_by { |t| -t['stats']['avg_points'] }.first(10)
+        'highest_avg_points' => teams_by_user.values.select { |t| t['seasons'].size > 1 }.sort_by { |t| -t['stats']['avg_points'] }.first(10),
+        'completed_seasons' => completed_seasons
       }
     end
 
