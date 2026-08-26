@@ -124,14 +124,19 @@ module Jekyll
               'username' => team['username'],
               'current_team_name' => team['team_name'],
               'current_avatar' => team['avatar'],
+              'all_names' => [],
               'seasons' => [],
               'matchups' => []
             }
 
+            teams_by_user[user_id]['all_names'] << team['team_name'] if team['team_name']
+
             if season_data['year'].to_i >= (teams_by_user[user_id]['latest_year'] || 0).to_i
               teams_by_user[user_id]['current_team_name'] = team['team_name']
               teams_by_user[user_id]['current_avatar'] = team['avatar']
-              teams_by_user[user_id]['latest_year'] = season_data['year']
+              teams_by_user[user_id]['latest_year'] = season_data['year'].to_i
+              teams_by_user[user_id]['current_division_name'] = team['division_name'] || (team['division'] == 1 ? 'Yin' : (team['division'] == 2 ? 'Yang' : nil))
+              teams_by_user[user_id]['draft_slot'] = team['draft_slot']
             end
 
             # Only add to career historical record if season is complete or has played games
@@ -182,6 +187,8 @@ module Jekyll
         site.config['current_draft_id'] = seasons.first['draft_id']
       end
 
+      current_season_year = (site.config['current_season'] || 2026).to_i
+
       # Generate Team Pages and Calculate All-Time Stats
       teams_by_user.each do |user_id, data|
         wins = data['seasons'].sum { |s| s['wins'] }
@@ -189,6 +196,8 @@ module Jekyll
         points_for = data['seasons'].sum { |s| s['points_for'] }
         points_against = data['seasons'].sum { |s| s['points_against'] }
         championships = data['seasons'].count { |s| s['rank'] == 1 }
+        runner_ups = data['seasons'].count { |s| s['rank'] == 2 }
+        third_places = data['seasons'].count { |s| s['rank'] == 3 }
         toilet_bowls = data['seasons'].count { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 }
         
         max_score = data['matchups'].max_by { |m| m['points'] } || { 'points' => 0, 'week' => 0, 'year' => 0 }
@@ -198,6 +207,19 @@ module Jekyll
         avg_points = total_games > 0 ? (points_for / total_games).round(2) : 0
         best_finish = data['seasons'].map { |s| s['rank'] }.min
 
+        all_unique_names = data['all_names'].compact.uniq
+        past_names = all_unique_names.reject { |n| n == data['current_team_name'] }
+        years_list = data['seasons'].map { |s| s['year'].to_i }.sort
+        first_year = years_list.first || data['latest_year']
+        is_active = data['latest_year'].to_i == current_season_year
+
+        data['all_names'] = all_unique_names
+        data['past_names'] = past_names
+        data['is_active'] = is_active
+        data['first_year'] = first_year
+        data['years_span'] = first_year == data['latest_year'] ? "#{first_year}" : "#{first_year}–#{is_active ? 'Present' : data['latest_year']}"
+        data['seasons_count'] = data['seasons'].size
+
         data['stats'] = {
           'wins' => wins,
           'losses' => losses,
@@ -206,6 +228,8 @@ module Jekyll
           'win_pct' => win_pct,
           'avg_points' => avg_points,
           'championships' => championships,
+          'runner_ups' => runner_ups,
+          'third_places' => third_places,
           'toilet_bowls' => toilet_bowls,
           'best_finish' => best_finish,
           'max_score' => max_score
@@ -215,7 +239,7 @@ module Jekyll
         site.pages << TeamProfilePage.new(site, site.source, "teams/#{user_id}", data)
       end
 
-      site.data['all_teams'] = teams_by_user.values.sort_by { |t| -t['stats']['wins'] }
+      site.data['all_teams'] = teams_by_user.values.sort_by { |t| [-t['stats']['wins'], -t['stats']['win_pct']] }
       calculate_league_records(site, teams_by_user)
     end
 

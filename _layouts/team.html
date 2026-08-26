@@ -11,7 +11,12 @@ layout: default
       {% endif %}
       <div>
         <h1 style="margin: 0;">{{ page.team_data.username }}</h1>
-        <p style="margin: 5px 0 0; opacity: 0.8; font-size: 1.2em;">{{ page.team_data.current_team_name }}</p>
+        <p style="margin: 5px 0 0; opacity: 0.8; font-size: 1.2em; font-weight: bold;">{{ page.team_data.current_team_name }}</p>
+        {% if page.team_data.past_names and page.team_data.past_names.size > 0 %}
+          <p style="margin: 4px 0 0; font-size: 0.82em; opacity: 0.65;">
+            <span style="text-transform: uppercase; font-weight: bold; font-size: 0.85em;">Past Aliases:</span> {{ page.team_data.past_names | join: ' • ' }}
+          </p>
+        {% endif %}
       </div>
     </div>
     
