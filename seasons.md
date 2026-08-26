@@ -54,6 +54,7 @@ permalink: /seasons/
         "draft_id": "{{ season.draft_id }}",
         "is_current": {% if season.year == site.current_season %}true{% else %}false{% endif %},
         "awards": {{ season.awards | jsonify }},
+        "records": {{ season.records | jsonify }},
         "podium": {{ season.podium | jsonify }},
         "toilet_bowl_winner": {{ season.toilet_bowl_winner | jsonify }},
         "divisions": {{ season.divisions | jsonify }},
@@ -271,6 +272,88 @@ permalink: /seasons/
       });
       
       contentHtml += `</tbody></table></div>`;
+
+      // 🎯 Season Records & Notable Performances
+      if (season.records) {
+        contentHtml += `
+          <div class="dashboard-grid" style="margin-top: 25px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- Top Single-Game Scores of Season -->
+            ${season.records.top_game_scores && season.records.top_game_scores.length > 0 ? `
+              <div class="dashboard-card" style="grid-column: span 2;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
+                  <span class="category-tag">Single-Week Highs</span>
+                </div>
+                <table class="high-contrast-table">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Score</th>
+                      <th>Manager</th>
+                      <th>Team</th>
+                      <th>Week</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${season.records.top_game_scores.map((g, idx) => {
+                      const avatarUrl = g.avatar ? `https://sleepercdn.com/avatars/thumbs/${g.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                      const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
+                      return `
+                        <tr>
+                          <td style="font-weight: bold;">${rankLabel}</td>
+                          <td style="font-weight: 800; color: #4caf50; font-size: 1.05em;">${parseFloat(g.points).toFixed(2)}</td>
+                          <td>
+                            <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
+                          </td>
+                          <td>${g.team_name}</td>
+                          <td style="font-size: 0.85em; opacity: 0.8;">Week ${g.week}</td>
+                        </tr>
+                      `;
+                    }).join('')}
+                  </tbody>
+                </table>
+              </div>
+            ` : ''}
+
+            <!-- Matchup Highlights (Highest Combined & Closest) -->
+            <div class="dashboard-card" style="display: flex; flex-direction: column; gap: 20px;">
+              ${season.records.highest_scoring_matchups && season.records.highest_scoring_matchups.length > 0 ? `
+                <div>
+                  <h3 style="margin: 0 0 10px; font-size: 1.1em;">⚔️ Wildest Shootouts</h3>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${season.records.highest_scoring_matchups.map(m => `
+                      <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
+                          <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
+                        </div>
+                        <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              ${season.records.closest_matchups && season.records.closest_matchups.length > 0 ? `
+                <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                  <h3 style="margin: 0 0 10px; font-size: 1.1em;">🎯 Closest Nail-Biters</h3>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${season.records.closest_matchups.map(m => `
+                      <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
+                          <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
+                        </div>
+                        <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
 
     } else if (!hasGames) {
       // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)

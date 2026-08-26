@@ -35,23 +35,62 @@ module Jekyll
             }
           end
           
-          # Calculate Season Awards (High Score, Points Leader)
+          # Calculate Season Awards & Notable Records (High Scores, Matchup Thrillers)
           if has_games && season_data['matchups'] && !season_data['matchups'].empty?
             all_season_matchups = []
+            head_to_head_games = []
+
             season_data['matchups'].each do |week, games|
+              by_matchup = {}
               games.each do |game|
                 owner = season_data['standings'].find { |s| s['user_id'] == game['user_id'] }
-                all_season_matchups << game.merge(
+                m_info = game.merge(
+                  'week' => week.to_i,
                   'username' => owner ? owner['username'] : 'Unknown',
-                  'team_name' => owner ? owner['team_name'] : 'Unknown Team'
+                  'team_name' => owner ? owner['team_name'] : 'Unknown Team',
+                  'avatar' => owner ? owner['avatar'] : nil
                 )
+                all_season_matchups << m_info
+
+                if game['matchup_id']
+                  by_matchup[game['matchup_id']] ||= []
+                  by_matchup[game['matchup_id']] << m_info
+                end
+              end
+
+              by_matchup.each do |mid, pair|
+                if pair.size == 2
+                  t1, t2 = pair[0], pair[1]
+                  p1, p2 = t1['points'].to_f, t2['points'].to_f
+                  winner = p1 >= p2 ? t1 : t2
+                  loser = p1 >= p2 ? t2 : t1
+                  diff = (p1 - p2).abs.round(2)
+                  total = (p1 + p2).round(2)
+
+                  head_to_head_games << {
+                    'week' => week.to_i,
+                    'winner' => winner,
+                    'loser' => loser,
+                    'winner_points' => [p1, p2].max,
+                    'loser_points' => [p1, p2].min,
+                    'diff' => diff,
+                    'total_points' => total
+                  }
+                end
               end
             end
             
             if !all_season_matchups.empty?
               season_data['awards'] = {
                 'highest_game' => all_season_matchups.max_by { |m| m['points'].to_f },
+                'lowest_game' => all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f },
                 'regular_season_points_leader' => season_data['standings'].max_by { |s| s['points_for'].to_f }
+              }
+              season_data['records'] = {
+                'top_game_scores' => all_season_matchups.sort_by { |m| -m['points'].to_f }.first(5),
+                'highest_scoring_matchups' => head_to_head_games.sort_by { |h| -h['total_points'] }.first(3),
+                'largest_blowouts' => head_to_head_games.sort_by { |h| -h['diff'] }.first(3),
+                'closest_matchups' => head_to_head_games.sort_by { |h| h['diff'] }.first(3)
               }
             end
           end
