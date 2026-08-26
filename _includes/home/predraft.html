@@ -67,44 +67,38 @@
     </div>
   {% endif %}
 
-  <!-- Draft Countdown -->
+  <!-- Season Format Overview -->
   <div class="dashboard-card" style="grid-column: span 2;">
-    <h2>⏳ Draft Countdown</h2>
-    <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px 0; flex-wrap: wrap; gap: 15px;">
-      <div style="text-align: center;">
-        <p style="font-size: 2em; font-weight: bold; margin: 0;" id="days-remaining">--</p>
-        <p style="margin: 0; opacity: 0.8;">Days</p>
+    <h2>⚙️ {{ site.current_season }} Season Format</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px;">
+      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Roster Size</p>
+        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">15 Spots (9 Starters + 6 BN)</p>
       </div>
-      <div style="text-align: center;">
-        <p style="font-size: 1.2em; margin: 0;">{{ site.draft_date | date: "%B %d, %Y" }}</p>
-        <p style="margin: 0; opacity: 0.8;">at {{ site.draft_date | date: "%I:%M %p" }}</p>
+      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Keepers</p>
+        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">1 Keeper (Round 1 Forfeit)</p>
       </div>
-      {% if site.current_draft_id and site.current_draft_id != "" %}
-        <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
-      {% else %}
-        <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
-      {% endif %}
+      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Divisions</p>
+        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">2 Divisions (Yin & Yang)</p>
+      </div>
+      <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Playoffs</p>
+        <p style="margin: 3px 0 0; font-size: 1.05em; font-weight: bold;">6 Teams (Wks 15–17)</p>
+      </div>
     </div>
   </div>
 
   <!-- Draft Prep Links -->
   <div class="dashboard-card">
-    <h2>📋 Prep Tools</h2>
+    <h2>📋 Season Prep</h2>
     <div style="display: flex; flex-direction: column; gap: 10px;">
       <a href="{{ site.baseurl }}/seasons/" class="btn">Seasons Dashboard</a>
       <a href="{{ site.baseurl }}/rules/" class="btn">Keeper & Draft Rules</a>
       <a href="{{ site.baseurl }}/records/" class="btn">All-Time Records</a>
+      <a href="{{ site.baseurl }}/schedule/" class="btn">Milestone Calendar</a>
     </div>
   </div>
 </div>
-
-<script>
-  (function() {
-    const draftDate = new Date("{{ site.draft_date }}").getTime();
-    const now = new Date().getTime();
-    const diff = draftDate - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    document.getElementById('days-remaining').textContent = days > 0 ? days : 0;
-  })();
-</script>
 
