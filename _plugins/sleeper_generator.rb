@@ -107,6 +107,10 @@ module Jekyll
       seasons.sort_by! { |s| -s['year'] }
       site.data['all_seasons'] = seasons
 
+      if (site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?) && seasons.first && seasons.first['draft_id']
+        site.config['current_draft_id'] = seasons.first['draft_id']
+      end
+
       # Generate Team Pages and Calculate All-Time Stats
       teams_by_user.each do |user_id, data|
         wins = data['seasons'].sum { |s| s['wins'] }

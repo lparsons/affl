@@ -21,6 +21,7 @@ league_logo: "https://sleepercdn.com/avatars/3a3980fe203cf0de61241defe04aa2d0"
 platform: "Sleeper"
 current_season: 2026
 current_league_id: "1257465132527661056"
+current_draft_id: "1257465132527661057"
 
 # Date Settings (Optional Overrides)
 # Uncomment or set only if you need to override the automatic calculations:

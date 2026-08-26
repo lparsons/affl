@@ -11,7 +11,11 @@
         <p style="font-size: 1.2em; margin: 0;">{{ site.draft_date | date: "%B %d, %Y" }}</p>
         <p style="margin: 0; opacity: 0.8;">at {{ site.draft_date | date: "%I:%M %p" }}</p>
       </div>
-      <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/draft" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
+      {% if site.current_draft_id and site.current_draft_id != "" %}
+        <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
+      {% else %}
+        <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn" style="margin: 0;">Enter Draft Room</a>
+      {% endif %}
     </div>
   </div>
 

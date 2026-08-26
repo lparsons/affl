@@ -123,6 +123,7 @@ def update_all_seasons
     season_entry = {
       'year' => year.to_i,
       'league_id' => current_ptr,
+      'draft_id' => info['draft_id'],
       'name' => info['name'],
       'status' => info['status'],
       'standings' => standings,
