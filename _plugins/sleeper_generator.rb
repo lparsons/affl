@@ -19,8 +19,11 @@ module Jekyll
         begin
           season_data = JSON.parse(File.read(file))
           
+          is_complete = season_data['status'] == 'complete'
+          has_games = season_data['standings'] && season_data['standings'].any? { |s| (s['wins'].to_i + s['losses'].to_i) > 0 }
+
           # Identify winners
-          if season_data['standings'] && !season_data['standings'].empty?
+          if is_complete && season_data['standings'] && !season_data['standings'].empty?
             season_data['champion'] = season_data['standings'].first
             season_data['toilet_bowl_winner'] = season_data['standings'].last
             
@@ -33,7 +36,7 @@ module Jekyll
           end
           
           # Calculate Season Awards (High Score, Points Leader)
-          if season_data['matchups']
+          if has_games && season_data['matchups'] && !season_data['matchups'].empty?
             all_season_matchups = []
             season_data['matchups'].each do |week, games|
               games.each do |game|
@@ -45,10 +48,12 @@ module Jekyll
               end
             end
             
-            season_data['awards'] = {
-              'highest_game' => all_season_matchups.max_by { |m| m['points'].to_f },
-              'regular_season_points_leader' => season_data['standings'].max_by { |s| s['points_for'].to_f }
-            }
+            if !all_season_matchups.empty?
+              season_data['awards'] = {
+                'highest_game' => all_season_matchups.max_by { |m| m['points'].to_f },
+                'regular_season_points_leader' => season_data['standings'].max_by { |s| s['points_for'].to_f }
+              }
+            end
           end
 
           seasons << season_data
@@ -56,6 +61,8 @@ module Jekyll
           # Aggregate team data for Career Profiles
           season_data['standings'].each_with_index do |team, index|
             user_id = team['user_id']
+            next unless user_id
+
             teams_by_user[user_id] ||= {
               'user_id' => user_id,
               'username' => team['username'],
@@ -71,15 +78,18 @@ module Jekyll
               teams_by_user[user_id]['latest_year'] = season_data['year']
             end
 
-            teams_by_user[user_id]['seasons'] << {
-              'year' => season_data['year'],
-              'team_name' => team['team_name'],
-              'rank' => index + 1,
-              'wins' => team['wins'],
-              'losses' => team['losses'],
-              'points_for' => team['points_for'],
-              'points_against' => team['points_against']
-            }
+            # Only add to career historical record if season is complete or has played games
+            if is_complete || (team['wins'].to_i + team['losses'].to_i > 0)
+              teams_by_user[user_id]['seasons'] << {
+                'year' => season_data['year'],
+                'team_name' => team['team_name'],
+                'rank' => index + 1,
+                'wins' => team['wins'],
+                'losses' => team['losses'],
+                'points_for' => team['points_for'],
+                'points_against' => team['points_against']
+              }
+            end
           end
 
           if season_data['matchups']
