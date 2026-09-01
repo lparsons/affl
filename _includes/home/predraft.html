@@ -1,27 +1,6 @@
 {% assign reigning = site.data.reigning_season %}
 
 <div class="dashboard-grid">
-  {% if site.league_state == 'drafting' or site.data.next_event.status == 'in_progress' %}
-    <!-- Active Draft Alert Card -->
-    <div class="dashboard-card" style="grid-column: 1 / -1; border: 2px solid #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, var(--card-bg) 100%);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 2em;">📋</span>
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <h2 style="margin: 0; border: none; padding: 0;">2026 AFFL Slow Draft is Live!</h2>
-              <span class="event-badge badge-live">🟢 In Progress</span>
-            </div>
-            <p style="margin: 4px 0 0; font-size: 0.9em; opacity: 0.85;">Pick clock is turned off. Please keep Sleeper push notifications enabled and submit picks promptly when you're up.</p>
-          </div>
-        </div>
-        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn" style="background: #10b981; color: #fff !important;">Enter Draft Room ↗</a>
-        </div>
-      </div>
-    </div>
-  {% endif %}
-
   <!-- Reigning Champion & 2025 Honors Spotlight -->
   {% if reigning and reigning.champion %}
     <div class="dashboard-card" style="grid-column: 1 / -1;">
