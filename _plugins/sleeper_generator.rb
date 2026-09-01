@@ -295,9 +295,14 @@ module Jekyll
       return site.config['league_state'] = 'offseason' unless draft_date_str
       draft_date = Time.parse(draft_date_str)
       
+      nfl_start_str = site.config['nfl_season_start']
+      nfl_start_date = nfl_start_str ? Time.parse(nfl_start_str) : draft_date + (11 * 24 * 60 * 60)
+
       state = if now < draft_date
                 prep_start = draft_date - (21 * 24 * 60 * 60)
                 now >= prep_start ? 'predraft' : 'offseason'
+              elsif now >= draft_date && now < nfl_start_date
+                'drafting'
               else
                 playoff_start = Time.new(draft_date.year, 12, 1)
                 offseason_end = Time.new(draft_date.year + 1, 1, 11)

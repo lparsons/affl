@@ -130,10 +130,11 @@ module Jekyll
           'category' => 'draft',
           'icon' => '📋',
           'date' => draft_date.to_s,
+          'end_date' => preseason_claims_date.to_s,
           'time' => draft_time.strftime('%I:%M %p'),
           'formatted_date' => "#{draft_date.strftime('%B %d, %Y')} at #{draft_time.strftime('%I:%M %p')}",
           'rule_ref' => '/rules/#5-draft-order-determination',
-          'description' => "Official #{season_year} AFFL draft kicks off in the Sleeper draft room with timer active."
+          'description' => "Official #{season_year} AFFL slow draft is underway in the Sleeper draft room."
         },
         {
           'id' => 'preseason_claims',
@@ -249,10 +250,23 @@ module Jekyll
         rescue StandardError
           today
         end
+        ev_end_date = begin
+          event['end_date'] ? Date.parse(event['end_date'].to_s) : ev_date
+        rescue StandardError
+          ev_date
+        end
+
         diff_days = (ev_date - today).to_i
         event['days_away'] = diff_days
 
-        if diff_days < 0
+        if event['id'] == 'draft_day' && today >= ev_date && today < ev_end_date
+          days_in = (today - ev_date).to_i + 1
+          event['status'] = 'in_progress'
+          event['status_label'] = "In Progress (Day #{days_in})"
+          event['is_in_progress'] = true
+          event['days_in'] = days_in
+          next_event ||= event
+        elsif diff_days < 0
           event['status'] = 'past'
           event['status_label'] = 'Completed'
         elsif diff_days == 0

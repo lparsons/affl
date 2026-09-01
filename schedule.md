@@ -20,20 +20,27 @@ Welcome to the official schedule and calendar for The Art of Fantasy Football Le
 
 <div class="timeline-list">
   {% for event in site.data.league_calendar %}
-    <div class="timeline-item {% if event == site.data.next_event %}status-next{% elsif event.status == 'past' %}status-past{% endif %}">
+    <div class="timeline-item {% if event.status == 'in_progress' %}status-in-progress{% elsif event == site.data.next_event %}status-next{% elsif event.status == 'past' %}status-past{% endif %}">
       <div class="timeline-icon">
         {{ event.icon }}
       </div>
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">{{ event.title }}</h3>
+            <h3 class="timeline-title">
+              {{ event.title }}
+              {% if event.status == 'in_progress' %}
+                <span style="font-size: 0.8em; color: #10b981; margin-left: 6px; font-weight: normal;">(In Progress)</span>
+              {% endif %}
+            </h3>
             <div class="timeline-date">
               📅 {{ event.formatted_date }}
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-            {% if event.status == 'today' %}
+            {% if event.status == 'in_progress' %}
+              <span class="event-badge badge-live">🟢 In Progress (Day {{ event.days_in }})</span>
+            {% elsif event.status == 'today' %}
               <span class="event-badge badge-next">Today</span>
             {% elsif event == site.data.next_event %}
               <span class="event-badge badge-next">Next Up ({{ event.days_away }}d)</span>
@@ -48,7 +55,10 @@ Welcome to the official schedule and calendar for The Art of Fantasy Football Le
         <p class="timeline-description">
           {{ event.description }}
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          {% if event.id == 'draft_day' and event.status == 'in_progress' %}
+            <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn" style="padding: 4px 12px; font-size: 0.85em; background: #10b981; color: #fff !important;">Enter Draft Room ↗</a>
+          {% endif %}
           <a href="{{ site.baseurl }}{{ event.rule_ref }}" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>

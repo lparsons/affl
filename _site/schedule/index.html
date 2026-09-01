@@ -89,34 +89,40 @@
 
 <h2 id="-next-upcoming-milestone">⚡ Next Upcoming Milestone</h2>
 
-<div class="calendar-highlight-card">
+<div class="calendar-highlight-card highlight-in-progress">
     <div class="calendar-highlight-content">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-        <span class="event-badge badge-next">Upcoming Milestone</span>
+        
+          <span class="event-badge badge-live">🟢 Active Milestone</span>
+        
         <span class="category-tag">Draft Day</span>
       </div>
       <div class="calendar-highlight-title">
         <span>📋</span>
-        <span>AFFL Slow Draft Begins</span>
+        <span>
+          
+            AFFL Slow Draft (In Progress)
+          
+        </span>
       </div>
       <div class="calendar-highlight-date">
-        📅 August 30, 2026 at 09:00 AM
+        📅 Started August 30, 2026 at 09:00 AM
       </div>
       <p class="calendar-highlight-desc">
-        Official 2026 AFFL draft kicks off in the Sleeper draft room with timer active.
+        Official 2026 AFFL slow draft is underway in the Sleeper draft room.
       </p>
     </div>
 
     <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-      <div class="calendar-countdown-badge" id="event-countdown-box">
+      <div class="calendar-countdown-badge badge-live-pulse" id="event-countdown-box">
         <span class="calendar-countdown-num" id="event-countdown-days">
           
-            4
+            LIVE
           
         </span>
         <span class="calendar-countdown-label" id="event-countdown-label">
           
-            Days Left
+            In Progress
           
         </span>
       </div>
@@ -124,7 +130,7 @@
       <div style="display: flex; flex-direction: column; gap: 8px;">
         
           
-            <a href="https://sleeper.com/draft/nfl/1389359803838509057?is_active=true" target="_blank" class="btn">Enter Draft Room</a>
+            <a href="https://sleeper.com/draft/nfl/1389359803838509057?is_active=true" target="_blank" class="btn" style="background-color: #10b981; color: #fff !important;">Enter Draft Room ↗</a>
           
         
         <a href="/schedule/" style="font-size: 0.85em; text-align: center; text-decoration: underline;">Full Calendar &rarr;</a>
@@ -134,16 +140,30 @@
 
 <script>
     (function() {
-      const eventDateStr = "2026-08-30";
-      if (!eventDateStr) return;
-      const targetDate = new Date(eventDateStr + "T23:59:59").getTime();
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      
+      const eventStatus = "in_progress";
+      const isInProgress = true;
+      const eventStartDateStr = "2026-08-30";
+      const eventEndDateStr = "2026-09-08";
+      const eventId = "draft_day";
+
+      if (!eventStartDateStr) return;
+
       const numEl = document.getElementById('event-countdown-days');
       const labelEl = document.getElementById('event-countdown-label');
-      if (numEl && labelEl) {
+      if (!numEl || !labelEl) return;
+
+      const now = new Date().getTime();
+      const startTarget = new Date(eventStartDateStr + "T00:00:00").getTime();
+      const endTarget = new Date(eventEndDateStr + "T23:59:59").getTime();
+
+      if (isInProgress || (eventId === 'draft_day' && now >= startTarget && now <= endTarget)) {
+        numEl.textContent = 'LIVE';
+        labelEl.textContent = 'In Progress';
+      } else {
+        const targetDate = new Date(eventStartDateStr + "T23:59:59").getTime();
+        const diff = targetDate - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
         if (days > 0) {
           numEl.textContent = days;
           labelEl.textContent = days === 1 ? 'Day Left' : 'Days Left';
@@ -171,7 +191,10 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Keeper Selections Due</h3>
+            <h3 class="timeline-title">
+              Keeper Selections Due
+              
+            </h3>
             <div class="timeline-date">
               📅 August 23, 2026
             </div>
@@ -186,35 +209,44 @@
         <p class="timeline-description">
           Managers must finalize designation of up to 1 keeper player (forfeits Round 1 pick).
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#4-keeper-rules" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
     </div>
   
-    <div class="timeline-item status-next">
+    <div class="timeline-item status-in-progress">
       <div class="timeline-icon">
         📋
       </div>
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">AFFL Slow Draft Begins</h3>
+            <h3 class="timeline-title">
+              AFFL Slow Draft Begins
+              
+                <span style="font-size: 0.8em; color: #10b981; margin-left: 6px; font-weight: normal;">(In Progress)</span>
+              
+            </h3>
             <div class="timeline-date">
               📅 August 30, 2026 at 09:00 AM
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-next">Next Up (4d)</span>
+              <span class="event-badge badge-live">🟢 In Progress (Day 2)</span>
             
             <span class="category-tag">Draft Day</span>
           </div>
         </div>
         <p class="timeline-description">
-          Official 2026 AFFL draft kicks off in the Sleeper draft room with timer active.
+          Official 2026 AFFL slow draft is underway in the Sleeper draft room.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
+            <a href="https://sleeper.com/draft/nfl/1389359803838509057?is_active=true" target="_blank" class="btn" style="padding: 4px 12px; font-size: 0.85em; background: #10b981; color: #fff !important;">Enter Draft Room ↗</a>
+          
           <a href="/rules/#5-draft-order-determination" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -227,14 +259,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Pre-Season Claims &amp; Free Agency</h3>
+            <h3 class="timeline-title">
+              Pre-Season Claims &amp; Free Agency
+              
+            </h3>
             <div class="timeline-date">
               📅 September 08, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 13 days</span>
+              <span class="event-badge badge-upcoming">In 8 days</span>
             
             <span class="category-tag">Waivers</span>
           </div>
@@ -242,7 +277,8 @@
         <p class="timeline-description">
           First round pre-season waiver claims process. Unclaimed free agents become immediately available.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#2-in-season-transaction--lineup-deadlines" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -255,14 +291,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">NFL Kickoff (Week 1)</h3>
+            <h3 class="timeline-title">
+              NFL Kickoff (Week 1)
+              
+            </h3>
             <div class="timeline-date">
               📅 September 10, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 15 days</span>
+              <span class="event-badge badge-upcoming">In 10 days</span>
             
             <span class="category-tag">Season Start</span>
           </div>
@@ -270,7 +309,8 @@
         <p class="timeline-description">
           Regular season begins with Thursday Night Football. Starting lineups lock at individual kickoff times.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#2-in-season-transaction--lineup-deadlines" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -283,14 +323,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Trade Deadline</h3>
+            <h3 class="timeline-title">
+              Trade Deadline
+              
+            </h3>
             <div class="timeline-date">
               📅 December 09, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 105 days</span>
+              <span class="event-badge badge-upcoming">In 100 days</span>
             
             <span class="category-tag">Trading</span>
           </div>
@@ -298,7 +341,8 @@
         <p class="timeline-description">
           Conclusion of Week 13. Final deadline to complete player and draft pick trades for the season.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#3-trading--draft-pick-exchanges" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -311,14 +355,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Free Agency Lock / Regular Season Closes</h3>
+            <h3 class="timeline-title">
+              Free Agency Lock / Regular Season Closes
+              
+            </h3>
             <div class="timeline-date">
               📅 December 17, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 113 days</span>
+              <span class="event-badge badge-upcoming">In 108 days</span>
             
             <span class="category-tag">Playoff Lock</span>
           </div>
@@ -326,7 +373,8 @@
         <p class="timeline-description">
           Free agency closes before the first playoff game starts. Playoff rosters lock.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#8-general-season-calendar" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -339,14 +387,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Wild Card Round (Week 15)</h3>
+            <h3 class="timeline-title">
+              Wild Card Round (Week 15)
+              
+            </h3>
             <div class="timeline-date">
               📅 December 17, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 113 days</span>
+              <span class="event-badge badge-upcoming">In 108 days</span>
             
             <span class="category-tag">Playoffs</span>
           </div>
@@ -354,7 +405,8 @@
         <p class="timeline-description">
           Seeds 3–6 clash in elimination matchups; Seeds 1 &amp; 2 enjoy first-round byes. Toilet Bowl kicks off.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#6-playoff-structure" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -367,14 +419,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Conference Semifinals (Week 16)</h3>
+            <h3 class="timeline-title">
+              Conference Semifinals (Week 16)
+              
+            </h3>
             <div class="timeline-date">
               📅 December 24, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 120 days</span>
+              <span class="event-badge badge-upcoming">In 115 days</span>
             
             <span class="category-tag">Playoffs</span>
           </div>
@@ -382,7 +437,8 @@
         <p class="timeline-description">
           Division leaders take the field against Wild Card winners for a berth in the AFFL Super Bowl.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#6-playoff-structure" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -395,14 +451,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">AFFL Super Bowl &amp; Toilet Bowl Final (Week 17)</h3>
+            <h3 class="timeline-title">
+              AFFL Super Bowl &amp; Toilet Bowl Final (Week 17)
+              
+            </h3>
             <div class="timeline-date">
               📅 December 31, 2026
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 127 days</span>
+              <span class="event-badge badge-upcoming">In 122 days</span>
             
             <span class="category-tag">Championship</span>
           </div>
@@ -410,7 +469,8 @@
         <p class="timeline-description">
           Championship game crowns the AFFL Champion. Toilet Bowl concludes and determines next year's #1 pick.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#6-playoff-structure" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>
@@ -423,14 +483,17 @@
       <div class="timeline-content">
         <div class="timeline-header">
           <div>
-            <h3 class="timeline-title">Off-Season Governance &amp; Trading Window Opens</h3>
+            <h3 class="timeline-title">
+              Off-Season Governance &amp; Trading Window Opens
+              
+            </h3>
             <div class="timeline-date">
               📅 February 07, 2027
             </div>
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             
-              <span class="event-badge badge-upcoming">In 165 days</span>
+              <span class="event-badge badge-upcoming">In 160 days</span>
             
             <span class="category-tag">Governance</span>
           </div>
@@ -438,7 +501,8 @@
         <p class="timeline-description">
           End of NFL Pro Bowl opens the window for rule change proposals, voting, and off-season trading.
         </p>
-        <div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          
           <a href="/rules/#7-league-rule-changes--governance" style="font-size: 0.85em; font-weight: bold; text-decoration: underline;">View Constitution Rule &rarr;</a>
         </div>
       </div>

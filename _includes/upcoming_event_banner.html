@@ -1,17 +1,27 @@
 {% if site.data.next_event %}
   {% assign next_ev = site.data.next_event %}
-  <div class="calendar-highlight-card">
+  <div class="calendar-highlight-card {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}highlight-in-progress{% endif %}">
     <div class="calendar-highlight-content">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-        <span class="event-badge badge-next">Upcoming Milestone</span>
+        {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}
+          <span class="event-badge badge-live">🟢 Active Milestone</span>
+        {% else %}
+          <span class="event-badge badge-next">Upcoming Milestone</span>
+        {% endif %}
         <span class="category-tag">{{ next_ev.tag }}</span>
       </div>
       <div class="calendar-highlight-title">
         <span>{{ next_ev.icon }}</span>
-        <span>{{ next_ev.title }}</span>
+        <span>
+          {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}
+            AFFL Slow Draft (In Progress)
+          {% else %}
+            {{ next_ev.title }}
+          {% endif %}
+        </span>
       </div>
       <div class="calendar-highlight-date">
-        📅 {{ next_ev.formatted_date }}
+        📅 {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}Started {% endif %}{{ next_ev.formatted_date }}
       </div>
       <p class="calendar-highlight-desc">
         {{ next_ev.description }}
@@ -19,16 +29,20 @@
     </div>
 
     <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-      <div class="calendar-countdown-badge" id="event-countdown-box">
+      <div class="calendar-countdown-badge {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}badge-live-pulse{% endif %}" id="event-countdown-box">
         <span class="calendar-countdown-num" id="event-countdown-days">
-          {% if next_ev.days_away < 0 %}
+          {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}
+            LIVE
+          {% elsif next_ev.days_away < 0 %}
             0
           {% else %}
             {{ next_ev.days_away }}
           {% endif %}
         </span>
         <span class="calendar-countdown-label" id="event-countdown-label">
-          {% if next_ev.days_away == 0 %}
+          {% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}
+            In Progress
+          {% elsif next_ev.days_away == 0 %}
             Today!
           {% elsif next_ev.days_away == 1 %}
             Day Left
@@ -41,9 +55,9 @@
       <div style="display: flex; flex-direction: column; gap: 8px;">
         {% if next_ev.id == 'draft_day' %}
           {% if site.current_draft_id and site.current_draft_id != "" %}
-            <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn">Enter Draft Room</a>
+            <a href="https://sleeper.com/draft/nfl/{{ site.current_draft_id }}?is_active=true" target="_blank" class="btn" style="{% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}background-color: #10b981; color: #fff !important;{% endif %}">Enter Draft Room ↗</a>
           {% else %}
-            <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn">Enter Draft Room</a>
+            <a href="https://sleeper.com/leagues/{{ site.current_league_id }}" target="_blank" class="btn" style="{% if next_ev.status == 'in_progress' or next_ev.is_in_progress %}background-color: #10b981; color: #fff !important;{% endif %}">Enter Draft Room ↗</a>
           {% endif %}
         {% elsif next_ev.id == 'kickoff' or next_ev.id == 'playoffs_wildcard' %}
           <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">View Matchups</a>
@@ -57,16 +71,30 @@
 
   <script>
     (function() {
-      const eventDateStr = "{{ next_ev.date }}";
-      if (!eventDateStr) return;
-      const targetDate = new Date(eventDateStr + "T23:59:59").getTime();
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      
+      const eventStatus = "{{ next_ev.status }}";
+      const isInProgress = {{ next_ev.is_in_progress | default: false }};
+      const eventStartDateStr = "{{ next_ev.date }}";
+      const eventEndDateStr = "{{ next_ev.end_date | default: next_ev.date }}";
+      const eventId = "{{ next_ev.id }}";
+
+      if (!eventStartDateStr) return;
+
       const numEl = document.getElementById('event-countdown-days');
       const labelEl = document.getElementById('event-countdown-label');
-      if (numEl && labelEl) {
+      if (!numEl || !labelEl) return;
+
+      const now = new Date().getTime();
+      const startTarget = new Date(eventStartDateStr + "T00:00:00").getTime();
+      const endTarget = new Date(eventEndDateStr + "T23:59:59").getTime();
+
+      if (isInProgress || (eventId === 'draft_day' && now >= startTarget && now <= endTarget)) {
+        numEl.textContent = 'LIVE';
+        labelEl.textContent = 'In Progress';
+      } else {
+        const targetDate = new Date(eventStartDateStr + "T23:59:59").getTime();
+        const diff = targetDate - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
         if (days > 0) {
           numEl.textContent = days;
           labelEl.textContent = days === 1 ? 'Day Left' : 'Days Left';

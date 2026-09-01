@@ -24,7 +24,7 @@ layout: page
   <div class="dashboard-content">
     {% if site.league_state == 'offseason' %}
       {% include home/offseason.html %}
-    {% elsif site.league_state == 'predraft' %}
+    {% elsif site.league_state == 'predraft' or site.league_state == 'drafting' %}
       {% include home/predraft.html %}
     {% elsif site.league_state == 'regular_season' %}
       {% include home/regular_season.html %}
