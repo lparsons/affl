@@ -246,7 +246,7 @@ permalink: /seasons/
         highlightsHtml += `
           <div class="dashboard-card" style="grid-column: 1 / -1;">
             <h2>🏆 Final Podium</h2>
-            <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 0; gap: 20px;">
+            <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 0; gap: 20px; max-width: 620px; margin: 0 auto; width: 100%;">
               <div style="text-align: center; flex: 1; order: 2;">
                 <p style="font-size: 2em; margin: 0;">🥇</p>
                 <img src="${season.podium.first.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.first.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #ffd700;">
@@ -400,7 +400,7 @@ permalink: /seasons/
           <h2 style="margin-bottom: 5px;">☯️ Division Alignments</h2>
           <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 20px;">12 Franchises split across the Yin and Yang Divisions for the ${season.year} campaign</p>
           
-          <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+          <div class="dashboard-grid">
             <!-- Yin Division Card -->
             <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
@@ -697,7 +697,7 @@ permalink: /seasons/
           <!-- Matchup Highlights (Highest Combined & Closest) -->
           <div class="dashboard-card">
             <h3 style="margin: 0 0 15px; font-size: 1.2em;">⚔️ Season Matchup Showcases</h3>
-            <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <div class="dashboard-grid">
               ${r.highest_scoring_matchups && r.highest_scoring_matchups.length > 0 ? `
                 <div>
                   <h4 style="margin: 0 0 10px; font-size: 1.05em; color: var(--link-color);">💥 Wildest Shootouts</h4>
