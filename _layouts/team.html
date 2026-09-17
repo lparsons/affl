@@ -119,50 +119,52 @@ layout: default
 
   <div class="dashboard-card">
     <h2>Season History</h2>
-    <table class="high-contrast-table">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Team Name</th>
-          <th>Finish</th>
-          <th>Record</th>
-          <th>Points For</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for season in page.team_data.seasons %}
+    <div class="table-responsive">
+      <table class="high-contrast-table">
+        <thead>
           <tr>
-            <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
-            <td>{{ season.team_name }}</td>
-            <td>
-              {% if season.is_complete %}
-                {% if season.rank == 1 %}
-                  <span title="League Champion" style="font-weight: bold; color: #ffd700;">🥇 1st</span>
-                {% elsif season.rank == 2 %}
-                  <span title="Runner-Up" style="font-weight: bold; color: #c0c0c0;">🥈 2nd</span>
-                {% elsif season.rank == 3 %}
-                  <span title="3rd Place" style="font-weight: bold; color: #cd7f32;">🥉 3rd</span>
-                {% elsif season.is_toilet_bowl_winner or season.rank == 7 %}
-                  <span title="Toilet Bowl Winner" style="font-weight: bold; color: #ff9800;">🚽 7th</span>
-                {% else %}
-                  {{ season.rank }}
-                {% endif %}
-              {% else %}
-                <span style="font-weight: bold;">#{{ season.rank }}</span>
-                {% if season.clinch_status %}
-                  <span class="{{ season.clinch_status.badge_class }}" style="margin-left: 6px; font-size: 0.8em; display: inline-block;">
-                    {{ season.clinch_status.icon }}
-                  </span>
-                {% else %}
-                  <span style="font-size: 0.8em; opacity: 0.6; margin-left: 4px;">(In Progress)</span>
-                {% endif %}
-              {% endif %}
-            </td>
-            <td>{{ season.wins }}-{{ season.losses }}</td>
-            <td>{{ season.points_for | round: 2 }}</td>
+            <th>Year</th>
+            <th>Team Name</th>
+            <th>Finish</th>
+            <th>Record</th>
+            <th>Points For</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for season in page.team_data.seasons %}
+            <tr>
+              <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+              <td>{{ season.team_name }}</td>
+              <td>
+                {% if season.is_complete %}
+                  {% if season.rank == 1 %}
+                    <span title="League Champion" style="font-weight: bold; color: #ffd700;">🥇 1st</span>
+                  {% elsif season.rank == 2 %}
+                    <span title="Runner-Up" style="font-weight: bold; color: #c0c0c0;">🥈 2nd</span>
+                  {% elsif season.rank == 3 %}
+                    <span title="3rd Place" style="font-weight: bold; color: #cd7f32;">🥉 3rd</span>
+                  {% elsif season.is_toilet_bowl_winner or season.rank == 7 %}
+                    <span title="Toilet Bowl Winner" style="font-weight: bold; color: #ff9800;">🚽 7th</span>
+                  {% else %}
+                    {{ season.rank }}
+                  {% endif %}
+                {% else %}
+                  <span style="font-weight: bold;">#{{ season.rank }}</span>
+                  {% if season.clinch_status %}
+                    <span class="{{ season.clinch_status.badge_class }}" style="margin-left: 6px; font-size: 0.8em; display: inline-block;">
+                      {{ season.clinch_status.icon }}
+                    </span>
+                  {% else %}
+                    <span style="font-size: 0.8em; opacity: 0.6; margin-left: 4px;">(In Progress)</span>
+                  {% endif %}
+                {% endif %}
+              </td>
+              <td>{{ season.wins }}-{{ season.losses }}</td>
+              <td>{{ season.points_for | round: 2 }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

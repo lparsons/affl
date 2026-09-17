@@ -40,32 +40,35 @@ permalink: /records/
     <div class="dashboard-card" style="grid-column: 1 / -1;">
       <h2>🚀 All-Time Scoring Titans (Single-Week High Games)</h2>
       <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Highest single-game outputs across all AFFL regular season & playoff weeks</p>
-      <table class="high-contrast-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Score</th>
-            <th>Manager</th>
-            <th>Team</th>
-            <th>Season</th>
-            <th>Week</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for game in site.data.records.highest_scores limit:10 %}
+      <div class="table-responsive">
+        <table class="high-contrast-table">
+          <thead>
             <tr>
-              <td style="font-weight: bold;">
-                {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
-              </td>
-              <td style="font-weight: 800; color: #4caf50; font-size: 1.1em;">{{ game.points | round: 2 }}</td>
-              <td><a href="{{ site.baseurl }}/teams/{{ game.user_id }}/">{{ game.username }}</a></td>
-              <td>{{ game.team_name }}</td>
-              <td><a href="{{ site.baseurl }}/seasons/#{{ game.year }}"><strong>{{ game.year }}</strong></a></td>
-              <td style="font-size: 0.85em; opacity: 0.8;">Week {{ game.week }}</td>
+              <th style="width: 70px;">Rank</th>
+              <th>Score</th>
+              <th>Team & Manager</th>
+              <th>Season</th>
+              <th>Week</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for game in site.data.records.highest_scores limit:10 %}
+              <tr>
+                <td style="font-weight: bold; white-space: nowrap;">
+                  {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
+                </td>
+                <td style="font-weight: 800; color: #4caf50; font-size: 1.1em; white-space: nowrap;">{{ game.points | round: 2 }}</td>
+                <td>
+                  <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/{{ game.user_id }}/">{{ game.team_name }}</a></div>
+                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ game.user_id }}/">{{ game.username }}</a></div>
+                </td>
+                <td><a href="{{ site.baseurl }}/seasons/#{{ game.year }}"><strong>{{ game.year }}</strong></a></td>
+                <td style="font-size: 0.85em; opacity: 0.8; white-space: nowrap;">Week {{ game.week }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Career Consistency & Longevity -->
@@ -137,96 +140,105 @@ permalink: /records/
     <div class="dashboard-card" style="grid-column: 1 / -1;">
       <h2>👑 Single-Season Scoring Kings (Regular Season Points)</h2>
       <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Most total regular-season points scored in a single 14-game campaign</p>
-      <table class="high-contrast-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Points</th>
-            <th>Manager</th>
-            <th>Team</th>
-            <th>Season</th>
-            <th>Record</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for season_stat in site.data.records.most_season_points limit:10 %}
+      <div class="table-responsive">
+        <table class="high-contrast-table">
+          <thead>
             <tr>
-              <td style="font-weight: bold;">
-                {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
-              </td>
-              <td style="font-weight: 800; color: var(--link-color); font-size: 1.05em;">{{ season_stat.points_for | round: 2 }}</td>
-              <td><a href="{{ site.baseurl }}/teams/{{ season_stat.user_id }}/">{{ season_stat.username }}</a></td>
-              <td>{{ season_stat.team_name }}</td>
-              <td><a href="{{ site.baseurl }}/seasons/#{{ season_stat.year }}"><strong>{{ season_stat.year }}</strong></a></td>
-              <td>{{ season_stat.record }}</td>
+              <th>Rank</th>
+              <th>Points</th>
+              <th>Team & Manager</th>
+              <th>Season</th>
+              <th>Record</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for season_stat in site.data.records.most_season_points limit:10 %}
+              <tr>
+                <td style="font-weight: bold;">
+                  {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
+                </td>
+                <td style="font-weight: 800; color: var(--link-color); font-size: 1.05em; white-space: nowrap;">{{ season_stat.points_for | round: 2 }}</td>
+                <td>
+                  <div style="font-weight: bold; white-space: nowrap;">{{ season_stat.team_name }}</div>
+                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season_stat.user_id }}/">{{ season_stat.username }}</a></div>
+                </td>
+                <td><a href="{{ site.baseurl }}/seasons/#{{ season_stat.year }}"><strong>{{ season_stat.year }}</strong></a></td>
+                <td style="white-space: nowrap;">{{ season_stat.record }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Chronological Season Records Archive -->
     <div class="dashboard-card" style="grid-column: 1 / -1; margin-top: 10px;">
       <h2>📜 Annual Season Records & Honors Archive</h2>
       <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Comprehensive season-by-season champion, awards, and record holder timeline</p>
-      <table class="high-contrast-table">
-        <thead>
-          <tr>
-            <th>Season</th>
-            <th>🥇 Champion</th>
-            <th>🥈 Runner-Up</th>
-            <th>🚽 Toilet Bowl (Pick #1)</th>
-            <th>👑 Points King</th>
-            <th>🚀 Season High Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for season in site.data.records.completed_seasons %}
+      <div class="table-responsive">
+        <table class="high-contrast-table">
+          <thead>
             <tr>
-              <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
-              <td>
-                {% if season.podium and season.podium.first %}
-                  <a href="{{ site.baseurl }}/teams/{{ season.podium.first.user_id }}/" style="font-weight: bold;">{{ season.podium.first.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ season.podium.first.username }})</span>
-                {% elsif season.champion %}
-                  <a href="{{ site.baseurl }}/teams/{{ season.champion.user_id }}/" style="font-weight: bold;">{{ season.champion.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ season.champion.username }})</span>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if season.podium and season.podium.second %}
-                  <a href="{{ site.baseurl }}/teams/{{ season.podium.second.user_id }}/">{{ season.podium.second.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ season.podium.second.username }})</span>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if season.toilet_bowl_winner %}
-                  <a href="{{ site.baseurl }}/teams/{{ season.toilet_bowl_winner.user_id }}/">{{ season.toilet_bowl_winner.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ season.toilet_bowl_winner.username }})</span>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if season.awards and season.awards.regular_season_points_leader %}
-                  <span style="font-weight: bold; color: var(--link-color);">{{ season.awards.regular_season_points_leader.points_for | round: 2 }} pts</span>
-                  <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season.awards.regular_season_points_leader.user_id }}/">({{ season.awards.regular_season_points_leader.username }})</a></span>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if season.awards and season.awards.highest_game %}
-                  <span style="font-weight: bold; color: #4caf50;">{{ season.awards.highest_game.points | round: 2 }} pts</span>
-                  <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season.awards.highest_game.user_id }}/">({{ season.awards.highest_game.username }}, Wk {{ season.awards.highest_game.week }})</a></span>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
+              <th style="min-width: 80px;">Season</th>
+              <th>🥇 Champion</th>
+              <th>🥈 Runner-Up</th>
+              <th>🚽 Toilet Bowl (Pick #1)</th>
+              <th>👑 Points King</th>
+              <th>🚀 Season High Score</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for season in site.data.records.completed_seasons %}
+              <tr>
+                <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+                <td>
+                  {% if season.podium and season.podium.first %}
+                    <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ season.podium.first.user_id }}/">{{ season.podium.first.team_name }}</a></div>
+                    <div style="opacity: 0.7; font-size: 0.85em;">{{ season.podium.first.username }}</div>
+                  {% elsif season.champion %}
+                    <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ season.champion.user_id }}/">{{ season.champion.team_name }}</a></div>
+                    <div style="opacity: 0.7; font-size: 0.85em;">{{ season.champion.username }}</div>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if season.podium and season.podium.second %}
+                    <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ season.podium.second.user_id }}/">{{ season.podium.second.team_name }}</a></div>
+                    <div style="opacity: 0.7; font-size: 0.85em;">{{ season.podium.second.username }}</div>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if season.toilet_bowl_winner %}
+                    <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ season.toilet_bowl_winner.user_id }}/">{{ season.toilet_bowl_winner.team_name }}</a></div>
+                    <div style="opacity: 0.7; font-size: 0.85em;">{{ season.toilet_bowl_winner.username }}</div>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if season.awards and season.awards.regular_season_points_leader %}
+                    <div style="font-weight: bold; color: var(--link-color); white-space: nowrap;">{{ season.awards.regular_season_points_leader.points_for | round: 2 }} pts</div>
+                    <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season.awards.regular_season_points_leader.user_id }}/">{{ season.awards.regular_season_points_leader.username }}</a></div>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if season.awards and season.awards.highest_game %}
+                    <div style="font-weight: bold; color: #4caf50; white-space: nowrap;">{{ season.awards.highest_game.points | round: 2 }} pts</div>
+                    <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season.awards.highest_game.user_id }}/">{{ season.awards.highest_game.username }} <span style="opacity: 0.7;">(Wk {{ season.awards.highest_game.week }})</span></a></div>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

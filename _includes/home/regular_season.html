@@ -23,51 +23,56 @@
     </div>
 
     {% if display_season and display_season.standings %}
-      <table class="high-contrast-table" style="font-size: 0.9em; margin-bottom: 15px;">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>Manager</th>
-            <th>Record</th>
-            {% if has_current_games %}<th>Status</th>{% endif %}
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for team in display_season.standings limit:5 %}
+      <div class="table-responsive">
+        <table class="high-contrast-table" style="font-size: 0.9em; margin-bottom: 15px;">
+          <thead>
             <tr>
-              <td style="font-weight: bold;">
-                {% if has_current_games %}
-                  #{{ forloop.index }}
-                {% else %}
-                  {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
-                {% endif %}
-              </td>
-              <td style="display: flex; align-items: center; gap: 10px;">
-                {% if team.avatar %}
-                  <img src="https://sleepercdn.com/avatars/thumbs/{{ team.avatar }}" style="width: 28px; height: 28px; border-radius: 50%;">
-                {% else %}
-                  <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 28px; height: 28px; border-radius: 50%;">
-                {% endif %}
-                <a href="{{ site.baseurl }}/teams/{{ team.user_id }}/">{{ team.team_name }}</a>
-              </td>
-              <td>{{ team.username }}</td>
-              <td>{{ team.record }}</td>
-              {% if has_current_games %}
-                <td>
-                  {% if team.clinch_status %}
-                    <span class="{{ team.clinch_status.badge_class }}">{{ team.clinch_status.icon }}</span>
+              <th>Rank</th>
+              <th>Team & Manager</th>
+              <th>Record</th>
+              {% if has_current_games %}<th>Status</th>{% endif %}
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for team in display_season.standings limit:5 %}
+              <tr>
+                <td style="font-weight: bold;">
+                  {% if has_current_games %}
+                    #{{ forloop.index }}
                   {% else %}
-                    -
+                    {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
                   {% endif %}
                 </td>
-              {% endif %}
-              <td>{{ team.points_for | round: 2 }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    {% if team.avatar %}
+                      <img src="https://sleepercdn.com/avatars/thumbs/{{ team.avatar }}" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
+                    {% else %}
+                      <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
+                    {% endif %}
+                    <div>
+                      <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ team.user_id }}/">{{ team.team_name }}</a></div>
+                      <div style="opacity: 0.7; font-size: 0.85em;">{{ team.username }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="white-space: nowrap;">{{ team.record }}</td>
+                {% if has_current_games %}
+                  <td>
+                    {% if team.clinch_status %}
+                      <span class="{{ team.clinch_status.badge_class }}">{{ team.clinch_status.icon }}</span>
+                    {% else %}
+                      -
+                    {% endif %}
+                  </td>
+                {% endif %}
+                <td style="white-space: nowrap;">{{ team.points_for | round: 2 }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       <a href="{{ site.baseurl }}/seasons/{% if has_current_games %}#{{ site.current_season }}{% else %}#{{ display_season.year }}{% endif %}" class="btn" style="align-self: flex-start;">View Full Standings & Records</a>
     {% else %}
       <p>Data will appear once the season starts.</p>

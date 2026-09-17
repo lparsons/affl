@@ -13,46 +13,48 @@ permalink: /history/
   </div>
 
   <div class="dashboard-card">
-    <table class="high-contrast-table">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Champion Team</th>
-          <th>Manager</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for season in site.data.all_seasons %}
-          {% assign champ = season.standings | first %}
-          {% if champ.avatar %}
-            {% assign avatar_url = "https://sleepercdn.com/avatars/thumbs/" | append: champ.avatar %}
-          {% else %}
-            {% assign avatar_url = "https://sleepercdn.com/images/v2/icons/player_default.webp" %}
-          {% endif %}
+    <div class="table-responsive">
+      <table class="high-contrast-table">
+        <thead>
           <tr>
-            <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
-            <td>
-              {% if season.status == 'complete' or season.year < site.current_season %}
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="{{ avatar_url }}" width="30" height="30" style="border-radius: 50%;">
-                  <a href="{{ site.baseurl }}/teams/{{ champ.user_id }}/">{{ champ.team_name }}</a>
-                </div>
-            {% else %}
-
-                <span style="opacity: 0.7; font-style: italic;">Season in Progress</span>
-              {% endif %}
-            </td>
-            <td>
-              {% if season.status == 'complete' or season.year < site.current_season %}
-                {{ champ.username }}
-              {% else %}
-                -
-              {% endif %}
-            </td>
+            <th>Year</th>
+            <th>Champion Team</th>
+            <th>Manager</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for season in site.data.all_seasons %}
+            {% assign champ = season.standings | first %}
+            {% if champ.avatar %}
+              {% assign avatar_url = "https://sleepercdn.com/avatars/thumbs/" | append: champ.avatar %}
+            {% else %}
+              {% assign avatar_url = "https://sleepercdn.com/images/v2/icons/player_default.webp" %}
+            {% endif %}
+            <tr>
+              <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+              <td>
+                {% if season.status == 'complete' or season.year < site.current_season %}
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="{{ avatar_url }}" width="30" height="30" style="border-radius: 50%;">
+                    <a href="{{ site.baseurl }}/teams/{{ champ.user_id }}/">{{ champ.team_name }}</a>
+                  </div>
+              {% else %}
+
+                  <span style="opacity: 0.7; font-style: italic;">Season in Progress</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if season.status == 'complete' or season.year < site.current_season %}
+                  {{ champ.username }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="dashboard-card" style="background: rgba(42, 122, 226, 0.05);">

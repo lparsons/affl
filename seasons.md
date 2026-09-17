@@ -54,68 +54,74 @@ permalink: /seasons/
       </div>
       <a href="{{ site.baseurl }}/records/" class="btn" style="padding: 6px 14px; font-size: 0.85em;">All-Time Record Book ↗</a>
     </div>
-    <table class="high-contrast-table">
-      <thead>
-        <tr>
-          <th>Season</th>
-          <th>🥇 Champion</th>
-          <th>🥈 Runner-Up</th>
-          <th>🚽 Toilet Bowl (Pick #1)</th>
-          <th>👑 Points King</th>
-          <th>🚀 Season High Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for s in site.data.records.completed_seasons %}
+    <div class="table-responsive">
+      <table class="high-contrast-table">
+        <thead>
           <tr>
-            <td>
-              <button onclick="updateSeasonsDashboard('{{ s.year }}'); window.location.hash='{{ s.year }}'; window.scrollTo({top: 0, behavior: 'smooth'});" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); border: 1px solid var(--border-color); font-weight: bold; border-radius: 6px; padding: 4px 10px; cursor: pointer;" title="View {{ s.year }} Season Dashboard">
-                {{ s.year }} ↗
-              </button>
-            </td>
-            <td>
-              {% if s.podium and s.podium.first %}
-                <a href="{{ site.baseurl }}/teams/{{ s.podium.first.user_id }}/" style="font-weight: bold;">{{ s.podium.first.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.podium.first.username }})</span>
-              {% elsif s.champion %}
-                <a href="{{ site.baseurl }}/teams/{{ s.champion.user_id }}/" style="font-weight: bold;">{{ s.champion.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.champion.username }})</span>
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td>
-              {% if s.podium and s.podium.second %}
-                <a href="{{ site.baseurl }}/teams/{{ s.podium.second.user_id }}/">{{ s.podium.second.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.podium.second.username }})</span>
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td>
-              {% if s.toilet_bowl_winner %}
-                <a href="{{ site.baseurl }}/teams/{{ s.toilet_bowl_winner.user_id }}/">{{ s.toilet_bowl_winner.team_name }}</a> <span style="opacity: 0.7; font-size: 0.85em;">({{ s.toilet_bowl_winner.username }})</span>
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td>
-              {% if s.awards and s.awards.regular_season_points_leader %}
-                <span style="font-weight: bold; color: var(--link-color);">{{ s.awards.regular_season_points_leader.points_for | round: 2 }} pts</span>
-                <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.regular_season_points_leader.user_id }}/">({{ s.awards.regular_season_points_leader.username }})</a></span>
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td>
-              {% if s.awards and s.awards.highest_game %}
-                <span style="font-weight: bold; color: #4caf50;">{{ s.awards.highest_game.points | round: 2 }} pts</span>
-                <span style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.highest_game.user_id }}/">({{ s.awards.highest_game.username }}, Wk {{ s.awards.highest_game.week }})</a></span>
-              {% else %}
-                -
-              {% endif %}
-            </td>
+            <th style="min-width: 80px;">Season</th>
+            <th>🥇 Champion</th>
+            <th>🥈 Runner-Up</th>
+            <th>🚽 Toilet Bowl (Pick #1)</th>
+            <th>👑 Points King</th>
+            <th>🚀 Season High Score</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for s in site.data.records.completed_seasons %}
+            <tr>
+              <td>
+                <button onclick="updateSeasonsDashboard('{{ s.year }}'); window.location.hash='{{ s.year }}'; window.scrollTo({top: 0, behavior: 'smooth'});" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); border: 1px solid var(--border-color); font-weight: bold; border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap;" title="View {{ s.year }} Season Dashboard">
+                  {{ s.year }} ↗
+                </button>
+              </td>
+              <td>
+                {% if s.podium and s.podium.first %}
+                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.podium.first.user_id }}/">{{ s.podium.first.team_name }}</a></div>
+                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.podium.first.username }}</div>
+                {% elsif s.champion %}
+                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.champion.user_id }}/">{{ s.champion.team_name }}</a></div>
+                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.champion.username }}</div>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if s.podium and s.podium.second %}
+                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.podium.second.user_id }}/">{{ s.podium.second.team_name }}</a></div>
+                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.podium.second.username }}</div>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if s.toilet_bowl_winner %}
+                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.toilet_bowl_winner.user_id }}/">{{ s.toilet_bowl_winner.team_name }}</a></div>
+                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.toilet_bowl_winner.username }}</div>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if s.awards and s.awards.regular_season_points_leader %}
+                  <div style="font-weight: bold; color: var(--link-color); white-space: nowrap;">{{ s.awards.regular_season_points_leader.points_for | round: 2 }} pts</div>
+                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.regular_season_points_leader.user_id }}/">{{ s.awards.regular_season_points_leader.username }}</a></div>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if s.awards and s.awards.highest_game %}
+                  <div style="font-weight: bold; color: #4caf50; white-space: nowrap;">{{ s.awards.highest_game.points | round: 2 }} pts</div>
+                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.highest_game.user_id }}/">{{ s.awards.highest_game.username }} <span style="opacity: 0.7;">(Wk {{ s.awards.highest_game.week }})</span></a></div>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -313,18 +319,18 @@ permalink: /seasons/
         <div class="dashboard-card" style="margin-top: 20px;">
           <h2>Full Final Standings</h2>
           <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Final ranks determined by Playoff & Toilet Bowl Brackets</p>
-          <table class="high-contrast-table">
-            <thead>
-              <tr>
-                <th>Final Rank</th>
-                <th>Team</th>
-                <th>Manager</th>
-                <th>Reg. Record (Seed)</th>
-                <th>PF</th>
-                <th>PA</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div class="table-responsive">
+            <table class="high-contrast-table">
+              <thead>
+                <tr>
+                  <th style="width: 85px;">Rank</th>
+                  <th>Team & Manager</th>
+                  <th>Reg. Record (Seed)</th>
+                  <th>PF</th>
+                  <th>PA</th>
+                </tr>
+              </thead>
+              <tbody>
       `;
       
       season.standings.forEach(team => {
@@ -339,20 +345,24 @@ permalink: /seasons/
 
         contentHtml += `
           <tr>
-            <td style="font-weight: bold;">${rankBadge}</td>
-            <td style="display: flex; align-items: center; gap: 10px;">
-              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
-              <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
+            <td style="font-weight: bold; white-space: nowrap;">${rankBadge}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                <div>
+                  <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a></div>
+                  <div style="font-size: 0.82em; opacity: 0.7;">${team.username}</div>
+                </div>
+              </div>
             </td>
-            <td>${team.username}</td>
-            <td>${team.record} <span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span></td>
+            <td style="white-space: nowrap;">${team.record} <span style="opacity: 0.6; font-size: 0.85em;">${seedLabel}</span></td>
             <td>${team.points_for}</td>
             <td>${team.points_against}</td>
           </tr>
         `;
       });
       
-      contentHtml += `</tbody></table></div>`;
+      contentHtml += `</tbody></table></div></div>`;
       contentHtml += renderSeasonRecords(season);
 
     } else if (!hasGames) {
@@ -453,32 +463,34 @@ permalink: /seasons/
               </div>
               <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
             </div>
-            <table class="high-contrast-table">
-              <thead>
-                <tr>
-                  <th style="width: 80px;">Slot</th>
-                  <th>Team</th>
-                  <th>Manager</th>
-                  <th>Division</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${[...season.standings].sort((a, b) => (a.draft_slot || 99) - (b.draft_slot || 99)).map(t => {
-                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
-                  return `
-                    <tr>
-                      <td style="font-weight: 800; color: var(--link-color);">#${t.draft_slot || '-'}</td>
-                      <td style="display: flex; align-items: center; gap: 10px;">
-                        <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;">
-                        <a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a>
-                      </td>
-                      <td>${t.username}</td>
-                      <td><span class="category-tag">${t.division_name || 'Yin'}</span></td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="high-contrast-table">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">Slot</th>
+                    <th>Team</th>
+                    <th>Manager</th>
+                    <th>Division</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${[...season.standings].sort((a, b) => (a.draft_slot || 99) - (b.draft_slot || 99)).map(t => {
+                    const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                    return `
+                      <tr>
+                        <td style="font-weight: 800; color: var(--link-color);">#${t.draft_slot || '-'}</td>
+                        <td style="display: flex; align-items: center; gap: 10px;">
+                          <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;">
+                          <a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a>
+                        </td>
+                        <td>${t.username}</td>
+                        <td><span class="category-tag">${t.division_name || 'Yin'}</span></td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Note about live standings activation -->
@@ -531,20 +543,19 @@ permalink: /seasons/
           <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
             Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 draft pick
           </p>
-          <table class="high-contrast-table">
-            <thead>
-              <tr>
-                <th>Seed</th>
-                <th>Team</th>
-                <th>Division</th>
-                <th>Manager</th>
-                <th>Record</th>
-                <th>Playoff Status</th>
-                <th>PF</th>
-                <th>PA</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div class="table-responsive">
+            <table class="high-contrast-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Seed</th>
+                  <th>Team & Manager</th>
+                  <th>Record</th>
+                  <th>Playoff Status</th>
+                  <th>PF</th>
+                  <th>PA</th>
+                </tr>
+              </thead>
+              <tbody>
       `;
       
       season.standings.forEach((team, index) => {
@@ -553,13 +564,13 @@ permalink: /seasons/
         const divName = team.division_name || (team.division === 2 ? 'Yang' : 'Yin');
         const isYang = team.division === 2 || divName.toLowerCase() === 'yang';
         const divBadge = isYang
-          ? `<span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800; font-size: 0.8em; padding: 2px 8px; font-weight: 600;">☯️ Yang</span>`
-          : `<span class="category-tag" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); font-size: 0.8em; padding: 2px 8px; font-weight: 600;">☯️ Yin</span>`;
+          ? `<span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800; font-size: 0.78em; padding: 1px 6px; font-weight: 600;">☯️ Yang</span>`
+          : `<span class="category-tag" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); font-size: 0.78em; padding: 1px 6px; font-weight: 600;">☯️ Yin</span>`;
 
         if (index === 6) {
           contentHtml += `
             <tr class="playoff-cutline-row">
-              <td colspan="8">
+              <td colspan="6">
                 ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
               </td>
             </tr>
@@ -568,14 +579,21 @@ permalink: /seasons/
 
         contentHtml += `
           <tr>
-            <td style="font-weight: bold;">#${index + 1}</td>
-            <td style="display: flex; align-items: center; gap: 10px;">
-              <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
-              <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
+            <td style="font-weight: bold; white-space: nowrap;">#${index + 1}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                <div>
+                  <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a></div>
+                  <div style="font-size: 0.82em; opacity: 0.75; display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                    <span>${team.username}</span>
+                    <span>•</span>
+                    ${divBadge}
+                  </div>
+                </div>
+              </div>
             </td>
-            <td>${divBadge}</td>
-            <td>${team.username}</td>
-            <td>${team.record}</td>
+            <td style="white-space: nowrap; font-weight: 600;">${team.record}</td>
             <td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>
             <td>${team.points_for}</td>
             <td>${team.points_against}</td>
@@ -583,7 +601,7 @@ permalink: /seasons/
         `;
       });
       
-      contentHtml += `</tbody></table></div>`;
+      contentHtml += `</tbody></table></div></div>`;
       contentHtml += renderSeasonRecords(season);
     }
 
@@ -644,33 +662,35 @@ permalink: /seasons/
                 <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
                 <span class="category-tag">Single-Week Highs</span>
               </div>
-              <table class="high-contrast-table">
-                <thead>
-                  <tr>
-                    <th>Rank</th>
-                    <th>Score</th>
-                    <th>Manager</th>
-                    <th>Team</th>
-                    <th>Week</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${r.top_game_scores.map((g, idx) => {
-                    const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
-                    return `
-                      <tr>
-                        <td style="font-weight: bold;">${rankLabel}</td>
-                        <td style="font-weight: 800; color: #4caf50; font-size: 1.05em;">${parseFloat(g.points).toFixed(2)}</td>
-                        <td>
-                          <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
-                        </td>
-                        <td>${g.team_name}</td>
-                        <td style="font-size: 0.85em; opacity: 0.8;">Week ${g.week}</td>
-                      </tr>
-                    `;
-                  }).join('')}
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="high-contrast-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 70px;">Rank</th>
+                      <th>Score</th>
+                      <th>Manager</th>
+                      <th>Team</th>
+                      <th>Week</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${r.top_game_scores.map((g, idx) => {
+                      const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
+                      return `
+                        <tr>
+                          <td style="font-weight: bold; white-space: nowrap;">${rankLabel}</td>
+                          <td style="font-weight: 800; color: #4caf50; font-size: 1.05em; white-space: nowrap;">${parseFloat(g.points).toFixed(2)}</td>
+                          <td>
+                            <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
+                          </td>
+                          <td>${g.team_name}</td>
+                          <td style="font-size: 0.85em; opacity: 0.8; white-space: nowrap;">Week ${g.week}</td>
+                        </tr>
+                      `;
+                    }).join('')}
+                  </tbody>
+                </table>
+              </div>
             </div>
           ` : ''}
 

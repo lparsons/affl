@@ -1,6 +1,7 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
+$content-width: 1080px;
 @import "minima";
 
 // Dark Mode Variables (Default)
@@ -84,7 +85,36 @@ body.light-mode th {
 
 th, td {
   border: 1px solid var(--border-color) !important;
-  padding: 12px 15px;
+  padding: 10px 14px;
+}
+
+// Responsive Table Container
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 10px;
+}
+
+// Data-Dense High Contrast Tables
+.high-contrast-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.high-contrast-table th,
+.high-contrast-table td {
+  padding: 8px 12px !important;
+  font-size: 0.88em;
+  vertical-align: middle;
+}
+
+// Markdown Tables Horizontal Scroll on Narrow Viewports
+.post-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 tr:nth-child(even) {
@@ -176,6 +206,8 @@ hr {
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .dashboard-card h2 {
