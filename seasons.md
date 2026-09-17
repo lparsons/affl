@@ -19,8 +19,16 @@ permalink: /seasons/
             {% assign total_g = s.wins | plus: s.losses %}
             {% if total_g > 0 %}{% assign has_played_games = true %}{% endif %}
           {% endfor %}
-          <option value="{{ season.year }}">
-            {{ season.year }}{% if season.year == site.current_season and has_played_games == false %} (Upcoming / Pre-Draft){% elsif season.year == site.data.latest_completed_season %} (Latest Final){% endif %}
+          <option value="{{ season.year }}" {% if season.year == site.data.default_season_year %}selected{% endif %}>
+            {{ season.year }}
+            {%- if season.year == site.current_season %}
+              {%- if has_played_games -%}
+                {%- if season.status == 'complete' %} (Final){% else %} (In Progress){% endif -%}
+              {%- elsif site.league_state == 'drafting' %} (Draft Underway)
+              {%- else %} (Upcoming / Pre-Draft)
+              {%- endif -%}
+            {%- elsif season.year == site.data.latest_completed_season %} (Latest Final)
+            {%- endif %}
           </option>
         {% endfor %}
       </select>
@@ -116,7 +124,7 @@ permalink: /seasons/
   const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
   const highlightsContainer = document.getElementById('season-highlights');
-  const defaultSeasonYear = "{{ site.data.latest_completed_season | default: 2025 }}";
+  const defaultSeasonYear = "{{ site.data.default_season_year | default: site.data.latest_completed_season | default: 2025 }}";
   
   const seasonsData = {
     {% for season in site.data.all_seasons %}

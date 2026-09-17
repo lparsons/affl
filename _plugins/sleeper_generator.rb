@@ -196,6 +196,20 @@ module Jekyll
       site.data['latest_completed_season'] = latest_comp ? latest_comp['year'] : (seasons.first ? seasons.first['year'] : 2025)
       site.data['reigning_season'] = latest_comp
 
+      # Determine default season for Seasons dashboard
+      # Option 2: Draft Day trigger (Drafting, Regular Season, or Playoffs defaults to current_season)
+      is_draft_or_active = ['drafting', 'regular_season', 'playoffs'].include?(site.config['league_state'])
+      current_season_data = seasons.find { |s| s['year'].to_s == site.config['current_season'].to_s }
+      has_games = current_season_data && current_season_data['standings'] && current_season_data['standings'].any? do |t|
+        (t['wins'].to_i + t['losses'].to_i) > 0
+      end
+
+      if is_draft_or_active || has_games
+        site.data['default_season_year'] = site.config['current_season']
+      else
+        site.data['default_season_year'] = site.data['latest_completed_season']
+      end
+
       if (site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?) && seasons.first && seasons.first['draft_id']
         site.config['current_draft_id'] = seasons.first['draft_id']
       end
