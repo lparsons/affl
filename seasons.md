@@ -58,18 +58,18 @@ permalink: /seasons/
       <table class="high-contrast-table">
         <thead>
           <tr>
-            <th style="min-width: 80px;">Season</th>
-            <th>🥇 Champion</th>
-            <th>🥈 Runner-Up</th>
-            <th>🚽 Toilet Bowl (Pick #1)</th>
-            <th>👑 Points King</th>
-            <th>🚀 Season High Score</th>
+            <th style="min-width: 80px; width: 90px; text-align: center;">Season</th>
+            <th style="width: 18%;">🥇 Champion</th>
+            <th style="width: 18%;">🥈 Runner-Up</th>
+            <th style="width: 18%;">🚽 Toilet Bowl (Pick #1)</th>
+            <th style="width: 18%;">👑 Points King</th>
+            <th style="width: 20%;">🚀 Season High Score</th>
           </tr>
         </thead>
         <tbody>
           {% for s in site.data.records.completed_seasons %}
             <tr>
-              <td>
+              <td style="text-align: center;">
                 <button onclick="updateSeasonsDashboard('{{ s.year }}'); window.location.hash='{{ s.year }}'; window.scrollTo({top: 0, behavior: 'smooth'});" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); border: 1px solid var(--border-color); font-weight: bold; border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap;" title="View {{ s.year }} Season Dashboard">
                   {{ s.year }} ↗
                 </button>

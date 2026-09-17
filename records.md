@@ -44,17 +44,17 @@ permalink: /records/
         <table class="high-contrast-table">
           <thead>
             <tr>
-              <th style="width: 70px;">Rank</th>
-              <th>Score</th>
+              <th style="width: 80px; text-align: center;">Rank</th>
+              <th style="width: 130px;">Score</th>
               <th>Team & Manager</th>
-              <th>Season</th>
-              <th>Week</th>
+              <th style="width: 100px; text-align: center;">Season</th>
+              <th style="width: 110px; text-align: center;">Week</th>
             </tr>
           </thead>
           <tbody>
             {% for game in site.data.records.highest_scores limit:10 %}
               <tr>
-                <td style="font-weight: bold; white-space: nowrap;">
+                <td style="font-weight: bold; white-space: nowrap; text-align: center;">
                   {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
                 </td>
                 <td style="font-weight: 800; color: #4caf50; font-size: 1.1em; white-space: nowrap;">{{ game.points | round: 2 }}</td>
@@ -62,8 +62,8 @@ permalink: /records/
                   <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/{{ game.user_id }}/">{{ game.team_name }}</a></div>
                   <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ game.user_id }}/">{{ game.username }}</a></div>
                 </td>
-                <td><a href="{{ site.baseurl }}/seasons/#{{ game.year }}"><strong>{{ game.year }}</strong></a></td>
-                <td style="font-size: 0.85em; opacity: 0.8; white-space: nowrap;">Week {{ game.week }}</td>
+                <td style="text-align: center;"><a href="{{ site.baseurl }}/seasons/#{{ game.year }}"><strong>{{ game.year }}</strong></a></td>
+                <td style="font-size: 0.85em; opacity: 0.8; white-space: nowrap; text-align: center;">Week {{ game.week }}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -71,7 +71,7 @@ permalink: /records/
       </div>
     </div>
 
-    <!-- Career Consistency & Longevity -->
+    <!-- Consistency & Longevity -->
     <div class="dashboard-card">
       <h2>🔥 Career PPG Leaders</h2>
       <p style="font-size: 0.8em; opacity: 0.6; margin-top: -10px; margin-bottom: 15px;">Min. 2 seasons played</p>
@@ -144,17 +144,17 @@ permalink: /records/
         <table class="high-contrast-table">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Points</th>
+              <th style="width: 80px; text-align: center;">Rank</th>
+              <th style="width: 130px;">Points</th>
               <th>Team & Manager</th>
-              <th>Season</th>
-              <th>Record</th>
+              <th style="width: 100px; text-align: center;">Season</th>
+              <th style="width: 110px; text-align: center;">Record</th>
             </tr>
           </thead>
           <tbody>
             {% for season_stat in site.data.records.most_season_points limit:10 %}
               <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; text-align: center;">
                   {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
                 </td>
                 <td style="font-weight: 800; color: var(--link-color); font-size: 1.05em; white-space: nowrap;">{{ season_stat.points_for | round: 2 }}</td>
@@ -162,8 +162,8 @@ permalink: /records/
                   <div style="font-weight: bold; white-space: nowrap;">{{ season_stat.team_name }}</div>
                   <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ season_stat.user_id }}/">{{ season_stat.username }}</a></div>
                 </td>
-                <td><a href="{{ site.baseurl }}/seasons/#{{ season_stat.year }}"><strong>{{ season_stat.year }}</strong></a></td>
-                <td style="white-space: nowrap;">{{ season_stat.record }}</td>
+                <td style="text-align: center;"><a href="{{ site.baseurl }}/seasons/#{{ season_stat.year }}"><strong>{{ season_stat.year }}</strong></a></td>
+                <td style="white-space: nowrap; text-align: center;">{{ season_stat.record }}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -179,18 +179,18 @@ permalink: /records/
         <table class="high-contrast-table">
           <thead>
             <tr>
-              <th style="min-width: 80px;">Season</th>
-              <th>🥇 Champion</th>
-              <th>🥈 Runner-Up</th>
-              <th>🚽 Toilet Bowl (Pick #1)</th>
-              <th>👑 Points King</th>
-              <th>🚀 Season High Score</th>
+              <th style="min-width: 80px; width: 90px; text-align: center;">Season</th>
+              <th style="width: 18%;">🥇 Champion</th>
+              <th style="width: 18%;">🥈 Runner-Up</th>
+              <th style="width: 18%;">🚽 Toilet Bowl (Pick #1)</th>
+              <th style="width: 18%;">👑 Points King</th>
+              <th style="width: 20%;">🚀 Season High Score</th>
             </tr>
           </thead>
           <tbody>
             {% for season in site.data.records.completed_seasons %}
               <tr>
-                <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
+                <td style="text-align: center;"><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
                 <td>
                   {% if season.podium and season.podium.first %}
                     <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ season.podium.first.user_id }}/">{{ season.podium.first.team_name }}</a></div>

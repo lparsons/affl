@@ -96,21 +96,29 @@ th, td {
   margin-bottom: 10px;
 }
 
-// Data-Dense High Contrast Tables
-.high-contrast-table {
-  width: 100%;
-  margin-bottom: 0;
+// Data-Dense High Contrast Tables & Full Width Expansion
+table,
+.high-contrast-table,
+.table-responsive > table,
+.dashboard-card table,
+.post-content table.high-contrast-table,
+.post-content .table-responsive table {
+  display: table !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 auto !important;
+  border-collapse: collapse;
 }
 
 .high-contrast-table th,
 .high-contrast-table td {
-  padding: 8px 12px !important;
-  font-size: 0.88em;
+  padding: 10px 14px !important;
+  font-size: 0.9em;
   vertical-align: middle;
 }
 
-// Markdown Tables Horizontal Scroll on Narrow Viewports
-.post-content table {
+// Markdown Tables Horizontal Scroll: only apply display: block to non-high-contrast standalone tables
+.post-content > table:not(.high-contrast-table) {
   display: block;
   width: 100%;
   overflow-x: auto;
