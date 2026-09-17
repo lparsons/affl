@@ -526,6 +526,7 @@ permalink: /seasons/
               <tr>
                 <th>Seed</th>
                 <th>Team</th>
+                <th>Division</th>
                 <th>Manager</th>
                 <th>Record</th>
                 <th>Playoff Status</th>
@@ -539,11 +540,16 @@ permalink: /seasons/
       season.standings.forEach((team, index) => {
         const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
         const clinch = clinchMap[team.user_id];
+        const divName = team.division_name || (team.division === 2 ? 'Yang' : 'Yin');
+        const isYang = team.division === 2 || divName.toLowerCase() === 'yang';
+        const divBadge = isYang
+          ? `<span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800; font-size: 0.8em; padding: 2px 8px; font-weight: 600;">☯️ Yang</span>`
+          : `<span class="category-tag" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); font-size: 0.8em; padding: 2px 8px; font-weight: 600;">☯️ Yin</span>`;
 
         if (index === 6) {
           contentHtml += `
             <tr class="playoff-cutline-row">
-              <td colspan="7">
+              <td colspan="8">
                 ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
               </td>
             </tr>
@@ -557,6 +563,7 @@ permalink: /seasons/
               <img src="${avatarUrl}" width="30" height="30" style="border-radius: 50%;">
               <a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a>
             </td>
+            <td>${divBadge}</td>
             <td>${team.username}</td>
             <td>${team.record}</td>
             <td>${clinch ? `<span class="${clinch.badgeClass}">${clinch.icon}</span>` : '-'}</td>
