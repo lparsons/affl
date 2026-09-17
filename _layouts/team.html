@@ -17,23 +17,40 @@ layout: default
             <span style="text-transform: uppercase; font-weight: bold; font-size: 0.85em;">Past Aliases:</span> {{ page.team_data.past_names | join: ' • ' }}
           </p>
         {% endif %}
+        {% if page.team_data.current_season_complete == false and page.team_data.current_clinch_status %}
+          <div style="margin-top: 6px;">
+            <span class="{{ page.team_data.current_clinch_status.badge_class }}" style="font-size: 0.8em; padding: 3px 8px;">
+              {{ page.team_data.latest_year }} Live: {{ page.team_data.current_clinch_status.icon }} ({{ page.team_data.current_record }})
+            </span>
+          </div>
+        {% endif %}
       </div>
     </div>
     
     <div style="text-align: right;">
-      <div style="display: flex; gap: 15px; justify-content: flex-end; margin-bottom: 10px;">
+      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 10px; flex-wrap: wrap;">
         {% if page.team_data.stats.championships > 0 %}
-          <div title="Championships" style="background: rgba(255,215,0,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #ffd700; color: #ffd700; font-weight: bold;">
+          <div title="Championships (1st Place)" style="background: rgba(255,215,0,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #ffd700; color: #ffd700; font-weight: bold;">
             🏆 {{ page.team_data.stats.championships }}
           </div>
         {% endif %}
+        {% if page.team_data.stats.runner_ups > 0 %}
+          <div title="Runner-Up (2nd Place)" style="background: rgba(192,192,192,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #c0c0c0; color: #c0c0c0; font-weight: bold;">
+            🥈 {{ page.team_data.stats.runner_ups }}
+          </div>
+        {% endif %}
+        {% if page.team_data.stats.third_places > 0 %}
+          <div title="3rd Place Podium" style="background: rgba(205,127,50,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #cd7f32; color: #cd7f32; font-weight: bold;">
+            🥉 {{ page.team_data.stats.third_places }}
+          </div>
+        {% endif %}
         {% if page.team_data.stats.toilet_bowls > 0 %}
-          <div title="Toilet Bowls" style="background: rgba(165,42,42,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #a52a2a; color: #a52a2a; font-weight: bold;">
+          <div title="Toilet Bowl Titles" style="background: rgba(255,152,0,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid #ff9800; color: #ff9800; font-weight: bold;">
             🚽 {{ page.team_data.stats.toilet_bowls }}
           </div>
         {% endif %}
       </div>
-      <p style="margin: 0; opacity: 0.6; font-size: 0.9em;">Member since {{ page.team_data.seasons.last.year }}</p>
+      <p style="margin: 0; opacity: 0.6; font-size: 0.9em;">Member since {{ page.team_data.first_year | default: page.team_data.seasons.last.year }}</p>
     </div>
   </div>
 
@@ -115,7 +132,28 @@ layout: default
             <td><a href="{{ site.baseurl }}/seasons/#{{ season.year }}"><strong>{{ season.year }}</strong></a></td>
             <td>{{ season.team_name }}</td>
             <td>
-              {% if season.rank == 1 %}🥇{% elsif season.rank == 2 %}🥈{% elsif season.rank == 3 %}🥉{% else %}{{ season.rank }}{% endif %}
+              {% if season.is_complete %}
+                {% if season.rank == 1 %}
+                  <span title="League Champion" style="font-weight: bold; color: #ffd700;">🥇 1st</span>
+                {% elsif season.rank == 2 %}
+                  <span title="Runner-Up" style="font-weight: bold; color: #c0c0c0;">🥈 2nd</span>
+                {% elsif season.rank == 3 %}
+                  <span title="3rd Place" style="font-weight: bold; color: #cd7f32;">🥉 3rd</span>
+                {% elsif season.is_toilet_bowl_winner or season.rank == 7 %}
+                  <span title="Toilet Bowl Winner" style="font-weight: bold; color: #ff9800;">🚽 7th</span>
+                {% else %}
+                  {{ season.rank }}
+                {% endif %}
+              {% else %}
+                <span style="font-weight: bold;">#{{ season.rank }}</span>
+                {% if season.clinch_status %}
+                  <span class="{{ season.clinch_status.badge_class }}" style="margin-left: 6px; font-size: 0.8em; display: inline-block;">
+                    {{ season.clinch_status.icon }}
+                  </span>
+                {% else %}
+                  <span style="font-size: 0.8em; opacity: 0.6; margin-left: 4px;">(In Progress)</span>
+                {% endif %}
+              {% endif %}
             </td>
             <td>{{ season.wins }}-{{ season.losses }}</td>
             <td>{{ season.points_for | round: 2 }}</td>

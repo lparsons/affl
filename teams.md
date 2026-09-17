@@ -140,6 +140,14 @@ permalink: /teams/
                 </div>
               </div>
 
+              {% if team.current_season_complete == false and team.current_clinch_status %}
+                <div style="margin: -4px 0 10px 0;">
+                  <span class="{{ team.current_clinch_status.badge_class }}" style="font-size: 0.8em; padding: 3px 8px;">
+                    {{ team.latest_year }} Playoff Picture: {{ team.current_clinch_status.icon }}
+                  </span>
+                </div>
+              {% endif %}
+
               <!-- Trophy Cabinet Badges -->
               <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; font-size: 0.82em;">
                 {% if team.stats.championships > 0 %}
@@ -152,12 +160,17 @@ permalink: /teams/
                     🥈 {{ team.stats.runner_ups }} Runner-Up
                   </span>
                 {% endif %}
+                {% if team.stats.third_places > 0 %}
+                  <span style="background: rgba(205,127,50,0.15); color: #cd7f32; border: 1px solid rgba(205,127,50,0.4); padding: 3px 8px; border-radius: 6px; font-weight: bold;">
+                    🥉 {{ team.stats.third_places }} 3rd Place
+                  </span>
+                {% endif %}
                 {% if team.stats.toilet_bowls > 0 %}
                   <span style="background: rgba(255,152,0,0.15); color: #ff9800; border: 1px solid rgba(255,152,0,0.4); padding: 3px 8px; border-radius: 6px; font-weight: bold;">
                     🚽 {{ team.stats.toilet_bowls }} Toilet Bowl
                   </span>
                 {% endif %}
-                {% if team.stats.championships == 0 and team.stats.runner_ups == 0 and team.stats.toilet_bowls == 0 %}
+                {% if team.stats.championships == 0 and team.stats.runner_ups == 0 and team.stats.third_places == 0 and team.stats.toilet_bowls == 0 %}
                   <span style="opacity: 0.5; font-style: italic;">Chasing first league trophy</span>
                 {% endif %}
               </div>

@@ -30,6 +30,7 @@
             <th>Team</th>
             <th>Manager</th>
             <th>Record</th>
+            {% if has_current_games %}<th>Status</th>{% endif %}
             <th>Points</th>
           </tr>
         </thead>
@@ -37,7 +38,11 @@
           {% for team in display_season.standings limit:5 %}
             <tr>
               <td style="font-weight: bold;">
-                {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
+                {% if has_current_games %}
+                  #{{ forloop.index }}
+                {% else %}
+                  {% if forloop.index == 1 %}🥇 1{% elsif forloop.index == 2 %}🥈 2{% elsif forloop.index == 3 %}🥉 3{% else %}#{{ forloop.index }}{% endif %}
+                {% endif %}
               </td>
               <td style="display: flex; align-items: center; gap: 10px;">
                 {% if team.avatar %}
@@ -49,6 +54,15 @@
               </td>
               <td>{{ team.username }}</td>
               <td>{{ team.record }}</td>
+              {% if has_current_games %}
+                <td>
+                  {% if team.clinch_status %}
+                    <span class="{{ team.clinch_status.badge_class }}">{{ team.clinch_status.icon }}</span>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+              {% endif %}
               <td>{{ team.points_for | round: 2 }}</td>
             </tr>
           {% endfor %}

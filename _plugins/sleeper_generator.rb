@@ -34,6 +34,13 @@ module Jekyll
               'third' => season_data['standings'][2]
             }
           end
+
+          clinch_map = (!is_complete && has_games && season_data['standings']) ? compute_clinch_status(season_data['standings']) : {}
+          if !clinch_map.empty?
+            season_data['standings'].each do |t|
+              t['clinch_status'] = clinch_map[t['user_id']]
+            end
+          end
           
           # Calculate Season Awards & Notable Records (High Scores, Matchup Thrillers)
           if has_games && season_data['matchups'] && !season_data['matchups'].empty?
@@ -137,6 +144,10 @@ module Jekyll
               teams_by_user[user_id]['latest_year'] = season_data['year'].to_i
               teams_by_user[user_id]['current_division_name'] = team['division_name'] || (team['division'] == 1 ? 'Yin' : (team['division'] == 2 ? 'Yang' : nil))
               teams_by_user[user_id]['draft_slot'] = team['draft_slot']
+              teams_by_user[user_id]['current_clinch_status'] = team['clinch_status']
+              teams_by_user[user_id]['current_season_complete'] = is_complete
+              teams_by_user[user_id]['current_record'] = team['record'] || "#{team['wins']}-#{team['losses']}"
+              teams_by_user[user_id]['current_rank'] = team['rank'] || (index + 1)
             end
 
             # Only add to career historical record if season is complete or has played games
@@ -145,7 +156,9 @@ module Jekyll
                 'year' => season_data['year'],
                 'team_name' => team['team_name'],
                 'rank' => team['rank'] || (index + 1),
-                'is_toilet_bowl_winner' => team['is_toilet_bowl_winner'] || false,
+                'is_toilet_bowl_winner' => is_complete && (team['is_toilet_bowl_winner'] || false),
+                'is_complete' => is_complete,
+                'clinch_status' => team['clinch_status'],
                 'wins' => team['wins'],
                 'losses' => team['losses'],
                 'points_for' => team['points_for'],
@@ -179,7 +192,7 @@ module Jekyll
       seasons.sort_by! { |s| -s['year'].to_i }
       site.data['all_seasons'] = seasons
 
-      latest_comp = seasons.find { |s| s['status'] == 'complete' || (s['standings'] && s['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 }) }
+      latest_comp = seasons.find { |s| s['status'] == 'complete' }
       site.data['latest_completed_season'] = latest_comp ? latest_comp['year'] : (seasons.first ? seasons.first['year'] : 2025)
       site.data['reigning_season'] = latest_comp
 
@@ -195,17 +208,18 @@ module Jekyll
         losses = data['seasons'].sum { |s| s['losses'] }
         points_for = data['seasons'].sum { |s| s['points_for'] }
         points_against = data['seasons'].sum { |s| s['points_against'] }
-        championships = data['seasons'].count { |s| s['rank'] == 1 }
-        runner_ups = data['seasons'].count { |s| s['rank'] == 2 }
-        third_places = data['seasons'].count { |s| s['rank'] == 3 }
-        toilet_bowls = data['seasons'].count { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 }
+        championships = data['seasons'].count { |s| s['is_complete'] && s['rank'] == 1 }
+        runner_ups = data['seasons'].count { |s| s['is_complete'] && s['rank'] == 2 }
+        third_places = data['seasons'].count { |s| s['is_complete'] && s['rank'] == 3 }
+        toilet_bowls = data['seasons'].count { |s| s['is_complete'] && (s['is_toilet_bowl_winner'] || s['rank'] == 7) }
         
         max_score = data['matchups'].max_by { |m| m['points'] } || { 'points' => 0, 'week' => 0, 'year' => 0 }
         
         total_games = wins + losses
         win_pct = total_games > 0 ? (wins.to_f / total_games * 100).round(2) : 0
         avg_points = total_games > 0 ? (points_for / total_games).round(2) : 0
-        best_finish = data['seasons'].map { |s| s['rank'] }.min
+        completed_seasons = data['seasons'].select { |s| s['is_complete'] }
+        best_finish = (completed_seasons.empty? ? data['seasons'] : completed_seasons).map { |s| s['rank'] }.min
 
         all_unique_names = data['all_names'].compact.uniq
         past_names = all_unique_names.reject { |n| n == data['current_team_name'] }
@@ -260,7 +274,7 @@ module Jekyll
 
       all_team_seasons = []
       site.data['all_seasons'].each do |season|
-        next unless season['status'] == 'complete' || (season['standings'] && season['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 })
+        next unless season['status'] == 'complete'
         season['standings'].each do |team|
           all_team_seasons << team.merge(
             'year' => season['year'],
@@ -273,7 +287,7 @@ module Jekyll
       end
 
       completed_seasons = site.data['all_seasons'].select do |s|
-        s['status'] == 'complete' || (s['standings'] && s['standings'].any? { |t| (t['wins'].to_i + t['losses'].to_i) > 0 })
+        s['status'] == 'complete'
       end
 
       site.data['records'] = {
@@ -287,6 +301,59 @@ module Jekyll
         'highest_avg_points' => teams_by_user.values.select { |t| t['seasons'].size > 1 }.sort_by { |t| -t['stats']['avg_points'] }.first(10),
         'completed_seasons' => completed_seasons
       }
+    end
+
+    def compute_clinch_status(standings, total_weeks = 14)
+      return {} if standings.nil? || standings.empty?
+
+      games_played = standings.map do |t|
+        (t['wins'].to_i + t['losses'].to_i)
+      end.max || 0
+
+      return {} if games_played == 0
+
+      remaining = [0, total_weeks - games_played].max
+
+      teams_with_bounds = standings.map.with_index do |t, idx|
+        wins = t['wins'].to_i
+        pf = t['points_for'].to_f
+        {
+          'user_id' => t['user_id'],
+          'current_rank' => idx + 1,
+          'wins' => wins,
+          'max_wins' => wins + remaining,
+          'pf' => pf
+        }
+      end
+
+      sorted = teams_with_bounds.sort_by { |t| [-t['wins'], -t['pf']] }
+
+      clinch_map = {}
+      third_team = sorted[2]   # 3rd place (index 2)
+      seventh_team = sorted[6] # 7th place (index 6)
+      sixth_team = sorted[5]   # 6th place (index 5)
+
+      sorted.each_with_index do |team, index|
+        is_bye_clinched = third_team && (team['wins'] > third_team['max_wins'])
+        is_playoff_clinched = seventh_team && (team['wins'] > seventh_team['max_wins'])
+        is_eliminated = sixth_team && (team['max_wins'] < sixth_team['wins'])
+
+        status = if is_bye_clinched
+                   { 'label' => 'Clinched Bye', 'badge_class' => 'badge-clinch badge-bye', 'icon' => '⭐ [BYE] Bye Clinched' }
+                 elsif is_playoff_clinched
+                   { 'label' => 'Clinched Playoffs', 'badge_class' => 'badge-clinch badge-playoffs', 'icon' => '🟢 [X] Playoff Clinched' }
+                 elsif is_eliminated
+                   { 'label' => 'Toilet Bowl Bound', 'badge_class' => 'badge-clinch badge-tb', 'icon' => '🚽 [TB] Toilet Bowl Bound' }
+                 elsif index < 6
+                   { 'label' => 'In Playoff Position', 'badge_class' => 'badge-clinch badge-bubble', 'icon' => '🟡 In Contention' }
+                 else
+                   { 'label' => 'In the Hunt', 'badge_class' => 'badge-clinch badge-hunt', 'icon' => 'In the Hunt' }
+                 end
+
+        clinch_map[team['user_id']] = status
+      end
+
+      clinch_map
     end
 
     def calculate_league_state(site)
