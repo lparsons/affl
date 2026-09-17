@@ -238,7 +238,7 @@ permalink: /seasons/
       // 🏆 Final Podium Card
       if (season.podium) {
         highlightsHtml += `
-          <div class="dashboard-card" style="grid-column: span 2;">
+          <div class="dashboard-card" style="grid-column: 1 / -1;">
             <h2>🏆 Final Podium</h2>
             <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 0; gap: 20px;">
               <div style="text-align: center; flex: 1; order: 2;">
@@ -267,37 +267,37 @@ permalink: /seasons/
       // 🌟 Awards & Honors Card
       if (season.awards || season.toilet_bowl_winner) {
         highlightsHtml += `
-          <div class="dashboard-card">
+          <div class="dashboard-card" style="grid-column: 1 / -1;">
             <h2>🌟 Season Honors</h2>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
         `;
 
         if (season.toilet_bowl_winner) {
           highlightsHtml += `
-              <div>
-                <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1)</p>
-                <p style="margin: 0; font-weight: bold; color: #ff9800;"><a href="{{ site.baseurl }}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
-                <p style="margin: 0; font-size: 0.85em; opacity: 0.8;">${season.toilet_bowl_winner.username} (${season.toilet_bowl_winner.record})</p>
+              <div style="padding: 12px 15px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
+                <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1)</p>
+                <p style="margin: 4px 0 0; font-weight: bold; color: #ff9800; font-size: 1.05em;"><a href="{{ site.baseurl }}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
+                <p style="margin: 2px 0 0; font-size: 0.85em; opacity: 0.8;">${season.toilet_bowl_winner.username} (${season.toilet_bowl_winner.record})</p>
               </div>
           `;
         }
 
         if (season.awards && season.awards.highest_game) {
           highlightsHtml += `
-              <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
-                <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">🚀 High Score of Year</p>
-                <p style="margin: 0; font-weight: bold; color: #4caf50;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
-                <p style="margin: 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
+              <div style="padding: 12px 15px; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px;">
+                <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚀 High Score of Year</p>
+                <p style="margin: 4px 0 0; font-weight: bold; color: #4caf50; font-size: 1.05em;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
+                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
               </div>
           `;
         }
 
         if (season.awards && season.awards.regular_season_points_leader) {
           highlightsHtml += `
-              <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
-                <p style="margin: 0; font-size: 0.8em; opacity: 0.6; text-transform: uppercase; font-weight: 800;">👑 Regular Season Points King</p>
-                <p style="margin: 0; font-weight: bold; color: var(--link-color);">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
-                <p style="margin: 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
+              <div style="padding: 12px 15px; background: rgba(42, 122, 226, 0.08); border: 1px solid rgba(42, 122, 226, 0.3); border-radius: 8px;">
+                <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">👑 Regular Season Points King</p>
+                <p style="margin: 4px 0 0; font-weight: bold; color: var(--link-color); font-size: 1.05em;">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
+                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
               </div>
           `;
         }
@@ -358,7 +358,7 @@ permalink: /seasons/
     } else if (!hasGames) {
       // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)
       highlightsHtml += `
-        <div class="dashboard-card" style="grid-column: span 2;">
+        <div class="dashboard-card">
           <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
           <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
             The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions. 
@@ -491,7 +491,7 @@ permalink: /seasons/
     } else {
       // 🏈 ACTIVE REGULAR SEASON IN PROGRESS (GAMES PLAYED)
       highlightsHtml += `
-        <div class="dashboard-card" style="grid-column: span 2;">
+        <div class="dashboard-card" style="grid-column: 1 / -1;">
           <h2>🏈 Active Regular Season & Playoff Race</h2>
           <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
             Standings below update live every Tuesday morning. Top 6 seeds punch tickets to the Championship Playoffs (Seeds 1 & 2 earn byes), while Seeds 7–12 compete in the Toilet Bowl bracket.
@@ -508,7 +508,17 @@ permalink: /seasons/
           <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
             • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
             • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
-            • Final podium places & Toilet Bowl winner lock upon conclusion of Week 17.
+            • <strong>Championship:</strong> Winner earns the AFFL Trophy & ultimate league glory.<br>
+            • <strong>Toilet Bowl:</strong> Winner claims next year's <strong>#1 Overall Draft Pick</strong>.
+          </p>
+        </div>
+        <div class="dashboard-card">
+          <h2>⚖️ Playoff Structure & Seeding</h2>
+          <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
+            • <strong>Seeds 1 & 2:</strong> Top 2 teams (Division Winners) earn 1st-round byes.<br>
+            • <strong>Seeds 3–6:</strong> Next best regular season records advance to Wild Card round.<br>
+            • <strong>Tiebreakers:</strong> 1. Overall Record, 2. Total Points For (PF), 3. Head-to-Head record.<br>
+            • <a href="{{ site.baseurl }}/rules/" style="text-decoration: underline;">View Full Constitution Rules &rarr;</a>
           </p>
         </div>
       `;
@@ -626,10 +636,10 @@ permalink: /seasons/
           ` : ''}
         </div>
 
-        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        <div class="dashboard-grid" style="grid-template-columns: 1fr; gap: 20px;">
           <!-- Top Single-Game Scores of Season -->
           ${r.top_game_scores && r.top_game_scores.length > 0 ? `
-            <div class="dashboard-card" style="grid-column: span 2;">
+            <div class="dashboard-card">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
                 <span class="category-tag">Single-Week Highs</span>
@@ -665,40 +675,43 @@ permalink: /seasons/
           ` : ''}
 
           <!-- Matchup Highlights (Highest Combined & Closest) -->
-          <div class="dashboard-card" style="display: flex; flex-direction: column; gap: 20px;">
-            ${r.highest_scoring_matchups && r.highest_scoring_matchups.length > 0 ? `
-              <div>
-                <h3 style="margin: 0 0 10px; font-size: 1.1em;">⚔️ Wildest Shootouts</h3>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                  ${r.highest_scoring_matchups.map(m => `
-                    <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
-                      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                        <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
-                        <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
+          <div class="dashboard-card">
+            <h3 style="margin: 0 0 15px; font-size: 1.2em;">⚔️ Season Matchup Showcases</h3>
+            <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+              ${r.highest_scoring_matchups && r.highest_scoring_matchups.length > 0 ? `
+                <div>
+                  <h4 style="margin: 0 0 10px; font-size: 1.05em; color: var(--link-color);">💥 Wildest Shootouts</h4>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${r.highest_scoring_matchups.map(m => `
+                      <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
+                          <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
+                        </div>
+                        <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
                       </div>
-                      <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
-                    </div>
-                  `).join('')}
+                    `).join('')}
+                  </div>
                 </div>
-              </div>
-            ` : ''}
+              ` : ''}
 
-            ${r.closest_matchups && r.closest_matchups.length > 0 ? `
-              <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
-                <h3 style="margin: 0 0 10px; font-size: 1.1em;">🎯 Closest Nail-Biters</h3>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                  ${r.closest_matchups.map(m => `
-                    <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
-                      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                        <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
-                        <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
+              ${r.closest_matchups && r.closest_matchups.length > 0 ? `
+                <div>
+                  <h4 style="margin: 0 0 10px; font-size: 1.05em; color: #ff9800;">🎯 Closest Nail-Biters</h4>
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${r.closest_matchups.map(m => `
+                      <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
+                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
+                          <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
+                        </div>
+                        <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
                       </div>
-                      <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
-                    </div>
-                  `).join('')}
+                    `).join('')}
+                  </div>
                 </div>
-              </div>
-            ` : ''}
+              ` : ''}
+            </div>
           </div>
         </div>
       </div>

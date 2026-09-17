@@ -55,21 +55,24 @@ layout: default
   </div>
 
   <!-- Career Stats Grid -->
-  <div class="dashboard-grid">
+  <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));">
     <div class="dashboard-card">
       <h2>Career Record</h2>
-      <div style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
-        <div style="text-align: center;">
-          <p style="font-size: 2.5em; font-weight: 800; margin: 0;">{{ page.team_data.stats.wins }}</p>
-          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Wins</p>
+      <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 15px;">
+        <div style="display: flex; justify-content: space-around; align-items: center; padding: 5px 0;">
+          <div style="text-align: center;">
+            <p style="font-size: 2.2em; font-weight: 800; margin: 0;">{{ page.team_data.stats.wins }}</p>
+            <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Wins</p>
+          </div>
+          <div style="height: 40px; border-left: 1px solid var(--border-color); opacity: 0.5;"></div>
+          <div style="text-align: center;">
+            <p style="font-size: 2.2em; font-weight: 800; margin: 0;">{{ page.team_data.stats.losses }}</p>
+            <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Losses</p>
+          </div>
         </div>
-        <div style="text-align: center;">
-          <p style="font-size: 2.5em; font-weight: 800; margin: 0;">{{ page.team_data.stats.losses }}</p>
-          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Losses</p>
-        </div>
-        <div style="text-align: center;">
-          <p style="font-size: 2.5em; font-weight: 800; margin: 0; color: var(--link-color);">{{ page.team_data.stats.win_pct }}%</p>
-          <p style="margin: 0; opacity: 0.6; text-transform: uppercase; font-size: 0.8em; font-weight: bold;">Win %</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 10px;">
+          <span style="opacity: 0.8;">Win Rate:</span>
+          <span style="font-weight: bold; color: var(--link-color); font-size: 1.15em;">{{ page.team_data.stats.win_pct }}%</span>
         </div>
       </div>
     </div>

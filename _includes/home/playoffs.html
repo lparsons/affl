@@ -1,7 +1,7 @@
 <div class="dashboard-grid">
   <!-- Playoff Picture -->
   {% assign current_season_data = site.data.all_seasons | where: "year", site.current_season | first %}
-  <div class="dashboard-card" style="grid-column: span 2;">
+  <div class="dashboard-card">
     <h2>🏆 The Road to the Title</h2>
     <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
       <div style="flex: 1; min-width: 200px;">
@@ -19,10 +19,18 @@
     </div>
   </div>
 
-  <!-- Historic Context -->
+  <!-- Historic Context & Postseason Stakes -->
   <div class="dashboard-card">
-    <h2>📜 Join the Greats</h2>
-    <p style="font-size: 0.9em; margin-bottom: 15px;">Who will be the next champion of the Art of Fantasy Football?</p>
-    <a href="{{ site.baseurl }}/history/" class="btn">View All Champions</a>
+    <h2>📜 Postseason Honors & Stakes</h2>
+    <div style="font-size: 0.9em; opacity: 0.9; line-height: 1.5; display: flex; flex-direction: column; gap: 10px;">
+      <p style="margin: 0;">Who will be crowned the next champion of the Art of Fantasy Football?</p>
+      <div style="padding: 8px 10px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
+        <strong style="color: #ff9800;">🚽 Toilet Bowl Stakes:</strong> Winner claims next year's <strong>#1 Overall Draft Pick</strong>.
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap;">
+        <a href="{{ site.baseurl }}/history/" class="btn" style="flex: 1; text-align: center; min-width: 130px;">Hall of Champions</a>
+        <a href="{{ site.baseurl }}/records/" class="btn" style="flex: 1; text-align: center; min-width: 130px;">Record Book</a>
+      </div>
+    </div>
   </div>
 </div>

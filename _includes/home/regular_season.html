@@ -14,7 +14,7 @@
     {% assign display_season = site.data.reigning_season %}
   {% endif %}
 
-  <div class="dashboard-card" style="grid-column: span 2;">
+  <div class="dashboard-card" style="grid-column: 1 / -1;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
       <h2 style="margin: 0;">📊 {% if has_current_games %}{{ site.current_season }} Standings (Top 5){% else %}{{ display_season.year }} Standings (Reigning Final){% endif %}</h2>
       {% unless has_current_games %}
@@ -74,9 +74,24 @@
     {% endif %}
   </div>
 
+  <!-- Playoff Race & Stakes -->
+  <div class="dashboard-card">
+    <h2>🏆 Playoff Race & Stakes</h2>
+    <div style="font-size: 0.9em; opacity: 0.9; line-height: 1.5; display: flex; flex-direction: column; gap: 8px;">
+      <div><strong>Top 6 Advance:</strong> Seeds 1 & 2 earn 1st-round byes; Seeds 3–6 play Wild Card week.</div>
+      <div><strong>Toilet Bowl:</strong> Seeds 7–12 compete for next season's <strong>#1 Pick</strong>.</div>
+      <div style="margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap;">
+        <span class="badge-clinch badge-bye">⭐ Bye</span>
+        <span class="badge-clinch badge-playoffs">🟢 Clinched</span>
+        <span class="badge-clinch badge-tb">🚽 Toilet Bowl</span>
+        <span class="badge-clinch badge-bubble">🟡 In Contention</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Weekly Links -->
   <div class="dashboard-card">
-    <h2>🔗 Quick Links</h2>
+    <h2>🔗 Quick Links & Matchups</h2>
     <div style="display: flex; flex-direction: column; gap: 10px;">
       <a href="https://sleeper.com/leagues/{{ site.current_league_id }}/matchup" target="_blank" class="btn">Current Matchups</a>
       <a href="{{ site.baseurl }}/seasons/" class="btn">Seasons Dashboard</a>

@@ -37,7 +37,7 @@ permalink: /records/
     </div>
 
     <!-- All-Time Single Game Scoring Titans -->
-    <div class="dashboard-card" style="grid-column: span 2;">
+    <div class="dashboard-card" style="grid-column: 1 / -1;">
       <h2>🚀 All-Time Scoring Titans (Single-Week High Games)</h2>
       <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Highest single-game outputs across all AFFL regular season & playoff weeks</p>
       <table class="high-contrast-table">
@@ -113,8 +113,28 @@ permalink: /records/
       {% endif %}
     </div>
 
+    <!-- Best Single-Season Regular Records (Paired with Career Consistency) -->
+    <div class="dashboard-card">
+      <h2>⭐ Best Regular Season Records</h2>
+      <p style="font-size: 0.8em; opacity: 0.6; margin-top: -10px; margin-bottom: 15px;">Most dominant regular season performances</p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        {% for season_stat in site.data.records.best_season_records limit:6 %}
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);">
+            <div>
+              <a href="{{ site.baseurl }}/teams/{{ season_stat.user_id }}/" style="font-weight: bold;">{{ season_stat.username }}</a>
+              <span style="opacity: 0.6; font-size: 0.8em;">({{ season_stat.year }})</span>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-weight: 800; color: #4caf50;">{{ season_stat.record }}</span>
+              <span style="opacity: 0.6; font-size: 0.8em; display: block;">{{ season_stat.points_for | round: 1 }} pts</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
     <!-- Single Season Points Titans -->
-    <div class="dashboard-card" style="grid-column: span 2;">
+    <div class="dashboard-card" style="grid-column: 1 / -1;">
       <h2>👑 Single-Season Scoring Kings (Regular Season Points)</h2>
       <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">Most total regular-season points scored in a single 14-game campaign</p>
       <table class="high-contrast-table">
@@ -143,26 +163,6 @@ permalink: /records/
           {% endfor %}
         </tbody>
       </table>
-    </div>
-
-    <!-- Best Single-Season Regular Records -->
-    <div class="dashboard-card">
-      <h2>⭐ Best Regular Season Records</h2>
-      <p style="font-size: 0.8em; opacity: 0.6; margin-top: -10px; margin-bottom: 15px;">Most dominant regular season performances</p>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        {% for season_stat in site.data.records.best_season_records limit:6 %}
-          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);">
-            <div>
-              <a href="{{ site.baseurl }}/teams/{{ season_stat.user_id }}/" style="font-weight: bold;">{{ season_stat.username }}</a>
-              <span style="opacity: 0.6; font-size: 0.8em;">({{ season_stat.year }})</span>
-            </div>
-            <div style="text-align: right;">
-              <span style="font-weight: 800; color: #4caf50;">{{ season_stat.record }}</span>
-              <span style="opacity: 0.6; font-size: 0.8em; display: block;">{{ season_stat.points_for | round: 1 }} pts</span>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
     </div>
 
     <!-- Chronological Season Records Archive -->
