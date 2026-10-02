@@ -1,7 +1,7 @@
 {% assign reigning = site.data.reigning_season %}
 
 <div class="dashboard-grid">
-  <!-- Reigning Champion & 2025 Honors Spotlight -->
+  <!-- Reigning Champion & Honors Spotlight -->
   {% if reigning and reigning.champion %}
     <div class="dashboard-card" style="grid-column: 1 / -1;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
@@ -122,9 +122,9 @@
           <strong style="display: block; margin-bottom: 6px;">⚙️ Key League Rules</strong>
           <ul style="margin: 0; padding-left: 18px; font-size: 0.85em; opacity: 0.85; line-height: 1.5;">
             <li><strong>Keepers:</strong> 1 Keeper (Round 1 pick forfeited)</li>
-            <li><strong>Draft:</strong> Slow Snake (Sunday, August 30 @ 9:00 AM)</li>
+            <li><strong>Draft:</strong> Slow Snake ({{ site.draft_date | date: "%A, %B %d @ %I:%M %p" }})</li>
             <li><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</li>
-            <li><strong>Toilet Bowl:</strong> Winner earns 2027 Pick #1</li>
+            <li><strong>Toilet Bowl:</strong> Winner earns {{ site.current_season | plus: 1 }} Pick #1</li>
           </ul>
         </div>
         <div style="margin-top: 10px; display: flex; gap: 8px;">
