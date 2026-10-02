@@ -32,7 +32,7 @@ We believe that sustained fantasy football success comes from:
 * **Roster Depth:** 5 Bench spots + 1 IR / Reserve slot
 * **Keepers:** **1 Keeper** per team (forfeiting the team's Round 1 draft pick; due 1 week before the draft)
 * **Draft Type:** **Slow Snake Draft** hosted in the Sleeper Draft Room
-* **Playoff Tournament:** **6 Teams, 3 Weeks** (Weeks 15–17); Top 2 division winners earn 1st-round byes; 6-team **Toilet Bowl** with the #1 draft pick incentive for next season's winner.
+* **Playoff Tournament:** **6 Teams, 3 Weeks** (Weeks 15–17); Top 2 division winners earn 1st-round byes; 6-team **Toilet Bowl** with the #1 draft pick (post-keepers) incentive for next season's winner.
 * **Trade Deadline:** Conclusion of **Week 13**
 
 For complete constitution rules, tiebreakers, and governance policies, visit the [**Official Rules & Constitution**]({{ site.baseurl }}/rules/) page.

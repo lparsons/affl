@@ -182,7 +182,7 @@ permalink: /records/
               <th style="min-width: 80px; width: 90px; text-align: center;">Season</th>
               <th style="width: 18%;">🥇 Champion</th>
               <th style="width: 18%;">🥈 Runner-Up</th>
-              <th style="width: 18%;">🚽 Toilet Bowl (Pick #1)</th>
+              <th style="width: 18%;">🚽 Toilet Bowl (Pick #1 Post-Keepers)</th>
               <th style="width: 18%;">👑 Points King</th>
               <th style="width: 20%;">🚀 Season High Score</th>
             </tr>

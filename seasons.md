@@ -208,7 +208,7 @@ permalink: /seasons/
         if (season.toilet_bowl_winner) {
           highlightsHtml += `
               <div style="padding: 12px 15px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
-                <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1)</p>
+                <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1 Post-Keepers)</p>
                 <p style="margin: 4px 0 0; font-weight: bold; color: #ff9800; font-size: 1.05em;"><a href="{{ site.baseurl }}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
                 <p style="margin: 2px 0 0; font-size: 0.85em; opacity: 0.8;">${season.toilet_bowl_winner.username} (${season.toilet_bowl_winner.record})</p>
               </div>
@@ -299,7 +299,7 @@ permalink: /seasons/
           <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
           <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
             The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions. 
-            The slow snake draft commences on <strong>Sunday, August 30, 2026 at 09:00 AM EDT</strong>.
+            The slow snake draft commences on <strong>{{ site.draft_date | date: "%A, %B %d, %Y at %I:%M %p" }}</strong>.
           </p>
           <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
             <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
@@ -313,7 +313,7 @@ permalink: /seasons/
             <div><strong>Roster:</strong> 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 K, 1 DEF, 5 BN</div>
             <div><strong>Keepers:</strong> 1 Keeper per team (Forfeits Round 1 pick)</div>
             <div><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</div>
-            <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>#1 Pick</strong></div>
+            <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>Pick #1 (Post-Keepers)</strong></div>
           </div>
         </div>
       `;
@@ -448,7 +448,7 @@ permalink: /seasons/
             • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
             • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
             • <strong>Championship:</strong> Winner earns the AFFL Trophy & ultimate league glory.<br>
-            • <strong>Toilet Bowl:</strong> Winner claims next year's <strong>#1 Overall Draft Pick</strong>.
+            • <strong>Toilet Bowl:</strong> Winner claims next year's <strong>Pick #1 (Post-Keepers)</strong>.
           </p>
         </div>
         <div class="dashboard-card">
@@ -468,7 +468,7 @@ permalink: /seasons/
         <div class="dashboard-card" style="margin-top: 20px;">
           <h2>Current Season Standings & Playoff Picture</h2>
           <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
-            Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for #1 draft pick
+            Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for Pick #1 (Post-Keepers)
           </p>
           <div class="table-responsive">
             <table class="high-contrast-table">
@@ -498,7 +498,7 @@ permalink: /seasons/
           contentHtml += `
             <tr class="playoff-cutline-row">
               <td colspan="6">
-                ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (#1 Pick)
+                ⬆️ Top 6 Championship Playoffs (Seeds 1 & 2 Bye) • ⬇️ Bottom 6 Toilet Bowl Bracket (Pick #1 Post-Keepers)
               </td>
             </tr>
           `;
