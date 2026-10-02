@@ -10,15 +10,22 @@ The Art of Fantasy Football League (AFFL) website is a Jekyll-based static site 
 ## Core Architecture
 - **Data Integration & Plugins:**
   - `_plugins/league_calendar.rb`: Automatically calculates NFL Kickoff (Thursday after Labor Day) and all subsequent milestone dates (Keepers, Draft, Claims, Trade Deadline, Playoffs, Pro Bowl). Detects anomalies and displays warning alerts if dates are suspicious. Supports overrides via `_config.yml`.
-  - `_plugins/sleeper_generator.rb`: Fetches historical seasons and career team profiles via Sleeper API during build; generates all-time record books and team profile pages.
-  - `_scripts/update_standings.rb`: Standalone script to pull live standings and matchups for all seasons from Sleeper and write JSON data to `_data/seasons/`.
+  - `_plugins/sleeper_generator.rb`: Fetches historical seasons and career team profiles via Sleeper API during build; generates all-time record books and team profile pages. Enforces completed-week thresholds (`last_scored_leg` / standings games played) so in-progress and unplayed matchups never pollute season superlatives, career logs, nail-biters, or shootouts.
+  - `_scripts/update_standings.rb`: Standalone script to pull live standings and matchups for all seasons from Sleeper and write JSON data to `_data/seasons/` (including `last_scored_leg`).
 - **Pages & Components:**
   - `index.md`: Dynamic homepage dashboard with upcoming milestone countdown banner and season phase switching (`predraft`, `regular_season`, `playoffs`, `offseason`).
   - `rules.md`: Complete league constitution and governance rules.
   - `schedule.md`: Interactive milestone timeline and recurring in-season deadlines.
-  - `seasons.md`: Interactive seasons dashboard with podiums, awards, and historical standings.
+  - `seasons.md`: Interactive seasons dashboard with podiums, awards, historical standings, and matchup showcases (filtered to completed weeks with valid scores).
   - `records.md`: All-time record book and hall of champions.
   - `about.md`: League mission, roster format, scoring summary, and contact information.
+
+## Recent Updates & Bug Fixes
+- **In-Progress Week & 0–0 Matchup Filtering (Seasons Dashboard):**
+  - Resolved issue where active/incomplete weeks (e.g., Week 4 with 0–0 scores) populated "Closest Nail-Biters" and "Wildest Shootouts".
+  - `_plugins/sleeper_generator.rb` now restricts season superlative calculations and career matchups strictly to completed weeks (`completed_weeks_limit`) and ignores unplayed `0 <= points` matchups.
+  - `seasons.md` UI safely validates `winner_points > 0 && loser_points > 0 && total_points > 0` before rendering matchup cards and single-game highs.
+  - `_scripts/update_standings.rb` persists Sleeper's `last_scored_leg` to season JSONs.
 
 ## Building and Running Locally
 - **Install Dependencies:** `bundle install`
@@ -47,6 +54,6 @@ When setting up the 2026 season in the Sleeper App/Web:
 ## 🎯 Next Steps on Other Computer
 1. Clone / Pull repository: `git pull origin main`
 2. Run `bundle install` (if Ruby/bundler installed).
-3. Monitor owner responses to "I'm in" roll call.
-4. Input keeper designations and finalized draft order into Sleeper once keepers lock on August 23.
+3. Update Sleeper data: `.\update_affl.bat` or `ruby _scripts\update_standings.rb`.
+4. Run local server: `.\bin\jekyll.cmd serve` and verify season dashboard and completed weeks.
 

@@ -237,6 +237,7 @@ def update_all_seasons
       'draft_id' => info['draft_id'],
       'name' => info['name'],
       'status' => info['status'],
+      'last_scored_leg' => info.dig('settings', 'last_scored_leg'),
       'divisions' => {
         '1' => { 'name' => info.dig('metadata', 'division_1') || 'Yin', 'avatar' => info.dig('metadata', 'division_1_avatar') },
         '2' => { 'name' => info.dig('metadata', 'division_2') || 'Yang', 'avatar' => info.dig('metadata', 'division_2_avatar') }

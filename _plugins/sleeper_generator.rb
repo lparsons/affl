@@ -42,17 +42,39 @@ module Jekyll
             end
           end
           
+          # Determine completed weeks threshold
+          # Completed seasons have all weeks completed.
+          # In-progress seasons only include weeks that have concluded.
+          last_scored_leg = season_data['last_scored_leg']&.to_i
+          standings_weeks = season_data['standings'] ? season_data['standings'].map { |s| s['wins'].to_i + s['losses'].to_i + (s['ties'] || 0).to_i }.max.to_i : 0
+
+          completed_weeks_limit = if is_complete
+                                    999
+                                  elsif last_scored_leg && last_scored_leg > 0
+                                    last_scored_leg
+                                  else
+                                    standings_weeks
+                                  end
+
           # Calculate Season Awards & Notable Records (High Scores, Matchup Thrillers)
           if has_games && season_data['matchups'] && !season_data['matchups'].empty?
             all_season_matchups = []
             head_to_head_games = []
 
             season_data['matchups'].each do |week, games|
+              week_num = week.to_i
+              # Only include completed weeks from the season
+              next if week_num > completed_weeks_limit
+
+              # Ensure week has actual played games with points
+              has_played_points = games.any? { |g| g['points'].to_f > 0 }
+              next unless has_played_points
+
               by_matchup = {}
               games.each do |game|
                 owner = season_data['standings'].find { |s| s['user_id'] == game['user_id'] }
                 m_info = game.merge(
-                  'week' => week.to_i,
+                  'week' => week_num,
                   'username' => owner ? owner['username'] : 'Unknown',
                   'team_name' => owner ? owner['team_name'] : 'Unknown Team',
                   'avatar' => owner ? owner['avatar'] : nil
@@ -69,13 +91,16 @@ module Jekyll
                 if pair.size == 2
                   t1, t2 = pair[0], pair[1]
                   p1, p2 = t1['points'].to_f, t2['points'].to_f
+                  # Skip unplayed / incomplete 0-0 games
+                  next if p1 <= 0 && p2 <= 0
+
                   winner = p1 >= p2 ? t1 : t2
                   loser = p1 >= p2 ? t2 : t1
                   diff = (p1 - p2).abs.round(2)
                   total = (p1 + p2).round(2)
 
                   head_to_head_games << {
-                    'week' => week.to_i,
+                    'week' => week_num,
                     'winner' => winner,
                     'loser' => loser,
                     'winner_points' => [p1, p2].max,
@@ -169,13 +194,17 @@ module Jekyll
 
           if season_data['matchups']
             season_data['matchups'].each do |week, games|
+              week_num = week.to_i
+              next if !is_complete && week_num > completed_weeks_limit
+
               games.each do |game|
                 user_id = game['user_id']
                 next unless user_id && teams_by_user[user_id]
+                next if !is_complete && game['points'].to_f <= 0
                 
                 teams_by_user[user_id]['matchups'] << {
                   'year' => season_data['year'],
-                  'week' => week.to_i,
+                  'week' => week_num,
                   'points' => game['points'].to_f,
                   'matchup_id' => game['matchup_id']
                 }

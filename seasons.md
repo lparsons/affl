@@ -612,6 +612,11 @@ permalink: /seasons/
   function renderSeasonRecords(season) {
     if (!season.records) return '';
     const r = season.records;
+
+    const validTopScores = (r.top_game_scores || []).filter(g => parseFloat(g.points) > 0);
+    const validShootouts = (r.highest_scoring_matchups || []).filter(m => (m.total_points || 0) > 0 && (m.winner_points || 0) > 0 && (m.loser_points || 0) > 0);
+    const validNailBiters = (r.closest_matchups || []).filter(m => (m.total_points || 0) > 0 && (m.winner_points || 0) > 0 && (m.loser_points || 0) > 0);
+
     return `
       <div style="margin-top: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
@@ -621,7 +626,7 @@ permalink: /seasons/
 
         <!-- Superlatives Summary Grid -->
         <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px;">
-          ${r.high_score ? `
+          ${r.high_score && parseFloat(r.high_score.points) > 0 ? `
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #4caf50;">
               <p style="margin: 0; font-size: 0.75em; color: #4caf50; text-transform: uppercase; font-weight: 800;">🚀 Season High Score</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: #4caf50;">${parseFloat(r.high_score.points).toFixed(2)} pts</p>
@@ -629,7 +634,7 @@ permalink: /seasons/
             </div>
           ` : ''}
 
-          ${r.points_leader ? `
+          ${r.points_leader && parseFloat(r.points_leader.points_for) > 0 ? `
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid var(--link-color);">
               <p style="margin: 0; font-size: 0.75em; color: var(--link-color); text-transform: uppercase; font-weight: 800;">👑 Total Points Leader</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: var(--link-color);">${parseFloat(r.points_leader.points_for).toFixed(2)} pts</p>
@@ -637,7 +642,7 @@ permalink: /seasons/
             </div>
           ` : ''}
 
-          ${r.best_record ? `
+          ${r.best_record && ((parseInt(r.best_record.wins) || 0) + (parseInt(r.best_record.losses) || 0) > 0) ? `
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #ffd700;">
               <p style="margin: 0; font-size: 0.75em; color: #ffd700; text-transform: uppercase; font-weight: 800;">⭐ Best Regular Record</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${r.best_record.record}</p>
@@ -645,7 +650,7 @@ permalink: /seasons/
             </div>
           ` : ''}
 
-          ${r.pa_leader ? `
+          ${r.pa_leader && parseFloat(r.pa_leader.points_against) > 0 ? `
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #f44336;">
               <p style="margin: 0; font-size: 0.75em; color: #f44336; text-transform: uppercase; font-weight: 800;">🛡️ Toughest Schedule (Most PA)</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${parseFloat(r.pa_leader.points_against).toFixed(2)} pts</p>
@@ -656,7 +661,7 @@ permalink: /seasons/
 
         <div class="dashboard-grid" style="grid-template-columns: 1fr; gap: 20px;">
           <!-- Top Single-Game Scores of Season -->
-          ${r.top_game_scores && r.top_game_scores.length > 0 ? `
+          ${validTopScores.length > 0 ? `
             <div class="dashboard-card">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h3 style="margin: 0; font-size: 1.2em;">🚀 Top Single-Game Scores (${season.year})</h3>
@@ -674,7 +679,7 @@ permalink: /seasons/
                     </tr>
                   </thead>
                   <tbody>
-                    ${r.top_game_scores.map((g, idx) => {
+                    ${validTopScores.map((g, idx) => {
                       const rankLabel = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : (idx === 2 ? '🥉 3' : `#${idx + 1}`));
                       return `
                         <tr>
@@ -695,14 +700,15 @@ permalink: /seasons/
           ` : ''}
 
           <!-- Matchup Highlights (Highest Combined & Closest) -->
+          ${(validShootouts.length > 0 || validNailBiters.length > 0) ? `
           <div class="dashboard-card">
             <h3 style="margin: 0 0 15px; font-size: 1.2em;">⚔️ Season Matchup Showcases</h3>
             <div class="dashboard-grid">
-              ${r.highest_scoring_matchups && r.highest_scoring_matchups.length > 0 ? `
+              ${validShootouts.length > 0 ? `
                 <div>
                   <h4 style="margin: 0 0 10px; font-size: 1.05em; color: var(--link-color);">💥 Wildest Shootouts</h4>
                   <div style="display: flex; flex-direction: column; gap: 8px;">
-                    ${r.highest_scoring_matchups.map(m => `
+                    ${validShootouts.map(m => `
                       <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
                         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
                           <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
@@ -715,11 +721,11 @@ permalink: /seasons/
                 </div>
               ` : ''}
 
-              ${r.closest_matchups && r.closest_matchups.length > 0 ? `
+              ${validNailBiters.length > 0 ? `
                 <div>
                   <h4 style="margin: 0 0 10px; font-size: 1.05em; color: #ff9800;">🎯 Closest Nail-Biters</h4>
                   <div style="display: flex; flex-direction: column; gap: 8px;">
-                    ${r.closest_matchups.map(m => `
+                    ${validNailBiters.map(m => `
                       <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
                         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
                           <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
@@ -733,6 +739,7 @@ permalink: /seasons/
               ` : ''}
             </div>
           </div>
+          ` : ''}
         </div>
       </div>
     `;
