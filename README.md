@@ -166,10 +166,11 @@ start _config.yml         # Default program
 ├── assets/              # CSS, JS, images
 ├── index.md             # Home page
 ├── about.md             # About page
-├── standings.md         # Current standings
-├── schedule.md          # Season schedule
-├── rules.md             # League rules
-├── history.md           # League history
+├── seasons.md           # Seasons dashboard and historical standings
+├── records.md           # All-time record book and hall of champions
+├── teams.md             # Franchises and team profiles
+├── schedule.md          # Season schedule and milestone calendar
+├── rules.md             # League rules and constitution
 └── README.md            # This file
 ```
 
@@ -187,10 +188,10 @@ Update the following in `_config.yml`:
 
 ### Content Updates
 
-- **Standings**: Update `standings.md` with current standings
-- **Schedule**: Update `schedule.md` with matchups and dates
-- **Rules**: Customize `rules.md` with your league's specific rules
-- **History**: Add past champions and memorable moments to `history.md`
+- **Seasons & Standings**: Automated via Sleeper API scripts (`_scripts/update_standings.rb`)
+- **Records**: Generated automatically by `_plugins/sleeper_generator.rb`
+- **Schedule**: Calculated automatically by `_plugins/league_calendar.rb` with overrides in `_config.yml`
+- **Rules**: Customize `rules.md` with your league's specific constitution
 
 ### Styling
 

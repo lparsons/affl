@@ -15,7 +15,7 @@ permalink: /teams/
     </div>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <a href="{{ site.baseurl }}/records/" class="btn" style="padding: 8px 14px; font-size: 0.9em;">Record Book ↗</a>
-      <a href="{{ site.baseurl }}/history/" class="btn" style="padding: 8px 14px; font-size: 0.9em; background: rgba(255,255,255,0.08); color: var(--text-color) !important;">Hall of Champions ↗</a>
+      <a href="{{ site.baseurl }}/seasons/" class="btn" style="padding: 8px 14px; font-size: 0.9em; background: rgba(255,255,255,0.08); color: var(--text-color) !important;">Season Dashboard ↗</a>
     </div>
   </div>
 

@@ -58,5 +58,14 @@ The AFFL is governed by constitutional voting rules and administered by the leag
 
 ---
 
+## Commissioner's Note
+
+> "The Art of Fantasy Football League has grown and thrived because of our passionate managers who treat fantasy football as a true art form. Our league's history is filled with unforgettable moments, fierce competitions, and a sense of community."
+>
+> — **AFFL Commissioner**
+
+---
+
 *Welcome to The Art of Fantasy Football League!*
+
 
