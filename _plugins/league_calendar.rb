@@ -81,8 +81,8 @@ module Jekyll
       site.config['nfl_start_is_auto'] = !nfl_is_overridden
       site.config['draft_date_is_auto'] = !draft_is_overridden
 
-      # 3. Determine Keeper Deadline (Config Override vs 2 weeks before draft)
-      calculated_keeper_due_date = draft_date - 14
+      # 3. Determine Keeper Deadline (Config Override vs 1 week before draft)
+      calculated_keeper_due_date = draft_date - 7
       keeper_due_date = calculated_keeper_due_date
 
       if site.config['keeper_deadline'] && !site.config['keeper_deadline'].to_s.strip.empty?

@@ -30,7 +30,7 @@ We believe that sustained fantasy football success comes from:
 * **Scoring Format:** **Full PPR** (1.0 Point Per Reception, 6 pt passing/rushing/receiving TDs, fractional yardage)
 * **Starting Lineup (9 Starters):** QB, RB, RB, WR, WR, TE, FLEX (W/R/T), K, DEF
 * **Roster Depth:** 5 Bench spots + 1 IR / Reserve slot
-* **Keepers:** **1 Keeper** per team (forfeiting the team's Round 1 draft pick; due 2 weeks before the draft)
+* **Keepers:** **1 Keeper** per team (forfeiting the team's Round 1 draft pick; due 1 week before the draft)
 * **Draft Type:** **Slow Snake Draft** hosted in the Sleeper Draft Room
 * **Playoff Tournament:** **6 Teams, 3 Weeks** (Weeks 15–17); Top 2 division winners earn 1st-round byes; 6-team **Toilet Bowl** with the #1 draft pick incentive for next season's winner.
 * **Trade Deadline:** Conclusion of **Week 13**

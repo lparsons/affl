@@ -63,7 +63,7 @@ Trading during the off-season (when automated platform trading is inactive) is m
 Before the start of the next season, teams may designate **one (1) keeper**:
 * The kept player remains on that team's roster for the upcoming season.
 * **Draft Pick Cost:** Selecting a keeper forfeits that team's **Round 1 draft pick**.
-* **Deadline:** Keeper selections must be finalized **two weeks before the start of the AFFL draft** (4 weeks prior to the NFL season start).
+* **Deadline:** Keeper selections must be finalized **one week before the start of the AFFL draft** (3 weeks prior to the NFL season start).
 
 ---
 
@@ -151,7 +151,7 @@ A live, synchronized timeline with exact dates for the current season can be vie
 
 | Timing | Milestone Event |
 |:---|:---|
-| **4 Weeks Before Season** *(2 wks before draft)* | **Keeper Selections Due** |
+| **3 Weeks Before Season** *(1 wk before draft)* | **Keeper Selections Due** |
 | **2 Weeks Before Season** | **AFFL Slow Draft Begins** |
 | **2 Days Before Season** | **Pre-Season Claims** (First round draft order), Free Agency starts following claims |
 | **Kickoff (Week 1)** | **In-Season Claims & Waivers Active** (Kickoff lineup locks) |
