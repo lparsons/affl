@@ -19,11 +19,24 @@ permalink: /teams/
     </div>
   </div>
 
+  {% assign active_count = 0 %}
+  {% assign total_titles = 0 %}
+  {% assign title_winners = 0 %}
+  {% for team in site.data.all_teams %}
+    {% if team.is_active %}
+      {% assign active_count = active_count | plus: 1 %}
+    {% endif %}
+    {% if team.stats.championships > 0 %}
+      {% assign total_titles = total_titles | plus: team.stats.championships %}
+      {% assign title_winners = title_winners | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
   <!-- League Franchise Stats Banner -->
   <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 25px;">
     <div class="dashboard-card" style="padding: 12px 15px; border-left: 4px solid var(--link-color);">
       <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Active Franchises</p>
-      <p style="margin: 2px 0 0; font-size: 1.4em; font-weight: 800; color: var(--link-color);">12 Teams</p>
+      <p style="margin: 2px 0 0; font-size: 1.4em; font-weight: 800; color: var(--link-color);">{{ active_count }} Teams</p>
       <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">{{ site.current_season }} Campaign</p>
     </div>
     <div class="dashboard-card" style="padding: 12px 15px; border-left: 4px solid #9c27b0;">
@@ -33,8 +46,8 @@ permalink: /teams/
     </div>
     <div class="dashboard-card" style="padding: 12px 15px; border-left: 4px solid #ffd700;">
       <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">Championship Banners</p>
-      <p style="margin: 2px 0 0; font-size: 1.4em; font-weight: 800; color: #ffd700;">6 Titles Won</p>
-      <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Across 5 Unique Owners</p>
+      <p style="margin: 2px 0 0; font-size: 1.4em; font-weight: 800; color: #ffd700;">{{ total_titles }} Titles Won</p>
+      <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Across {{ title_winners }} Unique Owners</p>
     </div>
     <div class="dashboard-card" style="padding: 12px 15px; border-left: 4px solid #4caf50;">
       <p style="margin: 0; font-size: 0.75em; opacity: 0.7; text-transform: uppercase; font-weight: bold;">All-Time Win Leader</p>
@@ -62,7 +75,7 @@ permalink: /teams/
   <div style="margin-bottom: 35px;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
       <h2 style="margin: 0;">⚡ Active Franchises ({{ site.current_season }} Season)</h2>
-      <span class="category-tag">12 Competing Teams</span>
+      <span class="category-tag">{{ active_count }} Competing Teams</span>
     </div>
 
     <div class="dashboard-grid" id="active-franchises-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">

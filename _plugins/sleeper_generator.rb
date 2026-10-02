@@ -333,12 +333,16 @@ module Jekyll
         s['status'] == 'complete'
       end
 
+      most_championships = teams_by_user.values.select { |t| t['stats']['championships'] > 0 }.sort_by { |t| -t['stats']['championships'] }
+
       site.data['records'] = {
         'highest_scores' => all_matchups.sort_by { |m| -m['points'] }.first(10),
         'lowest_scores' => all_matchups.select { |m| m['points'] > 0 }.sort_by { |m| m['points'] }.first(10),
         'most_season_points' => all_team_seasons.sort_by { |ts| -ts['points_for_f'] }.first(10),
         'best_season_records' => all_team_seasons.sort_by { |ts| [-ts['wins_i'], ts['losses_i'], -ts['points_for_f']] }.first(10),
-        'most_championships' => teams_by_user.values.select { |t| t['stats']['championships'] > 0 }.sort_by { |t| -t['stats']['championships'] },
+        'most_championships' => most_championships,
+        'total_championships' => most_championships.sum { |t| t['stats']['championships'] },
+        'unique_champions_count' => most_championships.size,
         'most_toilet_bowls' => teams_by_user.values.select { |t| t['stats']['toilet_bowls'] > 0 }.sort_by { |t| -t['stats']['toilet_bowls'] },
         'most_wins' => teams_by_user.values.sort_by { |t| -t['stats']['wins'] }.first(10),
         'highest_avg_points' => teams_by_user.values.select { |t| t['seasons'].size > 1 }.sort_by { |t| -t['stats']['avg_points'] }.first(10),
