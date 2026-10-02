@@ -45,87 +45,12 @@ permalink: /seasons/
     <!-- Injected by JS -->
   </div>
 
-  <!-- All-Time Seasons & Champions Archive Table -->
-  <div class="dashboard-card" style="margin-top: 35px; grid-column: 1 / -1;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-      <div>
-        <h2 style="margin: 0;">📜 All-Time Season Records & Honors Archive</h2>
-        {% assign earliest_season = site.data.records.completed_seasons.last.year | default: 2019 %}
-        {% assign latest_season = site.data.records.completed_seasons.first.year | default: site.data.latest_completed_season %}
-        <p style="margin: 4px 0 0; font-size: 0.85em; opacity: 0.7;">Complete chronological honor roll and milestones across all AFFL seasons ({{ earliest_season }}–{{ latest_season }})</p>
-      </div>
-      <a href="{{ site.baseurl }}/records/" class="btn" style="padding: 6px 14px; font-size: 0.85em;">All-Time Record Book ↗</a>
-    </div>
-    <div class="table-responsive">
-      <table class="high-contrast-table">
-        <thead>
-          <tr>
-            <th style="min-width: 80px; width: 90px; text-align: center;">Season</th>
-            <th style="width: 18%;">🥇 Champion</th>
-            <th style="width: 18%;">🥈 Runner-Up</th>
-            <th style="width: 18%;">🚽 Toilet Bowl (Pick #1)</th>
-            <th style="width: 18%;">👑 Points King</th>
-            <th style="width: 20%;">🚀 Season High Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for s in site.data.records.completed_seasons %}
-            <tr>
-              <td style="text-align: center;">
-                <button onclick="updateSeasonsDashboard('{{ s.year }}'); window.location.hash='{{ s.year }}'; window.scrollTo({top: 0, behavior: 'smooth'});" style="background: rgba(42, 122, 226, 0.15); color: var(--link-color); border: 1px solid var(--border-color); font-weight: bold; border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap;" title="View {{ s.year }} Season Dashboard">
-                  {{ s.year }} ↗
-                </button>
-              </td>
-              <td>
-                {% if s.podium and s.podium.first %}
-                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.podium.first.user_id }}/">{{ s.podium.first.team_name }}</a></div>
-                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.podium.first.username }}</div>
-                {% elsif s.champion %}
-                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.champion.user_id }}/">{{ s.champion.team_name }}</a></div>
-                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.champion.username }}</div>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if s.podium and s.podium.second %}
-                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.podium.second.user_id }}/">{{ s.podium.second.team_name }}</a></div>
-                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.podium.second.username }}</div>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if s.toilet_bowl_winner %}
-                  <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ s.toilet_bowl_winner.user_id }}/">{{ s.toilet_bowl_winner.team_name }}</a></div>
-                  <div style="opacity: 0.7; font-size: 0.85em;">{{ s.toilet_bowl_winner.username }}</div>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if s.awards and s.awards.regular_season_points_leader %}
-                  <div style="font-weight: bold; color: var(--link-color); white-space: nowrap;">{{ s.awards.regular_season_points_leader.points_for | round: 2 }} pts</div>
-                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.regular_season_points_leader.user_id }}/">{{ s.awards.regular_season_points_leader.username }}</a></div>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>
-                {% if s.awards and s.awards.highest_game %}
-                  <div style="font-weight: bold; color: #4caf50; white-space: nowrap;">{{ s.awards.highest_game.points | round: 2 }} pts</div>
-                  <div style="opacity: 0.7; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/{{ s.awards.highest_game.user_id }}/">{{ s.awards.highest_game.username }} <span style="opacity: 0.7;">(Wk {{ s.awards.highest_game.week }})</span></a></div>
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  <!-- Link to All-Time Record Book -->
+  <div style="text-align: center; margin-top: 30px; padding: 16px; opacity: 0.85;">
+    Looking for all-time league records, career milestones, and annual honors? <a href="{{ site.baseurl }}/records/" style="font-weight: 700; color: var(--link-color);">Visit the All-Time Record Book &rarr;</a>
   </div>
 </div>
+
 
 <script>
   const seasonSelector = document.getElementById('season-selector');
