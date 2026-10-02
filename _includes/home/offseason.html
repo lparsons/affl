@@ -1,7 +1,11 @@
 <div class="dashboard-grid">
   <!-- Post-Season Spotlight -->
-  {% assign prev_year = site.current_season | minus: 1 %}
-  {% assign prev_season = site.data.all_seasons | where: "year", prev_year | first %}
+  {% assign prev_season = site.data.reigning_season %}
+  {% unless prev_season %}
+    {% assign prev_year = site.current_season | minus: 1 %}
+    {% assign prev_season = site.data.all_seasons | where: "year", prev_year | first %}
+  {% endunless %}
+  {% assign prev_year = prev_season.year %}
   
   {% if prev_season %}
     <div class="dashboard-card" style="grid-column: 1 / -1;">

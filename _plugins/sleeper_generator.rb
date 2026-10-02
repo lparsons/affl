@@ -91,8 +91,8 @@ module Jekyll
                 if pair.size == 2
                   t1, t2 = pair[0], pair[1]
                   p1, p2 = t1['points'].to_f, t2['points'].to_f
-                  # Skip unplayed / incomplete 0-0 games
-                  next if p1 <= 0 && p2 <= 0
+                  # Skip unplayed / incomplete games or playoff byes where either team has 0 points
+                  next if p1 <= 0 || p2 <= 0
 
                   winner = p1 >= p2 ? t1 : t2
                   loser = p1 >= p2 ? t2 : t1

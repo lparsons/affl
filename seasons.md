@@ -50,7 +50,9 @@ permalink: /seasons/
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
       <div>
         <h2 style="margin: 0;">📜 All-Time Season Records & Honors Archive</h2>
-        <p style="margin: 4px 0 0; font-size: 0.85em; opacity: 0.7;">Complete chronological honor roll and milestones across all AFFL seasons (2019–2025)</p>
+        {% assign earliest_season = site.data.records.completed_seasons.last.year | default: 2019 %}
+        {% assign latest_season = site.data.records.completed_seasons.first.year | default: site.data.latest_completed_season %}
+        <p style="margin: 4px 0 0; font-size: 0.85em; opacity: 0.7;">Complete chronological honor roll and milestones across all AFFL seasons ({{ earliest_season }}–{{ latest_season }})</p>
       </div>
       <a href="{{ site.baseurl }}/records/" class="btn" style="padding: 6px 14px; font-size: 0.85em;">All-Time Record Book ↗</a>
     </div>
@@ -130,7 +132,7 @@ permalink: /seasons/
   const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
   const highlightsContainer = document.getElementById('season-highlights');
-  const defaultSeasonYear = "{{ site.data.default_season_year | default: site.data.latest_completed_season | default: 2025 }}";
+  const defaultSeasonYear = "{{ site.data.default_season_year | default: site.data.latest_completed_season | default: site.current_season | default: 2026 }}";
   
   const seasonsData = {
     {% for season in site.data.all_seasons %}

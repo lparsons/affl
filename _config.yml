@@ -32,6 +32,7 @@ draft_date: "2026-08-30 09:00:00"     # Format: "YYYY-MM-DD HH:MM:SS" (9:00 AM E
 # Navigation
 header_pages:
   - schedule.md
+  - teams.md
   - records.md
   - seasons.md
   - history.md
