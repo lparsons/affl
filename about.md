@@ -25,7 +25,7 @@ We believe that sustained fantasy football success comes from:
 
 ## League Overview & Format
 
-* **Hosting Platform:** **Sleeper** ([AFFL League Home](<https://sleeper.com/leagues/{{> site.current_league_id }}))
+* **Hosting Platform:** **Sleeper** ([AFFL League Home](https://sleeper.com/leagues/{{site.current_league_id}}))
 * **League Size:** **12 Teams** divided into two 6-team divisions (**Yin** and **Yang**)
 * **Scoring Format:** **Full PPR** (1.0 Point Per Reception, 6 pt passing/rushing/receiving TDs, fractional yardage)
 * **Starting Lineup (9 Starters):** QB, RB, RB, WR, WR, TE, FLEX (W/R/T), K, DEF
