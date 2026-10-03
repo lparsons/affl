@@ -293,27 +293,29 @@ permalink: /seasons/
 
     } else if (!hasGames) {
       // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)
+      const pick1Team = season.standings ? season.standings.find(t => t.draft_slot === 1) : null;
+
       highlightsHtml += `
-        <div class="dashboard-card">
-          <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
-          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-            The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions.
-            The slow snake draft commences on <strong>{{ site.draft_date | date: "%A, %B %d, %Y at %I:%M %p" }}</strong>.
-          </p>
-          <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
-            <a href="{{ site.baseurl }}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Constitution & Rules</a>
-            <a href="{{ site.baseurl }}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestone Schedule</a>
+        <div class="dashboard-card" style="grid-column: 1 / -1;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+            <div>
+              <h2 style="margin: 0;">🏈 ${season.year} Season • Slow Snake Draft Launchpad</h2>
+              <p style="margin: 6px 0 0; opacity: 0.85; line-height: 1.5;">
+                12 Franchises split across Yin & Yang divisions. The slow snake draft begins on <strong>{{ site.draft_date | date: "%A, %B %d, %Y at %I:%M %p" }}</strong>.
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
+              <a href="{{ site.baseurl }}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestones</a>
+              <a href="{{ site.baseurl }}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Rules</a>
+            </div>
           </div>
-        </div>
-        <div class="dashboard-card">
-          <h2>📋 League Configuration</h2>
-          <div style="font-size: 0.9em; opacity: 0.85; display: flex; flex-direction: column; gap: 8px;">
-            <div><strong>Roster:</strong> 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 K, 1 DEF, 5 BN</div>
-            <div><strong>Keepers:</strong> 1 Keeper per team (Forfeits Round 1 pick)</div>
-            <div><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</div>
-            <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>Pick #1 (Post-Keepers)</strong></div>
-          </div>
+          ${pick1Team ? `
+            <div style="margin-top: 15px; padding: 10px 14px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.25); border-radius: 8px; font-size: 0.88em; display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.3em;">🎯</span>
+              <span><strong>Pick #1 On the Clock:</strong> <a href="{{ site.baseurl }}/teams/${pick1Team.user_id}/"><strong>${pick1Team.team_name}</strong></a> (${pick1Team.username}) holds the #1 overall selection post-keepers!</span>
+            </div>
+          ` : ''}
         </div>
       `;
 
@@ -322,70 +324,13 @@ permalink: /seasons/
       const yangTeams = season.standings.filter(t => t.division === 2);
 
       contentHtml = `
-        <div style="margin-top: 25px;">
-          <h2 style="margin-bottom: 5px;">☯️ Division Alignments</h2>
-          <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 20px;">12 Franchises split across the Yin and Yang Divisions for the ${season.year} campaign</p>
-
-          <div class="dashboard-grid">
-            <!-- Yin Division Card -->
-            <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yin Division</h3>
-                <span class="category-tag">6 Teams</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 12px;">
-                ${yinTeams.map(t => {
-                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
-                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
-                  return `
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
-                      <div style="display: flex; align-items: center; gap: 12px;">
-                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
-                        <div>
-                          <p style="margin: 0; font-weight: bold;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
-                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
-                        </div>
-                      </div>
-                      ${draftBadge}
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-
-            <!-- Yang Division Card -->
-            <div class="dashboard-card" style="border-top: 4px solid #ff9800;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                <h3 style="margin: 0; font-size: 1.25em;">☯️ Yang Division</h3>
-                <span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800;">6 Teams</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 12px;">
-                ${yangTeams.map(t => {
-                  const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
-                  const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
-                  return `
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
-                      <div style="display: flex; align-items: center; gap: 12px;">
-                        <img src="${avatarUrl}" width="36" height="36" style="border-radius: 50%;">
-                        <div>
-                          <p style="margin: 0; font-weight: bold;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
-                          <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
-                        </div>
-                      </div>
-                      ${draftBadge}
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          </div>
-
-          <!-- Draft Order Board -->
-          <div class="dashboard-card" style="margin-top: 25px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div style="margin-top: 20px;">
+          <!-- 🎯 Draft Order Board (Front & Center) -->
+          <div class="dashboard-card" style="margin-bottom: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
               <div>
-                <h3 style="margin: 0; font-size: 1.2em;">🎯 ${season.year} Draft Order Board</h3>
-                <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • August 30 @ 9:00 AM EDT</p>
+                <h3 style="margin: 0; font-size: 1.25em;">🎯 ${season.year} Draft Order Board</h3>
+                <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • 1 Keeper Forfeits Round 1</p>
               </div>
               <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
             </div>
@@ -419,56 +364,248 @@ permalink: /seasons/
             </div>
           </div>
 
+          <!-- ☯️ Division Alignments -->
+          <div style="margin-bottom: 25px;">
+            <h3 style="margin-bottom: 5px; font-size: 1.25em;">☯️ Division Alignments</h3>
+            <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 15px;">12 Franchises split across Yin and Yang Divisions for the ${season.year} campaign</p>
+
+            <div class="dashboard-grid">
+              <!-- Yin Division Card -->
+              <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                  <h4 style="margin: 0; font-size: 1.15em;">☯️ Yin Division</h4>
+                  <span class="category-tag">6 Teams</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  ${yinTeams.map(t => {
+                    const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                    const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                    return `
+                      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                          <div>
+                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                            <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                          </div>
+                        </div>
+                        ${draftBadge}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Yang Division Card -->
+              <div class="dashboard-card" style="border-top: 4px solid #ff9800;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                  <h4 style="margin: 0; font-size: 1.15em;">☯️ Yang Division</h4>
+                  <span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800;">6 Teams</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  ${yangTeams.map(t => {
+                    const avatarUrl = t.avatar ? `https://sleepercdn.com/avatars/thumbs/${t.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
+                    const draftBadge = t.draft_slot ? `<span class="badge-clinch badge-hunt" title="Draft Pick Slot">Pick #${t.draft_slot}</span>` : '';
+                    return `
+                      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                          <div>
+                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                            <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
+                          </div>
+                        </div>
+                        ${draftBadge}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Note about live standings activation -->
-          <div style="margin-top: 20px; padding: 15px 20px; background: rgba(42, 122, 226, 0.08); border: 1px dashed var(--link-color); border-radius: 10px; font-size: 0.88em; color: var(--text-color); opacity: 0.9;">
+          <div style="margin-bottom: 25px; padding: 14px 18px; background: rgba(42, 122, 226, 0.08); border: 1px dashed var(--link-color); border-radius: 10px; font-size: 0.88em; color: var(--text-color); opacity: 0.9;">
             ℹ️ <strong>Live Standings Notice:</strong> Win-loss standings, total points, weekly high scores, and mathematical playoff clinch trackers will automatically activate on this page once NFL Week 1 matchups kick off in September.
+          </div>
+
+          <!-- 📋 League Configuration & Rules (Moved to bottom reference) -->
+          <div class="dashboard-card">
+            <h3 style="margin-top: 0; font-size: 1.15em;">📋 League Configuration & Roster Rules</h3>
+            <div style="font-size: 0.9em; opacity: 0.85; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; line-height: 1.5;">
+              <div><strong>Roster:</strong> 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 K, 1 DEF, 5 BN</div>
+              <div><strong>Keepers:</strong> 1 Keeper per team (Forfeits Round 1 pick)</div>
+              <div><strong>Playoffs:</strong> Weeks 15–17 (Top 6 advance, Top 2 bye)</div>
+              <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>Pick #1 (Post-Keepers)</strong></div>
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 10px;">
+              <a href="{{ site.baseurl }}/rules/" style="font-size: 0.85em; text-decoration: underline;">View Full Constitution Rules &rarr;</a>
+              <a href="{{ site.baseurl }}/schedule/" style="font-size: 0.85em; text-decoration: underline;">Milestone Calendar &rarr;</a>
+            </div>
           </div>
         </div>
       `;
 
     } else {
       // 🏈 ACTIVE REGULAR SEASON IN PROGRESS (GAMES PLAYED)
+      const topTeam = season.standings && season.standings.length > 0 ? season.standings[0] : null;
+      const yinLeader = season.standings.find(t => t.division === 1 || (t.division_name && t.division_name.toLowerCase() === 'yin'));
+      const yangLeader = season.standings.find(t => t.division === 2 || (t.division_name && t.division_name.toLowerCase() === 'yang'));
+      const rec = season.records || {};
+      const highScore = rec.high_score || (season.awards && season.awards.highest_game);
+      const pointsLeader = rec.points_leader || (season.awards && season.awards.regular_season_points_leader);
+      const closestGame = rec.closest;
+
       highlightsHtml += `
-        <div class="dashboard-card" style="grid-column: 1 / -1;">
-          <h2>🏈 Active Regular Season & Playoff Race</h2>
-          <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-            Standings below update live every Tuesday morning. Top 6 seeds punch tickets to the Championship Playoffs (Seeds 1 & 2 earn byes), while Seeds 7–12 compete in the Toilet Bowl bracket.
-          </p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
-            <span class="badge-clinch badge-bye">⭐ [BYE] 1st-Round Bye Clinched</span>
-            <span class="badge-clinch badge-playoffs">🟢 [X] Playoff Clinched</span>
-            <span class="badge-clinch badge-tb">🚽 [TB] Toilet Bowl Bound</span>
-            <span class="badge-clinch badge-bubble">🟡 In Contention</span>
+        <!-- 👑 Current #1 Seed Spotlight -->
+        ${topTeam ? `
+          <div class="dashboard-card" style="border-left: 4px solid #ffd700; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: #ffd700;">👑 League Leader</span>
+                <span class="category-tag">Seed #1</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+                <img src="${topTeam.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + topTeam.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" alt="${topTeam.team_name}" width="42" height="42" style="border-radius: 50%; border: 2px solid #ffd700; flex-shrink: 0;">
+                <div>
+                  <div style="font-weight: 800; font-size: 1.05em;"><a href="{{ site.baseurl }}/teams/${topTeam.user_id}/">${topTeam.team_name}</a></div>
+                  <div style="font-size: 0.85em; opacity: 0.75; margin-top: 2px;">${topTeam.username} • <strong>${topTeam.record}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+              ${topTeam.points_for} PF • ${topTeam.division_name || (topTeam.division === 2 ? 'Yang' : 'Yin')} Division
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- ☯️ Division Leaders Card (Top 2 Byes) -->
+        <div class="dashboard-card" style="border-left: 4px solid var(--link-color); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: var(--link-color);">⭐ Division Leaders</span>
+              <span class="category-tag">1st-Round Byes</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
+              ${yinLeader ? `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.88em;">
+                  <span><strong>☯️ Yin:</strong> <a href="{{ site.baseurl }}/teams/${yinLeader.user_id}/">${yinLeader.team_name}</a> <span style="opacity: 0.7;">(${yinLeader.record})</span></span>
+                  <span style="font-weight: 600; font-size: 0.85em;">${yinLeader.points_for} PF</span>
+                </div>
+              ` : ''}
+              ${yangLeader ? `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.88em;">
+                  <span><strong>☯️ Yang:</strong> <a href="{{ site.baseurl }}/teams/${yangLeader.user_id}/">${yangLeader.team_name}</a> <span style="opacity: 0.7;">(${yangLeader.record})</span></span>
+                  <span style="font-weight: 600; font-size: 0.85em;">${yangLeader.points_for} PF</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+          <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+            Division leaders clinch Seeds 1 & 2 bye weeks
           </div>
         </div>
-        <div class="dashboard-card">
-          <h2>🏆 Postseason Stakes</h2>
-          <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-            • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
-            • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
-            • <strong>Championship:</strong> Winner earns the AFFL Trophy & ultimate league glory.<br>
-            • <strong>Toilet Bowl:</strong> Winner claims next year's <strong>Pick #1 (Post-Keepers)</strong>.
-          </p>
-        </div>
-        <div class="dashboard-card">
-          <h2>⚖️ Playoff Structure & Seeding</h2>
-          <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
-            • <strong>Seeds 1 & 2:</strong> Top 2 teams (Division Winners) earn 1st-round byes.<br>
-            • <strong>Seeds 3–6:</strong> Next best regular season records advance to Wild Card round.<br>
-            • <strong>Tiebreakers:</strong> 1. Overall Record, 2. Total Points For (PF), 3. Head-to-Head record.<br>
-            • <a href="{{ site.baseurl }}/rules/" style="text-decoration: underline;">View Full Constitution Rules &rarr;</a>
-          </p>
-        </div>
+
+        <!-- 🚀 Season High Score or Points Leader Card -->
+        ${highScore && parseFloat(highScore.points) > 0 ? `
+          <div class="dashboard-card" style="border-left: 4px solid #4caf50; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: #4caf50;">🚀 Season High Score</span>
+                <span class="category-tag" style="background: rgba(76, 175, 80, 0.15); color: #4caf50;">Week ${highScore.week}</span>
+              </div>
+              <div style="font-size: 1.5em; font-weight: 800; color: #4caf50; line-height: 1.2;">
+                ${parseFloat(highScore.points).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
+              </div>
+              <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
+                <a href="{{ site.baseurl }}/teams/${highScore.user_id}/">${highScore.team_name}</a>
+              </div>
+              <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${highScore.username}</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+              Single-week record for ${season.year}
+            </div>
+          </div>
+        ` : (pointsLeader && parseFloat(pointsLeader.points_for) > 0 ? `
+          <div class="dashboard-card" style="border-left: 4px solid #4caf50; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: #4caf50;">👑 Points Leader</span>
+                <span class="category-tag">Total PF</span>
+              </div>
+              <div style="font-size: 1.5em; font-weight: 800; color: #4caf50; line-height: 1.2;">
+                ${parseFloat(pointsLeader.points_for).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
+              </div>
+              <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
+                <a href="{{ site.baseurl }}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
+              </div>
+              <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${pointsLeader.username}</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+              Cumulative offensive points leader
+            </div>
+          </div>
+        ` : '')}
+
+        <!-- 👑 Scoring King or Closest Game Card -->
+        ${pointsLeader && parseFloat(pointsLeader.points_for) > 0 && (!highScore || highScore.user_id !== pointsLeader.user_id) ? `
+          <div class="dashboard-card" style="border-left: 4px solid var(--link-color); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: var(--link-color);">👑 Total Points King</span>
+                <span class="category-tag">Total PF</span>
+              </div>
+              <div style="font-size: 1.5em; font-weight: 800; color: var(--link-color); line-height: 1.2;">
+                ${parseFloat(pointsLeader.points_for).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
+              </div>
+              <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
+                <a href="{{ site.baseurl }}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
+              </div>
+              <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${pointsLeader.username}</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+              Leading the league in scoring production
+            </div>
+          </div>
+        ` : (closestGame && closestGame.diff > 0 ? `
+          <div class="dashboard-card" style="border-left: 4px solid #ff9800; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75em; text-transform: uppercase; font-weight: 800; color: #ff9800;">🎯 Closest Thriller</span>
+                <span class="category-tag" style="background: rgba(255, 152, 0, 0.15); color: #ff9800;">Week ${closestGame.week}</span>
+              </div>
+              <div style="font-size: 1.5em; font-weight: 800; color: #ff9800; line-height: 1.2;">
+                +${parseFloat(closestGame.diff).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">diff</span>
+              </div>
+              <div style="margin-top: 4px; font-size: 0.85em; font-weight: bold;">
+                <a href="{{ site.baseurl }}/teams/${closestGame.winner.user_id}/">${closestGame.winner.username}</a> (${closestGame.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${closestGame.loser.user_id}/">${closestGame.loser.username}</a> (${closestGame.loser_points.toFixed(1)})
+              </div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
+              Closest nail-biter victory of ${season.year}
+            </div>
+          </div>
+        ` : '')}
       `;
 
       const clinchMap = computeClinchStatus(season.standings);
 
       contentHtml = `
         <div class="dashboard-card" style="margin-top: 20px;">
-          <h2>Current Season Standings & Playoff Picture</h2>
-          <p style="font-size: 0.85em; opacity: 0.7; margin-top: -10px; margin-bottom: 15px;">
-            Top 6 advance to Championship Playoffs; Seeds 7–12 enter Toilet Bowl for Pick #1 (Post-Keepers)
-          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h2 style="margin: 0;">📊 Standings & Playoff Picture</h2>
+              <p style="font-size: 0.85em; opacity: 0.7; margin: 4px 0 0;">
+                Top 6 advance to Championship Playoffs (Seeds 1 & 2 Bye) • Seeds 7–12 enter Toilet Bowl for Pick #1
+              </p>
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+              <span class="badge-clinch badge-bye">⭐ Bye</span>
+              <span class="badge-clinch badge-playoffs">🟢 Clinched</span>
+              <span class="badge-clinch badge-bubble">🟡 In Contention</span>
+              <span class="badge-clinch badge-tb">🚽 Toilet Bowl</span>
+            </div>
+          </div>
           <div class="table-responsive">
             <table class="high-contrast-table">
               <thead>
@@ -529,6 +666,36 @@ permalink: /seasons/
 
       contentHtml += `</tbody></table></div></div>`;
       contentHtml += renderSeasonRecords(season);
+
+      // Boilerplate Postseason Rules & Stakes moved to bottom reference
+      contentHtml += `
+        <div style="margin-top: 30px;">
+          <h2 style="margin-bottom: 15px;">📜 Postseason Format, Seeding & Stakes</h2>
+          <div class="dashboard-grid">
+            <div class="dashboard-card">
+              <h3 style="margin-top: 0; font-size: 1.15em;">🏆 Postseason Stakes</h3>
+              <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
+                • <strong>Weeks 1–14:</strong> 14-game Regular Season.<br>
+                • <strong>Weeks 15–17:</strong> 3-round Championship & Toilet Bowl Brackets.<br>
+                • <strong>Championship:</strong> Winner earns the AFFL Trophy & ultimate league glory.<br>
+                • <strong>Toilet Bowl:</strong> Winner claims next year's <strong>Pick #1 (Post-Keepers)</strong>.
+              </p>
+            </div>
+            <div class="dashboard-card">
+              <h3 style="margin-top: 0; font-size: 1.15em;">⚖️ Playoff Structure & Seeding</h3>
+              <p style="font-size: 0.9em; opacity: 0.85; margin: 0; line-height: 1.6;">
+                • <strong>Seeds 1 & 2:</strong> Top 2 teams (Division Winners) earn 1st-round byes.<br>
+                • <strong>Seeds 3–6:</strong> Next best regular season records advance to Wild Card round.<br>
+                • <strong>Tiebreakers:</strong> 1. Overall Record, 2. Total Points For (PF), 3. Head-to-Head record.<br>
+                • <a href="{{ site.baseurl }}/rules/" style="text-decoration: underline;">View Full Constitution Rules &rarr;</a>
+              </p>
+            </div>
+          </div>
+          <div style="margin-top: 15px; padding: 12px 16px; background: rgba(42, 122, 226, 0.08); border-radius: 8px; font-size: 0.85em; opacity: 0.85;">
+            ℹ️ Standings, weekly scores, and clinch trackers update automatically via Sleeper API every Tuesday morning during the regular season.
+          </div>
+        </div>
+      `;
     }
 
     highlightsContainer.innerHTML = highlightsHtml;
