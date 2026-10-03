@@ -16,4 +16,29 @@ if [ -n "$STAGED_MD_FILES" ]; then
   echo "✅ Markdown lint passed!"
 fi
 
+# Get list of staged Ruby files
+STAGED_RB_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || true)
+
+if [ -n "$STAGED_RB_FILES" ]; then
+  if command -v rubocop >/dev/null 2>&1; then
+    echo "🔍 Linting staged Ruby files with RuboCop..."
+    if ! rubocop $STAGED_RB_FILES; then
+      echo ""
+      echo "❌ RuboCop lint errors found. Please fix them before committing."
+      exit 1
+    fi
+    echo "✅ RuboCop lint passed!"
+  elif command -v bundle >/dev/null 2>&1 && bundle exec rubocop -v >/dev/null 2>&1; then
+    echo "🔍 Linting staged Ruby files with bundle exec rubocop..."
+    if ! bundle exec rubocop $STAGED_RB_FILES; then
+      echo ""
+      echo "❌ RuboCop lint errors found. Please fix them before committing."
+      exit 1
+    fi
+    echo "✅ RuboCop lint passed!"
+  else
+    echo "ℹ️  RuboCop not installed locally; skipping local Ruby lint (will be validated in CI)."
+  fi
+fi
+
 exit 0

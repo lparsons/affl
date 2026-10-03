@@ -35,6 +35,11 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
+      - name: Lint Ruby Code (RuboCop)
+        run: |
+          gem install rubocop --no-document
+          rubocop _plugins/ _scripts/
+
       - name: Fetch Latest Sleeper Standings & Matchups
         run: |
           ruby _scripts/update_standings.rb
