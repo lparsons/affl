@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'time'
 require 'yaml'
@@ -281,10 +283,10 @@ module Jekyll
           event['is_in_progress'] = true
           event['days_in'] = days_in
           next_event ||= event
-        elsif diff_days < 0
+        elsif diff_days.negative?
           event['status'] = 'past'
           event['status_label'] = 'Completed'
-        elsif diff_days == 0
+        elsif diff_days.zero?
           event['status'] = 'today'
           event['status_label'] = 'Happening Today'
           next_event ||= event

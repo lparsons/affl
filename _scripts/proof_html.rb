@@ -12,6 +12,7 @@ options = {
   check_external_hash: false,
   enforce_https: false,
   ignore_empty_alt: true,
+  ignore_files: [%r{^vendor/}, %r{^node_modules/}],
   ignore_urls: [%r{^https?://}],
   swap_urls: {
     %r{^/affl/} => '/',

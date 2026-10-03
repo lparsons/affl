@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'fileutils'
 
@@ -19,197 +21,197 @@ module Jekyll
         season_data = JSON.parse(File.read(file))
 
         is_complete = season_data['status'] == 'complete'
-        has_games = season_data['standings'] && season_data['standings'].any? { |s| (s['wins'].to_i + s['losses'].to_i) > 0 }
+        has_games = season_data['standings']&.any? { |s| (s['wins'].to_i + s['losses'].to_i).positive? }
 
         # Identify winners
-        if is_complete && season_data['standings'] && !season_data['standings'].empty?
+        if is_complete && season_data['standings']&.any?
           season_data['champion'] = season_data['standings'].first
           season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
 
-            # Podiums
-            season_data['podium'] = {
-              'first' => season_data['standings'][0],
-              'second' => season_data['standings'][1],
-              'third' => season_data['standings'][2]
-            }
+          # Podiums
+          season_data['podium'] = {
+            'first' => season_data['standings'][0],
+            'second' => season_data['standings'][1],
+            'third' => season_data['standings'][2]
+          }
+        end
+
+        clinch_map = !is_complete && has_games && season_data['standings'] ? compute_clinch_status(season_data['standings']) : {}
+        unless clinch_map.empty?
+          season_data['standings'].each do |t|
+            t['clinch_status'] = clinch_map[t['user_id']]
           end
+        end
 
-          clinch_map = (!is_complete && has_games && season_data['standings']) ? compute_clinch_status(season_data['standings']) : {}
-          if !clinch_map.empty?
-            season_data['standings'].each do |t|
-              t['clinch_status'] = clinch_map[t['user_id']]
-            end
-          end
+        # Determine completed weeks threshold
+        # Completed seasons have all weeks completed.
+        # In-progress seasons only include weeks that have concluded.
+        last_scored_leg = season_data['last_scored_leg']&.to_i
+        standings_weeks = season_data['standings'] ? season_data['standings'].map { |s| s['wins'].to_i + s['losses'].to_i + (s['ties'] || 0).to_i }.max.to_i : 0
 
-          # Determine completed weeks threshold
-          # Completed seasons have all weeks completed.
-          # In-progress seasons only include weeks that have concluded.
-          last_scored_leg = season_data['last_scored_leg']&.to_i
-          standings_weeks = season_data['standings'] ? season_data['standings'].map { |s| s['wins'].to_i + s['losses'].to_i + (s['ties'] || 0).to_i }.max.to_i : 0
+        completed_weeks_limit = if is_complete
+                                  999
+                                elsif last_scored_leg && last_scored_leg > 0
+                                  last_scored_leg
+                                else
+                                  standings_weeks
+                                end
 
-          completed_weeks_limit = if is_complete
-                                    999
-                                  elsif last_scored_leg && last_scored_leg > 0
-                                    last_scored_leg
-                                  else
-                                    standings_weeks
-                                  end
+        # Calculate Season Awards & Notable Records (High Scores, Matchup Thrillers)
+        if has_games && season_data['matchups']&.any?
+          all_season_matchups = []
+          head_to_head_games = []
 
-          # Calculate Season Awards & Notable Records (High Scores, Matchup Thrillers)
-          if has_games && season_data['matchups'] && !season_data['matchups'].empty?
-            all_season_matchups = []
-            head_to_head_games = []
+          season_data['matchups'].each do |week, games|
+            week_num = week.to_i
+            # Only include completed weeks from the season
+            next if week_num > completed_weeks_limit
 
-            season_data['matchups'].each do |week, games|
-              week_num = week.to_i
-              # Only include completed weeks from the season
-              next if week_num > completed_weeks_limit
+            # Ensure week has actual played games with points
+            has_played_points = games.any? { |g| g['points'].to_f > 0 }
+            next unless has_played_points
 
-              # Ensure week has actual played games with points
-              has_played_points = games.any? { |g| g['points'].to_f > 0 }
-              next unless has_played_points
+            by_matchup = {}
+            games.each do |game|
+              owner = season_data['standings'].find { |s| s['user_id'] == game['user_id'] }
+              m_info = game.merge(
+                'week' => week_num,
+                'username' => owner ? owner['username'] : 'Unknown',
+                'team_name' => owner ? owner['team_name'] : 'Unknown Team',
+                'avatar' => owner ? owner['avatar'] : nil
+              )
+              all_season_matchups << m_info
 
-              by_matchup = {}
-              games.each do |game|
-                owner = season_data['standings'].find { |s| s['user_id'] == game['user_id'] }
-                m_info = game.merge(
-                  'week' => week_num,
-                  'username' => owner ? owner['username'] : 'Unknown',
-                  'team_name' => owner ? owner['team_name'] : 'Unknown Team',
-                  'avatar' => owner ? owner['avatar'] : nil
-                )
-                all_season_matchups << m_info
-
-                if game['matchup_id']
-                  by_matchup[game['matchup_id']] ||= []
-                  by_matchup[game['matchup_id']] << m_info
-                end
-              end
-
-              by_matchup.each_value do |pair|
-                if pair.size == 2
-                  t1, t2 = pair[0], pair[1]
-                  p1, p2 = t1['points'].to_f, t2['points'].to_f
-                  # Skip unplayed / incomplete games or playoff byes where either team has 0 points
-                  next if p1 <= 0 || p2 <= 0
-
-                  winner = p1 >= p2 ? t1 : t2
-                  loser = p1 >= p2 ? t2 : t1
-                  diff = (p1 - p2).abs.round(2)
-                  total = (p1 + p2).round(2)
-
-                  head_to_head_games << {
-                    'week' => week_num,
-                    'winner' => winner,
-                    'loser' => loser,
-                    'winner_points' => [p1, p2].max,
-                    'loser_points' => [p1, p2].min,
-                    'diff' => diff,
-                    'total_points' => total
-                  }
-                end
+              if game['matchup_id']
+                by_matchup[game['matchup_id']] ||= []
+                by_matchup[game['matchup_id']] << m_info
               end
             end
 
-            if !all_season_matchups.empty?
-              high_score = all_season_matchups.max_by { |m| m['points'].to_f }
-              low_score = all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f }
-              points_leader = season_data['standings'].max_by { |s| s['points_for'].to_f }
-              pa_leader = season_data['standings'].max_by { |s| s['points_against'].to_f }
-              best_rec = season_data['standings'].max_by { |s| [s['wins'].to_i, -s['losses'].to_i, s['points_for'].to_f] }
-              top_matchup = head_to_head_games.max_by { |h| h['total_points'] }
-              blowout = head_to_head_games.max_by { |h| h['diff'] }
-              closest = head_to_head_games.min_by { |h| h['diff'] }
+            by_matchup.each_value do |pair|
+              if pair.size == 2
+                t1, t2 = pair[0], pair[1]
+                p1, p2 = t1['points'].to_f, t2['points'].to_f
+                # Skip unplayed / incomplete games or playoff byes where either team has 0 points
+                next if p1 <= 0 || p2 <= 0
 
-              season_data['awards'] = {
-                'highest_game' => high_score,
-                'lowest_game' => low_score,
-                'regular_season_points_leader' => points_leader
-              }
-              season_data['records'] = {
-                'high_score' => high_score,
-                'low_score' => low_score,
-                'points_leader' => points_leader,
-                'pa_leader' => pa_leader,
-                'best_record' => best_rec,
-                'top_matchup' => top_matchup,
-                'blowout' => blowout,
-                'closest' => closest,
-                'top_game_scores' => all_season_matchups.sort_by { |m| -m['points'].to_f }.first(5),
-                'highest_scoring_matchups' => head_to_head_games.sort_by { |h| -h['total_points'] }.first(3),
-                'largest_blowouts' => head_to_head_games.sort_by { |h| -h['diff'] }.first(3),
-                'closest_matchups' => head_to_head_games.sort_by { |h| h['diff'] }.first(3)
-              }
-            end
-          end
+                winner = p1 >= p2 ? t1 : t2
+                loser = p1 >= p2 ? t2 : t1
+                diff = (p1 - p2).abs.round(2)
+                total = (p1 + p2).round(2)
 
-          seasons << season_data
-
-          # Aggregate team data for Career Profiles
-          season_data['standings'].each_with_index do |team, index|
-            user_id = team['user_id']
-            next unless user_id
-
-            teams_by_user[user_id] ||= {
-              'user_id' => user_id,
-              'username' => team['username'],
-              'current_team_name' => team['team_name'],
-              'current_avatar' => team['avatar'],
-              'all_names' => [],
-              'seasons' => [],
-              'matchups' => []
-            }
-
-            teams_by_user[user_id]['all_names'] << team['team_name'] if team['team_name']
-
-            if season_data['year'].to_i >= (teams_by_user[user_id]['latest_year'] || 0).to_i
-              teams_by_user[user_id]['current_team_name'] = team['team_name']
-              teams_by_user[user_id]['current_avatar'] = team['avatar']
-              teams_by_user[user_id]['latest_year'] = season_data['year'].to_i
-              teams_by_user[user_id]['current_division_name'] = team['division_name'] || (team['division'] == 1 ? 'Yin' : (team['division'] == 2 ? 'Yang' : nil))
-              teams_by_user[user_id]['draft_slot'] = team['draft_slot']
-              teams_by_user[user_id]['current_clinch_status'] = team['clinch_status']
-              teams_by_user[user_id]['current_season_complete'] = is_complete
-              teams_by_user[user_id]['current_record'] = team['record'] || "#{team['wins']}-#{team['losses']}"
-              teams_by_user[user_id]['current_rank'] = team['rank'] || (index + 1)
-            end
-
-            # Only add to career historical record if season is complete or has played games
-            if is_complete || (team['wins'].to_i + team['losses'].to_i > 0)
-              teams_by_user[user_id]['seasons'] << {
-                'year' => season_data['year'],
-                'team_name' => team['team_name'],
-                'rank' => team['rank'] || (index + 1),
-                'is_toilet_bowl_winner' => is_complete && (team['is_toilet_bowl_winner'] || false),
-                'is_complete' => is_complete,
-                'clinch_status' => team['clinch_status'],
-                'wins' => team['wins'],
-                'losses' => team['losses'],
-                'points_for' => team['points_for'],
-                'points_against' => team['points_against']
-              }
-            end
-          end
-
-          if season_data['matchups']
-            season_data['matchups'].each do |week, games|
-              week_num = week.to_i
-              next if !is_complete && week_num > completed_weeks_limit
-
-              games.each do |game|
-                user_id = game['user_id']
-                next unless user_id && teams_by_user[user_id]
-                next if !is_complete && game['points'].to_f <= 0
-
-                teams_by_user[user_id]['matchups'] << {
-                  'year' => season_data['year'],
+                head_to_head_games << {
                   'week' => week_num,
-                  'points' => game['points'].to_f,
-                  'matchup_id' => game['matchup_id']
+                  'winner' => winner,
+                  'loser' => loser,
+                  'winner_points' => [p1, p2].max,
+                  'loser_points' => [p1, p2].min,
+                  'diff' => diff,
+                  'total_points' => total
                 }
               end
             end
           end
+
+          if !all_season_matchups.empty?
+            high_score = all_season_matchups.max_by { |m| m['points'].to_f }
+            low_score = all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f }
+            points_leader = season_data['standings'].max_by { |s| s['points_for'].to_f }
+            pa_leader = season_data['standings'].max_by { |s| s['points_against'].to_f }
+            best_rec = season_data['standings'].max_by { |s| [s['wins'].to_i, -s['losses'].to_i, s['points_for'].to_f] }
+            top_matchup = head_to_head_games.max_by { |h| h['total_points'] }
+            blowout = head_to_head_games.max_by { |h| h['diff'] }
+            closest = head_to_head_games.min_by { |h| h['diff'] }
+
+            season_data['awards'] = {
+              'highest_game' => high_score,
+              'lowest_game' => low_score,
+              'regular_season_points_leader' => points_leader
+            }
+            season_data['records'] = {
+              'high_score' => high_score,
+              'low_score' => low_score,
+              'points_leader' => points_leader,
+              'pa_leader' => pa_leader,
+              'best_record' => best_rec,
+              'top_matchup' => top_matchup,
+              'blowout' => blowout,
+              'closest' => closest,
+              'top_game_scores' => all_season_matchups.sort_by { |m| -m['points'].to_f }.first(5),
+              'highest_scoring_matchups' => head_to_head_games.sort_by { |h| -h['total_points'] }.first(3),
+              'largest_blowouts' => head_to_head_games.sort_by { |h| -h['diff'] }.first(3),
+              'closest_matchups' => head_to_head_games.sort_by { |h| h['diff'] }.first(3)
+            }
+          end
+        end
+
+        seasons << season_data
+
+        # Aggregate team data for Career Profiles
+        season_data['standings'].each_with_index do |team, index|
+          user_id = team['user_id']
+          next unless user_id
+
+          teams_by_user[user_id] ||= {
+            'user_id' => user_id,
+            'username' => team['username'],
+            'current_team_name' => team['team_name'],
+            'current_avatar' => team['avatar'],
+            'all_names' => [],
+            'seasons' => [],
+            'matchups' => []
+          }
+
+          teams_by_user[user_id]['all_names'] << team['team_name'] if team['team_name']
+
+          if season_data['year'].to_i >= (teams_by_user[user_id]['latest_year'] || 0).to_i
+            teams_by_user[user_id]['current_team_name'] = team['team_name']
+            teams_by_user[user_id]['current_avatar'] = team['avatar']
+            teams_by_user[user_id]['latest_year'] = season_data['year'].to_i
+            teams_by_user[user_id]['current_division_name'] = team['division_name'] || (team['division'] == 1 ? 'Yin' : (team['division'] == 2 ? 'Yang' : nil))
+            teams_by_user[user_id]['draft_slot'] = team['draft_slot']
+            teams_by_user[user_id]['current_clinch_status'] = team['clinch_status']
+            teams_by_user[user_id]['current_season_complete'] = is_complete
+            teams_by_user[user_id]['current_record'] = team['record'] || "#{team['wins']}-#{team['losses']}"
+            teams_by_user[user_id]['current_rank'] = team['rank'] || (index + 1)
+          end
+
+          # Only add to career historical record if season is complete or has played games
+          if is_complete || (team['wins'].to_i + team['losses'].to_i > 0)
+            teams_by_user[user_id]['seasons'] << {
+              'year' => season_data['year'],
+              'team_name' => team['team_name'],
+              'rank' => team['rank'] || (index + 1),
+              'is_toilet_bowl_winner' => is_complete && (team['is_toilet_bowl_winner'] || false),
+              'is_complete' => is_complete,
+              'clinch_status' => team['clinch_status'],
+              'wins' => team['wins'],
+              'losses' => team['losses'],
+              'points_for' => team['points_for'],
+              'points_against' => team['points_against']
+            }
+          end
+        end
+
+        if season_data['matchups']
+          season_data['matchups'].each do |week, games|
+            week_num = week.to_i
+            next if !is_complete && week_num > completed_weeks_limit
+
+            games.each do |game|
+              user_id = game['user_id']
+              next unless user_id && teams_by_user[user_id]
+              next if !is_complete && game['points'].to_f <= 0
+
+              teams_by_user[user_id]['matchups'] << {
+                'year' => season_data['year'],
+                'week' => week_num,
+                'points' => game['points'].to_f,
+                'matchup_id' => game['matchup_id']
+              }
+            end
+          end
+        end
 
         rescue StandardError => e
           Jekyll.logger.warn "Error reading season file #{file}:", e.message
