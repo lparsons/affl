@@ -10,55 +10,16 @@ AllCops:
     - 'node_modules/**/*'
     - 'bin/**/*'
 
-# Disable excessive complexity & length restrictions for Jekyll plugins/scripts
-Metrics/AbcSize:
+# Focus RuboCop on code safety, correctness, and bug prevention (Lint and Security)
+# Disable stylistic and cosmetic departments (Layout, Style, Metrics, Naming) to eliminate bike-shedding
+Layout:
   Enabled: false
 
-Metrics/BlockLength:
+Style:
   Enabled: false
 
-Metrics/ClassLength:
+Metrics:
   Enabled: false
 
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-Layout/LineLength:
-  Enabled: false
-
-# Relax stylistic preferences that are overly opinionated or noisy
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/StringLiterals:
-  Enabled: false
-
-Style/NumericLiterals:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/NumericPredicate:
-  Enabled: false
-
-Style/NegatedIf:
-  Enabled: false
-
-Naming/VariableNumber:
-  Enabled: false
-
-Naming/MethodParameterName:
+Naming:
   Enabled: false

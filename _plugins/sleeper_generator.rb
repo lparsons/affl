@@ -18,13 +18,13 @@ module Jekyll
       Dir.glob(File.join(seasons_dir, '*.json')).each do |file|
         season_data = JSON.parse(File.read(file))
 
-          is_complete = season_data['status'] == 'complete'
-          has_games = season_data['standings'] && season_data['standings'].any? { |s| (s['wins'].to_i + s['losses'].to_i) > 0 }
+        is_complete = season_data['status'] == 'complete'
+        has_games = season_data['standings'] && season_data['standings'].any? { |s| (s['wins'].to_i + s['losses'].to_i) > 0 }
 
-          # Identify winners
-          if is_complete && season_data['standings'] && !season_data['standings'].empty?
-            season_data['champion'] = season_data['standings'].first
-            season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
+        # Identify winners
+        if is_complete && season_data['standings'] && !season_data['standings'].empty?
+          season_data['champion'] = season_data['standings'].first
+          season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
 
             # Podiums
             season_data['podium'] = {
