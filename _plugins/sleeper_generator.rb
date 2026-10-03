@@ -16,9 +16,8 @@ module Jekyll
       teams_by_user = {}
 
       Dir.glob(File.join(seasons_dir, '*.json')).each do |file|
-        begin
-          season_data = JSON.parse(File.read(file))
-          
+        season_data = JSON.parse(File.read(file))
+
           is_complete = season_data['status'] == 'complete'
           has_games = season_data['standings'] && season_data['standings'].any? { |s| (s['wins'].to_i + s['losses'].to_i) > 0 }
 
@@ -26,7 +25,7 @@ module Jekyll
           if is_complete && season_data['standings'] && !season_data['standings'].empty?
             season_data['champion'] = season_data['standings'].first
             season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
-            
+
             # Podiums
             season_data['podium'] = {
               'first' => season_data['standings'][0],
@@ -41,7 +40,7 @@ module Jekyll
               t['clinch_status'] = clinch_map[t['user_id']]
             end
           end
-          
+
           # Determine completed weeks threshold
           # Completed seasons have all weeks completed.
           # In-progress seasons only include weeks that have concluded.
@@ -111,7 +110,7 @@ module Jekyll
                 end
               end
             end
-            
+
             if !all_season_matchups.empty?
               high_score = all_season_matchups.max_by { |m| m['points'].to_f }
               low_score = all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f }
@@ -201,7 +200,7 @@ module Jekyll
                 user_id = game['user_id']
                 next unless user_id && teams_by_user[user_id]
                 next if !is_complete && game['points'].to_f <= 0
-                
+
                 teams_by_user[user_id]['matchups'] << {
                   'year' => season_data['year'],
                   'week' => week_num,
@@ -212,10 +211,9 @@ module Jekyll
             end
           end
 
-        rescue => e
+        rescue StandardError => e
           Jekyll.logger.warn "Error reading season file #{file}:", e.message
         end
-      end
 
       # Sort seasons by year descending
       seasons.sort_by! { |s| -s['year'].to_i }
@@ -255,9 +253,9 @@ module Jekyll
         runner_ups = data['seasons'].count { |s| s['is_complete'] && s['rank'] == 2 }
         third_places = data['seasons'].count { |s| s['is_complete'] && s['rank'] == 3 }
         toilet_bowls = data['seasons'].count { |s| s['is_complete'] && (s['is_toilet_bowl_winner'] || s['rank'] == 7) }
-        
+
         max_score = data['matchups'].max_by { |m| m['points'] } || { 'points' => 0, 'week' => 0, 'year' => 0 }
-        
+
         total_games = wins + losses
         win_pct = total_games > 0 ? (wins.to_f / total_games * 100).round(2) : 0
         avg_points = total_games > 0 ? (points_for / total_games).round(2) : 0
@@ -291,7 +289,7 @@ module Jekyll
           'best_finish' => best_finish,
           'max_score' => max_score
         }
-        
+
         data['seasons'].sort_by! { |s| -s['year'].to_i }
         site.pages << TeamProfilePage.new(site, site.source, "teams/#{user_id}", data)
       end
@@ -408,7 +406,7 @@ module Jekyll
       draft_date_str = site.config['draft_date']
       return site.config['league_state'] = 'offseason' unless draft_date_str
       draft_date = Time.parse(draft_date_str)
-      
+
       nfl_start_str = site.config['nfl_season_start']
       nfl_start_date = nfl_start_str ? Time.parse(nfl_start_str) : draft_date + (11 * 24 * 60 * 60)
 

@@ -32,7 +32,7 @@ Metrics/PerceivedComplexity:
 Layout/LineLength:
   Enabled: false
 
-# Relax stylistic preferences that don't cause bugs
+# Relax stylistic preferences that are overly opinionated or noisy
 Style/Documentation:
   Enabled: false
 
@@ -46,6 +46,15 @@ Style/NumericLiterals:
   Enabled: false
 
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/NegatedIf:
   Enabled: false
 
 Naming/VariableNumber:

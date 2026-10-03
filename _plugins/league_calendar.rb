@@ -40,7 +40,7 @@ module Jekyll
           parsed_start = Date.parse(site.config['nfl_season_start'].to_s)
           nfl_start_date = parsed_start
           nfl_is_overridden = true
-          
+
           # Validation: Is the override suspicious?
           if parsed_start.month != 9
             warnings << "NFL Season Start override is in #{parsed_start.strftime('%B')} (expected September). Verify '_config.yml'."
@@ -105,7 +105,7 @@ module Jekyll
       wildcard_date = nfl_start_date + (14 * 7)
       semifinals_date = nfl_start_date + (15 * 7)
       superbowl_date = nfl_start_date + (16 * 7)
-      
+
       # First Sunday of February
       feb_first = Date.new(season_year + 1, 2, 1)
       days_to_sunday = (7 - feb_first.cwday) % 7
@@ -252,7 +252,11 @@ module Jekyll
 
       # Sort events chronologically
       today = Date.today
-      default_events.sort_by! { |e| Date.parse(e['date'].to_s) rescue Date.new(9999, 1, 1) }
+      default_events.sort_by! do |e|
+        Date.parse(e['date'].to_s)
+      rescue StandardError
+        Date.new(9999, 1, 1)
+      end
 
       next_event = nil
       default_events.each do |event|
@@ -300,7 +304,7 @@ module Jekyll
         'messages' => warnings
       }
 
-      if !warnings.empty?
+      unless warnings.empty?
         warnings.each do |w|
           Jekyll.logger.warn "⚠️ [AFFL Calendar Warning]:", w
         end

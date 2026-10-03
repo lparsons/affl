@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # AFFL Git Pre-Commit Hook
-# Validates Markdown formatting and table/heading spacing before committing.
+# Validates Markdown formatting and Ruby code before committing.
 
 # Get list of staged markdown files
 STAGED_MD_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
@@ -37,7 +37,7 @@ if [ -n "$STAGED_RB_FILES" ]; then
     fi
     echo "✅ RuboCop lint passed!"
   else
-    echo "ℹ️  RuboCop not installed locally; skipping local Ruby lint (will be validated in CI)."
+    echo "ℹ️  RuboCop not installed locally; skipping local Ruby lint (validated in CI)."
   fi
 fi
 
