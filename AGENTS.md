@@ -51,7 +51,7 @@ When setting up the 2026 season in the Sleeper App/Web:
 - [ ] **Draft Order:**
   - Assign non-playoff teams picks 1–6 in reverse order of lower bracket finish (12th place gets Pick 1, 11th gets Pick 2, ..., 7th gets Pick 6).
   - Assign Toilet Bowl Winner Pick **2.01** (or 1.01 if keeping no player) in the first round post-keepers.
-  - Assign playoff teams picks 7–12 based on playoff finish.
+  - Assign playoff teams picks 7–12 in reverse order of championship bracket finish (6th place gets Pick 7, 5th gets Pick 8, ..., 1st place gets Pick 12).
 - [ ] **Divisions:** Confirm 2 Divisions (**Yin** and **Yang**), 6 teams each.
 - [ ] **Playoff Schedule:** 6 Teams, 3 Weeks (Weeks 15, 16, and 17; Top 2 seeds get 1st-round byes).
 - [ ] **Trade Deadline:** Set to **Week 13**.

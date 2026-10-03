@@ -99,7 +99,10 @@ Before the start of the next season, teams may designate **one (1) keeper**:
 
 ## 6. Draft Order Determination
 
-Draft order for the next season is determined by playoff finishes for championship playoff teams, and by **lower bracket (Toilet Bowl) finishes** for non-playoff teams (Seeds 7–12), rather than regular season records. A team's lower bracket finish establishes their draft slot for the entire snake draft.
+Draft order for the next season is determined entirely by post-season bracket results rather than regular season records:
+
+* **Picks 1 – 6:** Determined by reverse finish of the **lower bracket** (Toilet Bowl), establishing draft slots for the entire snake draft (subject to the Toilet Bowl winner incentive).
+* **Picks 7 – 12:** Determined by reverse finish of the **championship bracket** (Playoffs), establishing draft slots for the entire snake draft.
 
 ### The Toilet Bowl Incentive
 
@@ -112,14 +115,14 @@ Draft order for the next season is determined by playoff finishes for championsh
 | Picks | Qualifying Teams | Tiebreaker / Order |
 |:---|:---|:---|
 | **Picks 1 – 6** | Non-playoff teams (Seeds 7–12) | Reverse lower bracket finish (12th place gets Pick 1, 11th gets Pick 2, ..., 7th gets Pick 6)* |
-| **Picks 7 – 8** | Wild Card round losers | Worst regular season record gets Pick 7 |
-| **Picks 9 – 10** | Conference Semifinal / Round 2 losers | Worst regular season record gets Pick 9 |
-| **Pick 11** | Super Bowl Runner-up | — |
-| **Pick 12** | Super Bowl Champion | — |
+| **Picks 7 – 8** | Wild Card round finishers (5th/6th place) | Reverse finish (6th place gets Pick 7, 5th place gets Pick 8) |
+| **Picks 9 – 10** | Semifinal round finishers (3rd/4th place) | Reverse finish (4th place gets Pick 9, 3rd place gets Pick 10) |
+| **Pick 11** | Super Bowl Runner-up (2nd place) | — |
+| **Pick 12** | Super Bowl Champion (1st place) | — |
 
 *\*The Toilet Bowl winner (7th place finish) receives Pick 1.01 (or 2.01 if keeping a player) in the first round post-keepers as an exception, while their base draft slot (Slot 6) applies to all other rounds.*
 
-*Ties (e.g. between round losers in the championship bracket) are broken by regular season record and standard division rank tiebreakers.*
+*If any consolation placement matchups are not played, ties between round finishers are broken by regular season record and standard division rank tiebreakers.*
 
 ---
 
