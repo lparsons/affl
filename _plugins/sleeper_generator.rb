@@ -86,7 +86,7 @@ module Jekyll
                 end
               end
 
-              by_matchup.each do |mid, pair|
+              by_matchup.each_value do |pair|
                 if pair.size == 2
                   t1, t2 = pair[0], pair[1]
                   p1, p2 = t1['points'].to_f, t2['points'].to_f

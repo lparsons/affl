@@ -89,8 +89,8 @@ class SleeperAPI
         'wins' => (roster['settings']['wins'] || 0).to_i,
         'losses' => (roster['settings']['losses'] || 0).to_i,
         'ties' => (roster['settings']['ties'] || 0).to_i,
-        'points_for' => (roster['settings']['fpts'] || 0).to_f + (roster['settings']['fpts_decimal'] || 0).to_f / 100.0,
-        'points_against' => (roster['settings']['fpts_against'] || 0).to_f + (roster['settings']['fpts_against_decimal'] || 0).to_f / 100.0,
+        'points_for' => (roster['settings']['fpts'] || 0).to_f + ((roster['settings']['fpts_decimal'] || 0).to_f / 100.0),
+        'points_against' => (roster['settings']['fpts_against'] || 0).to_f + ((roster['settings']['fpts_against_decimal'] || 0).to_f / 100.0),
         'record' => "#{roster['settings']['wins'] || 0}-#{roster['settings']['losses'] || 0}"
       }
     end

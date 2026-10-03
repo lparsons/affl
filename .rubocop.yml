@@ -23,3 +23,11 @@ Metrics:
 
 Naming:
   Enabled: false
+
+# On Windows/cross-platform checkouts, git does not track POSIX executable bits (+x)
+Lint/ScriptPermission:
+  Enabled: false
+
+# Jekyll Page and Generator subclasses manage their own internal initialization
+Lint/MissingSuper:
+  Enabled: false
