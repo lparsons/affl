@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'time'
 require 'yaml'
@@ -155,8 +157,8 @@ module Jekyll
           'icon' => '💵',
           'date' => nfl_start_date.to_s,
           'formatted_date' => nfl_start_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#4-league-dues--payment-policy',
-          'description' => 'All annual league dues must be paid or explicitly arranged prior to kickoff of the NFL season opener. Unpaid teams face a transaction freeze.'
+          'description' => 'All annual league dues must be paid or explicitly arranged ' \
+                           'prior to kickoff of the NFL season opener. Unpaid teams face a transaction freeze.'
         },
         {
           'id' => 'kickoff',
@@ -281,10 +283,10 @@ module Jekyll
           event['is_in_progress'] = true
           event['days_in'] = days_in
           next_event ||= event
-        elsif diff_days < 0
+        elsif diff_days.negative?
           event['status'] = 'past'
           event['status_label'] = 'Completed'
-        elsif diff_days == 0
+        elsif diff_days.zero?
           event['status'] = 'today'
           event['status_label'] = 'Happening Today'
           next_event ||= event
@@ -306,7 +308,7 @@ module Jekyll
 
       unless warnings.empty?
         warnings.each do |w|
-          Jekyll.logger.warn "⚠️ [AFFL Calendar Warning]:", w
+          Jekyll.logger.warn '⚠️ [AFFL Calendar Warning]:', w
         end
       end
 

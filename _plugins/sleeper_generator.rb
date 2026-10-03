@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'fileutils'
 
@@ -199,23 +201,21 @@ module Jekyll
           }
         end
 
-        if season_data['matchups']
-          season_data['matchups'].each do |week, games|
-            week_num = week.to_i
-            next if !is_complete && week_num > completed_weeks_limit
+        season_data['matchups']&.each do |week, games|
+          week_num = week.to_i
+          next if !is_complete && week_num > completed_weeks_limit
 
-            games.each do |game|
-              user_id = game['user_id']
-              next unless teams_by_user[user_id]
-              next if !is_complete && !game['points'].to_f.positive?
+          games.each do |game|
+            user_id = game['user_id']
+            next unless teams_by_user[user_id]
+            next if !is_complete && !game['points'].to_f.positive?
 
-              teams_by_user[user_id]['matchups'] << {
-                'year' => season_data['year'],
-                'week' => week_num,
-                'points' => game['points'].to_f,
-                'matchup_id' => game['matchup_id']
-              }
-            end
+            teams_by_user[user_id]['matchups'] << {
+              'year' => season_data['year'],
+              'week' => week_num,
+              'points' => game['points'].to_f,
+              'matchup_id' => game['matchup_id']
+            }
           end
         end
       rescue StandardError => e
@@ -244,13 +244,14 @@ module Jekyll
         (t['wins'].to_i + t['losses'].to_i).positive?
       end
 
-      if is_draft_or_active || has_games
-        site.data['default_season_year'] = site.config['current_season']
-      else
-        site.data['default_season_year'] = site.data['latest_completed_season']
-      end
+      site.data['default_season_year'] = if is_draft_or_active || has_games
+                                           site.config['current_season']
+                                         else
+                                           site.data['latest_completed_season']
+                                         end
 
-      if (site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?) && seasons.first && seasons.first['draft_id']
+      draft_id_missing = site.config['current_draft_id'].nil? || site.config['current_draft_id'].to_s.strip.empty?
+      if draft_id_missing && seasons.first && seasons.first['draft_id']
         site.config['current_draft_id'] = seasons.first['draft_id']
       end
 
@@ -270,8 +271,8 @@ module Jekyll
         max_score = data['matchups'].max_by { |m| m['points'] } || { 'points' => 0, 'week' => 0, 'year' => 0 }
 
         total_games = wins + losses
-        win_pct = total_games > 0 ? (wins.to_f / total_games * 100).round(2) : 0
-        avg_points = total_games > 0 ? (points_for / total_games).round(2) : 0
+        win_pct = total_games.positive? ? (wins.to_f / total_games * 100).round(2) : 0
+        avg_points = total_games.positive? ? (points_for / total_games).round(2) : 0
         completed_seasons = data['seasons'].select { |s| s['is_complete'] }
         best_finish = (completed_seasons.empty? ? data['seasons'] : completed_seasons).map { |s| s['rank'] }.min
 
@@ -285,7 +286,11 @@ module Jekyll
         data['past_names'] = past_names
         data['is_active'] = is_active
         data['first_year'] = first_year
-        data['years_span'] = first_year == data['latest_year'] ? "#{first_year}" : "#{first_year}–#{is_active ? 'Present' : data['latest_year']}"
+        data['years_span'] = if first_year == data['latest_year']
+                               first_year.to_s
+                             else
+                               "#{first_year}–#{is_active ? 'Present' : data['latest_year']}"
+                             end
         data['seasons_count'] = data['seasons'].size
 
         data['stats'] = {
@@ -329,6 +334,7 @@ module Jekyll
       all_team_seasons = []
       site.data['all_seasons'].each do |season|
         next unless season['status'] == 'complete'
+
         season['standings'].each do |team|
           all_team_seasons << team.merge(
             'year' => season['year'],
@@ -344,19 +350,22 @@ module Jekyll
         s['status'] == 'complete'
       end
 
-      most_championships = teams_by_user.values.select { |t| t['stats']['championships'] > 0 }.sort_by { |t| -t['stats']['championships'] }
+      most_championships = teams_by_user.values.select { |t| (t['stats']['championships']).positive? }
+                                        .sort_by { |t| -t['stats']['championships'] }
+      toilet_bowl_winners = teams_by_user.values.select { |t| (t['stats']['toilet_bowls']).positive? }
+      multi_season_teams = teams_by_user.values.select { |t| t['seasons'].size > 1 }
 
       site.data['records'] = {
         'highest_scores' => all_matchups.sort_by { |m| -m['points'] }.first(10),
-        'lowest_scores' => all_matchups.select { |m| m['points'] > 0 }.sort_by { |m| m['points'] }.first(10),
+        'lowest_scores' => all_matchups.select { |m| (m['points']).positive? }.sort_by { |m| m['points'] }.first(10),
         'most_season_points' => all_team_seasons.sort_by { |ts| -ts['points_for_f'] }.first(10),
         'best_season_records' => all_team_seasons.sort_by { |ts| [-ts['wins_i'], ts['losses_i'], -ts['points_for_f']] }.first(10),
         'most_championships' => most_championships,
         'total_championships' => most_championships.sum { |t| t['stats']['championships'] },
         'unique_champions_count' => most_championships.size,
-        'most_toilet_bowls' => teams_by_user.values.select { |t| t['stats']['toilet_bowls'] > 0 }.sort_by { |t| -t['stats']['toilet_bowls'] },
+        'most_toilet_bowls' => toilet_bowl_winners.sort_by { |t| -t['stats']['toilet_bowls'] },
         'most_wins' => teams_by_user.values.sort_by { |t| -t['stats']['wins'] }.first(10),
-        'highest_avg_points' => teams_by_user.values.select { |t| t['seasons'].size > 1 }.sort_by { |t| -t['stats']['avg_points'] }.first(10),
+        'highest_avg_points' => multi_season_teams.sort_by { |t| -t['stats']['avg_points'] }.first(10),
         'completed_seasons' => completed_seasons
       }
     end
@@ -365,10 +374,10 @@ module Jekyll
       return {} if standings.nil? || standings.empty?
 
       games_played = standings.map do |t|
-        (t['wins'].to_i + t['losses'].to_i)
+        t['wins'].to_i + t['losses'].to_i
       end.max || 0
 
-      return {} if games_played == 0
+      return {} if games_played.zero?
 
       remaining = [0, total_weeks - games_played].max
 
@@ -418,6 +427,7 @@ module Jekyll
       now = Time.now
       draft_date_str = site.config['draft_date']
       return site.config['league_state'] = 'offseason' unless draft_date_str
+
       draft_date = Time.parse(draft_date_str)
 
       nfl_start_str = site.config['nfl_season_start']
@@ -449,10 +459,10 @@ module Jekyll
       @base = base
       @dir = dir
       @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'team.html')
-      self.data['title'] = "Team Profile: #{team_data['username']}"
-      self.data['team_data'] = team_data
+      process(@name)
+      read_yaml(File.join(base, '_layouts'), 'team.html')
+      data['title'] = "Team Profile: #{team_data['username']}"
+      data['team_data'] = team_data
     end
   end
 end
