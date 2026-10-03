@@ -25,8 +25,9 @@ module Jekyll
 
         # Identify winners
         if is_complete && season_data['standings']&.any?
-          season_data['champion'] = season_data['standings'].first
-          season_data['toilet_bowl_winner'] = season_data['standings'].find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || season_data['standings'].last
+          standings = season_data['standings']
+          season_data['champion'] = standings.first
+          season_data['toilet_bowl_winner'] = standings.find { |s| s['is_toilet_bowl_winner'] || s['rank'] == 7 } || standings.last
 
           # Podiums
           season_data['podium'] = {
@@ -47,11 +48,15 @@ module Jekyll
         # Completed seasons have all weeks completed.
         # In-progress seasons only include weeks that have concluded.
         last_scored_leg = season_data['last_scored_leg']&.to_i
-        standings_weeks = season_data['standings'] ? season_data['standings'].map { |s| s['wins'].to_i + s['losses'].to_i + (s['ties'] || 0).to_i }.max.to_i : 0
+        standings_weeks = if season_data['standings']
+                            season_data['standings'].map { |s| s['wins'].to_i + s['losses'].to_i + (s['ties'] || 0).to_i }.max.to_i
+                          else
+                            0
+                          end
 
         completed_weeks_limit = if is_complete
                                   999
-                                elsif last_scored_leg && last_scored_leg > 0
+                                elsif last_scored_leg&.positive?
                                   last_scored_leg
                                 else
                                   standings_weeks
@@ -68,7 +73,7 @@ module Jekyll
             next if week_num > completed_weeks_limit
 
             # Ensure week has actual played games with points
-            has_played_points = games.any? { |g| g['points'].to_f > 0 }
+            has_played_points = games.any? { |g| g['points'].to_f.positive? }
             next unless has_played_points
 
             by_matchup = {}
@@ -89,27 +94,29 @@ module Jekyll
             end
 
             by_matchup.each_value do |pair|
-              if pair.size == 2
-                t1, t2 = pair[0], pair[1]
-                p1, p2 = t1['points'].to_f, t2['points'].to_f
-                # Skip unplayed / incomplete games or playoff byes where either team has 0 points
-                next if p1 <= 0 || p2 <= 0
+              next unless pair.size == 2
 
-                winner = p1 >= p2 ? t1 : t2
-                loser = p1 >= p2 ? t2 : t1
-                diff = (p1 - p2).abs.round(2)
-                total = (p1 + p2).round(2)
+              t1 = pair[0]
+              t2 = pair[1]
+              p1 = t1['points'].to_f
+              p2 = t2['points'].to_f
+              # Skip unplayed / incomplete games or playoff byes where either team has 0 points
+              next if p1 <= 0 || p2 <= 0
 
-                head_to_head_games << {
-                  'week' => week_num,
-                  'winner' => winner,
-                  'loser' => loser,
-                  'winner_points' => [p1, p2].max,
-                  'loser_points' => [p1, p2].min,
-                  'diff' => diff,
-                  'total_points' => total
-                }
-              end
+              winner = p1 >= p2 ? t1 : t2
+              loser = p1 >= p2 ? t2 : t1
+              diff = (p1 - p2).abs.round(2)
+              total = (p1 + p2).round(2)
+
+              head_to_head_games << {
+                'week' => week_num,
+                'winner' => winner,
+                'loser' => loser,
+                'winner_points' => [p1, p2].max,
+                'loser_points' => [p1, p2].min,
+                'diff' => diff,
+                'total_points' => total
+              }
             end
           end
 
@@ -213,9 +220,9 @@ module Jekyll
           end
         end
 
-        rescue StandardError => e
-          Jekyll.logger.warn "Error reading season file #{file}:", e.message
-        end
+      rescue StandardError => e
+        Jekyll.logger.warn "Error reading season file #{file}:", e.message
+      end
 
       # Sort seasons by year descending
       seasons.sort_by! { |s| -s['year'].to_i }

@@ -158,7 +158,8 @@ module Jekyll
           'date' => nfl_start_date.to_s,
           'formatted_date' => nfl_start_date.strftime('%B %d, %Y'),
           'rule_ref' => '/rules/#4-league-dues--payment-policy',
-          'description' => 'All annual league dues must be paid or explicitly arranged prior to kickoff of the NFL season opener. Unpaid teams face a transaction freeze.'
+          'description' => 'All annual league dues must be paid or explicitly arranged prior to kickoff ' \
+                           'of the NFL season opener. Unpaid teams face a transaction freeze.'
         },
         {
           'id' => 'kickoff',
@@ -308,7 +309,7 @@ module Jekyll
 
       unless warnings.empty?
         warnings.each do |w|
-          Jekyll.logger.warn "⚠️ [AFFL Calendar Warning]:", w
+          Jekyll.logger.warn '⚠️ [AFFL Calendar Warning]:', w
         end
       end
 
