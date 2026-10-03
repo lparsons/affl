@@ -58,7 +58,29 @@ Trading during the off-season (when automated platform trading is inactive) is m
 
 ---
 
-## 4. Keeper Rules
+## 4. League Dues & Payment Policy
+
+All managers are expected to contribute their annual dues promptly to fund the prize pool and ensure smooth, timely league operations.
+
+### Deadlines & Payment Schedule
+* **Payment Deadline:** All annual league dues are due prior to the start of the season.
+* **The Hard Cutoff:** Payments must be **completed or explicitly arranged with the commissioner prior to the kickoff of the official NFL season opener** (Week 1, Game 1).
+
+### Late Payment Enforcement
+1. **Kickoff Transaction Freeze:**
+   If a manager’s dues are not paid or arranged prior to kickoff of the NFL season opener:
+   * The commissioner will apply a **Transaction Freeze** to the team in Sleeper (*Lock Roster Moves*).
+   * The team will be temporarily barred from making waiver claims, free agent additions, and executing trades.
+   * **Weekly Matchup Protection:** To protect the competitive integrity of the league and avoid granting unearned blowout wins to opponents, the manager may still adjust their starting lineup using active players already on their roster.
+2. **Escalation & Extended Non-Payment:**
+   If dues remain unpaid following Week 1 without prior communication or an approved payment arrangement:
+   * **Full Roster Lock:** The commissioner reserves the right to freeze the starting lineup from further changes.
+   * **Matchup Forfeitures:** At commissioner discretion, uncollected teams may forfeit subsequent weekly matchups.
+   * **Ownership Review & Replacement:** The league may initiate an emergency review to transfer team ownership and roster management to an active replacement manager.
+
+---
+
+## 5. Keeper Rules
 
 Before the start of the next season, teams may designate **one (1) keeper**:
 * The kept player remains on that team's roster for the upcoming season.
@@ -67,7 +89,7 @@ Before the start of the next season, teams may designate **one (1) keeper**:
 
 ---
 
-## 5. Draft Order Determination
+## 6. Draft Order Determination
 
 Draft order for the next season is determined by playoff finishes for playoff teams, and regular season records for non-playoff teams.
 
@@ -89,7 +111,7 @@ Draft order for the next season is determined by playoff finishes for playoff te
 
 ---
 
-## 6. Playoff Structure
+## 7. Playoff Structure
 
 ### 12-Team League Playoff Format
 #### Divisions:
@@ -126,7 +148,7 @@ Two-week playoff tournament (Weeks 15 & 16) where all teams continue competing a
 
 ---
 
-## 7. League Rule Changes & Governance
+## 8. League Rule Changes & Governance
 
 Proposals for rule changes should be submitted to the league and the commissioner. Any proposal **seconded by another league manager** is eligible for an official league vote.
 
@@ -145,7 +167,7 @@ Proposals for rule changes should be submitted to the league and the commissione
 
 ---
 
-## 8. General Season Calendar
+## 9. General Season Calendar
 
 A live, synchronized timeline with exact dates for the current season can be viewed on the [**League Calendar & Schedule**]({{ site.baseurl }}/schedule/) page.
 
@@ -154,6 +176,7 @@ A live, synchronized timeline with exact dates for the current season can be vie
 | **3 Weeks Before Season** *(1 wk before draft)* | **Keeper Selections Due** |
 | **2 Weeks Before Season** | **AFFL Slow Draft Begins** |
 | **2 Days Before Season** | **Pre-Season Claims** (First round draft order), Free Agency starts following claims |
+| **Kickoff (Week 1)** | **League Dues Hard Cutoff** (Prior to NFL season opener kickoff) |
 | **Kickoff (Week 1)** | **In-Season Claims & Waivers Active** (Kickoff lineup locks) |
 | **Conclusion of Week 13** | **Trade Deadline** (In-season player & pick trades close) |
 | **End of Regular Season (Week 14)** | **Free Agency Closes** at start of first playoff game (before teams are eliminated) |
@@ -162,7 +185,7 @@ A live, synchronized timeline with exact dates for the current season can be vie
 
 ---
 
-## 9. Commissioner's Authority
+## 10. Commissioner's Authority
 
 In all cases, the commissioner retains the authority to veto or implement changes, transactions, or adjustments—regardless of vote outcomes—if deemed necessary for the health, integrity, and good of the league.
 

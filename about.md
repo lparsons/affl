@@ -34,6 +34,7 @@ We believe that sustained fantasy football success comes from:
 * **Draft Type:** **Slow Snake Draft** hosted in the Sleeper Draft Room
 * **Playoff Tournament:** **6 Teams, 3 Weeks** (Weeks 15–17); Top 2 division winners earn 1st-round byes; 6-team **Toilet Bowl** with the #1 draft pick (post-keepers) incentive for next season's winner.
 * **Trade Deadline:** Conclusion of **Week 13**
+* **League Dues:** Due prior to the kickoff of the official NFL season opener (Week 1, Game 1). Unpaid teams face a transaction freeze.
 
 For complete constitution rules, tiebreakers, and governance policies, visit the [**Official Rules & Constitution**]({{ site.baseurl }}/rules/) page.
 

@@ -84,6 +84,7 @@ Welcome to the official schedule and calendar for The Art of Fantasy Football Le
 
 | Category | Deadline | Policy Summary |
 |:---|:---|:---|
+| **League Dues Hard Cutoff** | **NFL Season Opener Kickoff** | Annual dues must be paid or arranged prior to Game 1 kickoff. Unpaid teams face transaction freeze. |
 | **Waiver Wire Claims** | **Wednesday Morning** *(automated)* | Unclaimed players become free agents after claims process. |
 | **Free Agent Add/Drop** | **Individual Game Kickoff** | Unlocked players may be added/dropped until their scheduled kickoff. |
 | **Lineup Locks** | **Individual Game Kickoff** | Starters and bench players lock automatically once their game begins. |

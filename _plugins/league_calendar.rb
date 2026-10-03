@@ -44,8 +44,8 @@ module Jekyll
           # Validation: Is the override suspicious?
           if parsed_start.month != 9
             warnings << "NFL Season Start override is in #{parsed_start.strftime('%B')} (expected September). Verify '_config.yml'."
-          elsif parsed_start.cwday != 4
-            warnings << "NFL Season Start override is on a #{parsed_start.strftime('%A')} (expected Thursday). Verify '_config.yml'."
+          elsif ![3, 4, 5].include?(parsed_start.cwday)
+            warnings << "NFL Season Start override is on a #{parsed_start.strftime('%A')} (typically Thursday or Wednesday). Verify '_config.yml'."
           end
         rescue StandardError => e
           warnings << "Could not parse 'nfl_season_start' ('#{site.config['nfl_season_start']}'). Falling back to automatic date (#{calculated_nfl_start}). Error: #{e.message}"
@@ -120,7 +120,7 @@ module Jekyll
           'icon' => '🔒',
           'date' => keeper_due_date.to_s,
           'formatted_date' => keeper_due_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#4-keeper-rules',
+          'rule_ref' => '/rules/#5-keeper-rules',
           'description' => 'Managers must finalize designation of up to 1 keeper player (forfeits Round 1 pick).'
         },
         {
@@ -133,7 +133,7 @@ module Jekyll
           'end_date' => preseason_claims_date.to_s,
           'time' => draft_time.strftime('%I:%M %p'),
           'formatted_date' => "#{draft_date.strftime('%B %d, %Y')} at #{draft_time.strftime('%I:%M %p')}",
-          'rule_ref' => '/rules/#5-draft-order-determination',
+          'rule_ref' => '/rules/#6-draft-order-determination',
           'description' => "Official #{season_year} AFFL slow draft is underway in the Sleeper draft room."
         },
         {
@@ -148,6 +148,17 @@ module Jekyll
           'description' => 'First round pre-season waiver claims process. Unclaimed free agents become immediately available.'
         },
         {
+          'id' => 'dues_deadline',
+          'title' => 'League Dues Hard Cutoff',
+          'tag' => 'Dues',
+          'category' => 'governance',
+          'icon' => '💵',
+          'date' => nfl_start_date.to_s,
+          'formatted_date' => nfl_start_date.strftime('%B %d, %Y'),
+          'rule_ref' => '/rules/#4-league-dues--payment-policy',
+          'description' => 'All annual league dues must be paid or explicitly arranged prior to kickoff of the NFL season opener. Unpaid teams face a transaction freeze.'
+        },
+        {
           'id' => 'kickoff',
           'title' => 'NFL Kickoff (Week 1)',
           'tag' => 'Season Start',
@@ -156,7 +167,7 @@ module Jekyll
           'date' => nfl_start_date.to_s,
           'formatted_date' => nfl_start_date.strftime('%B %d, %Y'),
           'rule_ref' => '/rules/#2-in-season-transaction--lineup-deadlines',
-          'description' => 'Regular season begins with Thursday Night Football. Starting lineups lock at individual kickoff times.'
+          'description' => 'Regular season begins with the official NFL Kickoff game. Starting lineups lock at individual kickoff times.'
         },
         {
           'id' => 'trade_deadline',
@@ -177,7 +188,7 @@ module Jekyll
           'icon' => '🛑',
           'date' => regular_season_end_date.to_s,
           'formatted_date' => regular_season_end_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#8-general-season-calendar',
+          'rule_ref' => '/rules/#9-general-season-calendar',
           'description' => 'Free agency closes before the first playoff game starts. Playoff rosters lock.'
         },
         {
@@ -188,7 +199,7 @@ module Jekyll
           'icon' => '⚔️',
           'date' => wildcard_date.to_s,
           'formatted_date' => wildcard_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#6-playoff-structure',
+          'rule_ref' => '/rules/#7-playoff-structure',
           'description' => 'Seeds 3–6 clash in elimination matchups; Seeds 1 & 2 enjoy first-round byes. Toilet Bowl kicks off.'
         },
         {
@@ -199,7 +210,7 @@ module Jekyll
           'icon' => '🔥',
           'date' => semifinals_date.to_s,
           'formatted_date' => semifinals_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#6-playoff-structure',
+          'rule_ref' => '/rules/#7-playoff-structure',
           'description' => 'Division leaders take the field against Wild Card winners for a berth in the AFFL Super Bowl.'
         },
         {
@@ -210,7 +221,7 @@ module Jekyll
           'icon' => '🏆',
           'date' => superbowl_date.to_s,
           'formatted_date' => superbowl_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#6-playoff-structure',
+          'rule_ref' => '/rules/#7-playoff-structure',
           'description' => 'Championship game crowns the AFFL Champion. Toilet Bowl concludes and determines next year\'s #1 pick.'
         },
         {
@@ -221,7 +232,7 @@ module Jekyll
           'icon' => '🗳️',
           'date' => pro_bowl_date.to_s,
           'formatted_date' => pro_bowl_date.strftime('%B %d, %Y'),
-          'rule_ref' => '/rules/#7-league-rule-changes--governance',
+          'rule_ref' => '/rules/#8-league-rule-changes--governance',
           'description' => 'End of NFL Pro Bowl opens the window for rule change proposals, voting, and off-season trading.'
         }
       ]

@@ -48,6 +48,7 @@ When setting up the 2026 season in the Sleeper App/Web:
 - [ ] **Playoff Schedule:** 6 Teams, 3 Weeks (Weeks 15, 16, and 17; Top 2 seeds get 1st-round byes).
 - [ ] **Trade Deadline:** Set to **Week 13**.
 - [ ] **LeagueSafe:** Create LeagueSafe pool for 2026 dues and post link in Sleeper chat.
+- [ ] **Dues Enforcement:** Verify all 12 teams are paid in full or arranged prior to the NFL season opener kickoff; apply Sleeper transaction freeze to any unpaid managers.
 
 ---
 
