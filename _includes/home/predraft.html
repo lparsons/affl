@@ -13,9 +13,9 @@
         <!-- Champion Box -->
         <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255, 215, 0, 0.08); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px;">
           {% if reigning.champion.avatar %}
-            <img src="https://sleepercdn.com/avatars/thumbs/{{ reigning.champion.avatar }}" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
+            <img src="https://sleepercdn.com/avatars/thumbs/{{ reigning.champion.avatar }}" alt="{{ reigning.champion.team_name }}" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
           {% else %}
-            <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
+            <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" alt="Default Avatar" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #ffd700;">
           {% endif %}
           <div>
             <p style="margin: 0; font-size: 0.8em; color: #ffd700; text-transform: uppercase; font-weight: 800;">🥇 Reigning Champion</p>

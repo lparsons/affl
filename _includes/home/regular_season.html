@@ -47,9 +47,9 @@
                 <td>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     {% if team.avatar %}
-                      <img src="https://sleepercdn.com/avatars/thumbs/{{ team.avatar }}" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
+                      <img src="https://sleepercdn.com/avatars/thumbs/{{ team.avatar }}" alt="{{ team.team_name }}" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
                     {% else %}
-                      <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
+                      <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" alt="Default Avatar" style="width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;">
                     {% endif %}
                     <div>
                       <div style="font-weight: bold; white-space: nowrap;"><a href="{{ site.baseurl }}/teams/{{ team.user_id }}/">{{ team.team_name }}</a></div>
