@@ -38,7 +38,7 @@ jobs:
       - name: Lint Ruby Code (RuboCop)
         run: |
           gem install rubocop --no-document
-          rubocop _plugins/ _scripts/
+          rubocop --format github --format progress _plugins/ _scripts/
 
       - name: Fetch Latest Sleeper Standings & Matchups
         run: |
