@@ -350,14 +350,14 @@ module Jekyll
         s['status'] == 'complete'
       end
 
-      most_championships = teams_by_user.values.select { |t| (t['stats']['championships']).positive? }
+      most_championships = teams_by_user.values.select { |t| t['stats']['championships'].positive? }
                                         .sort_by { |t| -t['stats']['championships'] }
-      toilet_bowl_winners = teams_by_user.values.select { |t| (t['stats']['toilet_bowls']).positive? }
+      toilet_bowl_winners = teams_by_user.values.select { |t| t['stats']['toilet_bowls'].positive? }
       multi_season_teams = teams_by_user.values.select { |t| t['seasons'].size > 1 }
 
       site.data['records'] = {
         'highest_scores' => all_matchups.sort_by { |m| -m['points'] }.first(10),
-        'lowest_scores' => all_matchups.select { |m| (m['points']).positive? }.sort_by { |m| m['points'] }.first(10),
+        'lowest_scores' => all_matchups.select { |m| m['points'].positive? }.sort_by { |m| m['points'] }.first(10),
         'most_season_points' => all_team_seasons.sort_by { |ts| -ts['points_for_f'] }.first(10),
         'best_season_records' => all_team_seasons.sort_by { |ts| [-ts['wins_i'], ts['losses_i'], -ts['points_for_f']] }.first(10),
         'most_championships' => most_championships,
