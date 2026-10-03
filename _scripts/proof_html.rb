@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# Validates generated HTML and internal site hyperlinks
 require 'html-proofer'
 
 options = {

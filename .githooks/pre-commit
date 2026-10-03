@@ -20,6 +20,15 @@ fi
 STAGED_RB_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || true)
 
 if [ -n "$STAGED_RB_FILES" ]; then
+  # Include standard Ruby path if not present in inherited session PATH
+  if ! command -v rubocop >/dev/null 2>&1; then
+    if [ -d "/c/Ruby32-x64/bin" ]; then
+      export PATH="/c/Ruby32-x64/bin:$PATH"
+    elif [ -d "C:/Ruby32-x64/bin" ]; then
+      export PATH="C:/Ruby32-x64/bin:$PATH"
+    fi
+  fi
+
   if command -v rubocop >/dev/null 2>&1; then
     echo "🔍 Linting staged Ruby files with RuboCop..."
     if ! rubocop $STAGED_RB_FILES; then
