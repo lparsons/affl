@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'json'
 require 'fileutils'
 
@@ -31,9 +29,9 @@ module Jekyll
 
           # Podiums
           season_data['podium'] = {
-            'first' => season_data['standings'][0],
-            'second' => season_data['standings'][1],
-            'third' => season_data['standings'][2]
+            'first' => standings[0],
+            'second' => standings[1],
+            'third' => standings[2]
           }
         end
 
@@ -120,9 +118,9 @@ module Jekyll
             end
           end
 
-          if !all_season_matchups.empty?
+          unless all_season_matchups.empty?
             high_score = all_season_matchups.max_by { |m| m['points'].to_f }
-            low_score = all_season_matchups.select { |m| m['points'].to_f > 0 }.min_by { |m| m['points'].to_f }
+            low_score = all_season_matchups.select { |m| m['points'].to_f.positive? }.min_by { |m| m['points'].to_f }
             points_leader = season_data['standings'].max_by { |s| s['points_for'].to_f }
             pa_leader = season_data['standings'].max_by { |s| s['points_against'].to_f }
             best_rec = season_data['standings'].max_by { |s| [s['wins'].to_i, -s['losses'].to_i, s['points_for'].to_f] }
@@ -175,7 +173,7 @@ module Jekyll
             teams_by_user[user_id]['current_team_name'] = team['team_name']
             teams_by_user[user_id]['current_avatar'] = team['avatar']
             teams_by_user[user_id]['latest_year'] = season_data['year'].to_i
-            teams_by_user[user_id]['current_division_name'] = team['division_name'] || (team['division'] == 1 ? 'Yin' : (team['division'] == 2 ? 'Yang' : nil))
+            teams_by_user[user_id]['current_division_name'] = team['division_name'] || { 1 => 'Yin', 2 => 'Yang' }[team['division']]
             teams_by_user[user_id]['draft_slot'] = team['draft_slot']
             teams_by_user[user_id]['current_clinch_status'] = team['clinch_status']
             teams_by_user[user_id]['current_season_complete'] = is_complete
@@ -184,20 +182,21 @@ module Jekyll
           end
 
           # Only add to career historical record if season is complete or has played games
-          if is_complete || (team['wins'].to_i + team['losses'].to_i > 0)
-            teams_by_user[user_id]['seasons'] << {
-              'year' => season_data['year'],
-              'team_name' => team['team_name'],
-              'rank' => team['rank'] || (index + 1),
-              'is_toilet_bowl_winner' => is_complete && (team['is_toilet_bowl_winner'] || false),
-              'is_complete' => is_complete,
-              'clinch_status' => team['clinch_status'],
-              'wins' => team['wins'],
-              'losses' => team['losses'],
-              'points_for' => team['points_for'],
-              'points_against' => team['points_against']
-            }
-          end
+          games_played = (team['wins'].to_i + team['losses'].to_i).positive?
+          next unless is_complete || games_played
+
+          teams_by_user[user_id]['seasons'] << {
+            'year' => season_data['year'],
+            'team_name' => team['team_name'],
+            'rank' => team['rank'] || (index + 1),
+            'is_toilet_bowl_winner' => is_complete && (team['is_toilet_bowl_winner'] || false),
+            'is_complete' => is_complete,
+            'clinch_status' => team['clinch_status'],
+            'wins' => team['wins'],
+            'losses' => team['losses'],
+            'points_for' => team['points_for'],
+            'points_against' => team['points_against']
+          }
         end
 
         if season_data['matchups']
@@ -207,8 +206,8 @@ module Jekyll
 
             games.each do |game|
               user_id = game['user_id']
-              next unless user_id && teams_by_user[user_id]
-              next if !is_complete && game['points'].to_f <= 0
+              next unless teams_by_user[user_id]
+              next if !is_complete && !game['points'].to_f.positive?
 
               teams_by_user[user_id]['matchups'] << {
                 'year' => season_data['year'],
@@ -219,7 +218,6 @@ module Jekyll
             end
           end
         end
-
       rescue StandardError => e
         Jekyll.logger.warn "Error reading season file #{file}:", e.message
       end
@@ -229,15 +227,21 @@ module Jekyll
       site.data['all_seasons'] = seasons
 
       latest_comp = seasons.find { |s| s['status'] == 'complete' }
-      site.data['latest_completed_season'] = latest_comp ? latest_comp['year'] : (seasons.first ? seasons.first['year'] : 2025)
+      site.data['latest_completed_season'] = if latest_comp
+                                               latest_comp['year']
+                                             elsif seasons.first
+                                               seasons.first['year']
+                                             else
+                                               2025
+                                             end
       site.data['reigning_season'] = latest_comp
 
       # Determine default season for Seasons dashboard
       # Option 2: Draft Day trigger (Drafting, Regular Season, or Playoffs defaults to current_season)
-      is_draft_or_active = ['drafting', 'regular_season', 'playoffs'].include?(site.config['league_state'])
+      is_draft_or_active = %w[drafting regular_season playoffs].include?(site.config['league_state'])
       current_season_data = seasons.find { |s| s['year'].to_s == site.config['current_season'].to_s }
-      has_games = current_season_data && current_season_data['standings'] && current_season_data['standings'].any? do |t|
-        (t['wins'].to_i + t['losses'].to_i) > 0
+      has_games = current_season_data && current_season_data['standings']&.any? do |t|
+        (t['wins'].to_i + t['losses'].to_i).positive?
       end
 
       if is_draft_or_active || has_games

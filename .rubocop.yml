@@ -2,31 +2,29 @@ AllCops:
   TargetRubyVersion: 3.2
   NewCops: enable
   SuggestExtensions: false
-  # Exclude external, generated, and third-party code
   Exclude:
     - '_site/**/*'
     - '.sass-cache/**/*'
     - '.jekyll-cache/**/*'
-    - '.bundle/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - 'bin/**/*'
-    - 'gemfiles/**/*'
 
-# Enforce code layout & formatting with practical max line length for URLs and logs
-Layout/LineLength:
-  Max: 140
-  AllowedPatterns:
-    - '^#.*https?://'
-    - 'https?://'
-    - "warnings << '"
-    - 'warnings << "'
+# Focus RuboCop on code safety, correctness, and bug prevention (Lint and Security)
+# Disable stylistic and cosmetic departments (Layout, Style, Metrics, Naming) to eliminate bike-shedding
+Layout:
+  Enabled: false
 
-# Disable arbitrary size & complexity thresholds on data-aggregation scripts
+Style:
+  Enabled: false
+
 Metrics:
   Enabled: false
 
-# Accommodate Windows cross-platform development (POSIX executable bit +x is not preserved)
+Naming:
+  Enabled: false
+
+# On Windows/cross-platform checkouts, git does not track POSIX executable bits (+x)
 Lint/ScriptPermission:
   Enabled: false
 
@@ -34,18 +32,3 @@ Lint/ScriptPermission:
 Lint/MissingSuper:
   Enabled: false
 
-# Allow compact module/class definition (e.g., class Jekyll::LeagueCalendarGenerator)
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-# Internal static-site generator classes do not require public documentation
-Style/Documentation:
-  Enabled: false
-
-# Allow readable block 'if' statements without forcing trailing modifier 'if' on long statements
-Style/IfUnlessModifier:
-  Enabled: false
-
-# Allow large numeric identifiers (e.g. Sleeper 19-digit league IDs) without mandatory underscores
-Style/NumericLiterals:
-  Enabled: false
