@@ -51,7 +51,6 @@ permalink: /seasons/
   </div>
 </div>
 
-
 <script>
   const seasonSelector = document.getElementById('season-selector');
   const title = document.getElementById('seasons-title');
@@ -99,7 +98,7 @@ permalink: /seasons/
 
   function computeClinchStatus(standings, totalWeeks = 14) {
     if (!standings || standings.length === 0) return {};
-    
+
     const gamesPlayed = Math.max(...standings.map(t => {
       const parts = (t.record || "0-0").split("-");
       return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0);
@@ -166,7 +165,7 @@ permalink: /seasons/
 
     let highlightsHtml = '';
     let contentHtml = '';
-    
+
     if (isComplete) {
       // 🏆 Final Podium Card
       if (season.podium) {
@@ -259,7 +258,7 @@ permalink: /seasons/
               </thead>
               <tbody>
       `;
-      
+
       season.standings.forEach(team => {
         const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
         let rankBadge = `${team.rank}`;
@@ -288,7 +287,7 @@ permalink: /seasons/
           </tr>
         `;
       });
-      
+
       contentHtml += `</tbody></table></div></div>`;
       contentHtml += renderSeasonRecords(season);
 
@@ -298,7 +297,7 @@ permalink: /seasons/
         <div class="dashboard-card">
           <h2>🏈 ${season.year} Season • Pre-Draft Setup</h2>
           <p style="margin-top: 5px; opacity: 0.85; line-height: 1.6;">
-            The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions. 
+            The <strong>${season.year} season</strong> is configured with 12 managers across 2 divisions.
             The slow snake draft commences on <strong>{{ site.draft_date | date: "%A, %B %d, %Y at %I:%M %p" }}</strong>.
           </p>
           <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
@@ -326,7 +325,7 @@ permalink: /seasons/
         <div style="margin-top: 25px;">
           <h2 style="margin-bottom: 5px;">☯️ Division Alignments</h2>
           <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 20px;">12 Franchises split across the Yin and Yang Divisions for the ${season.year} campaign</p>
-          
+
           <div class="dashboard-grid">
             <!-- Yin Division Card -->
             <div class="dashboard-card" style="border-top: 4px solid var(--link-color);">
@@ -484,7 +483,7 @@ permalink: /seasons/
               </thead>
               <tbody>
       `;
-      
+
       season.standings.forEach((team, index) => {
         const avatarUrl = team.avatar ? `https://sleepercdn.com/avatars/thumbs/${team.avatar}` : `https://sleepercdn.com/images/v2/icons/player_default.webp`;
         const clinch = clinchMap[team.user_id];
@@ -527,7 +526,7 @@ permalink: /seasons/
           </tr>
         `;
       });
-      
+
       contentHtml += `</tbody></table></div></div>`;
       contentHtml += renderSeasonRecords(season);
     }
@@ -686,4 +685,3 @@ permalink: /seasons/
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('load', handleRoute);
 </script>
-

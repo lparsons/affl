@@ -333,7 +333,7 @@ permalink: /teams/
       const grid = document.getElementById(gridId);
       if (!grid) return;
       const gridCards = Array.from(grid.querySelectorAll('.franchise-card'));
-      
+
       gridCards.sort((a, b) => {
         let valA = parseFloat(a.getAttribute(`data-${criteria}`)) || 0;
         let valB = parseFloat(b.getAttribute(`data-${criteria}`)) || 0;

@@ -48,7 +48,7 @@ layout: page
         <li><a href="{{ site.baseurl }}/rules/">Official Rules & Constitution</a></li>
       </ul>
     </div>
-    
+
     <div class="dashboard-card">
       <h2>External Links</h2>
       <ul style="margin: 0; padding-left: 20px;">

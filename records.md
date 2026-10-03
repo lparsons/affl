@@ -21,9 +21,9 @@ permalink: /records/
           <div style="text-align: center; background: rgba(255,215,0,0.05); padding: 20px 25px; border-radius: 16px; border: 1px solid rgba(255,215,0,0.25); min-width: 160px;">
             <div style="position: relative; display: inline-block;">
               {% if team.current_avatar %}
-                <img src="https://sleepercdn.com/avatars/thumbs/{{ team.current_avatar }}" style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid #ffd700; box-shadow: 0 4px 15px rgba(255,215,0,0.3);">
+                <img src="https://sleepercdn.com/avatars/thumbs/{{ team.current_avatar }}" alt="{{ team.username }}" style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid #ffd700; box-shadow: 0 4px 15px rgba(255,215,0,0.3);">
               {% else %}
-                <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" style="width: 80px; height: 80px; border-radius: 50%;">
+                <img src="https://sleepercdn.com/images/v2/icons/player_default.webp" alt="{{ team.username }}" style="width: 80px; height: 80px; border-radius: 50%;">
               {% endif %}
               <div style="position: absolute; bottom: -5px; right: -5px; background: #ffd700; color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1em; border: 2px solid var(--bg-color);">
                 {{ team.stats.championships }}
@@ -242,4 +242,3 @@ permalink: /records/
     </div>
   </div>
 </div>
-

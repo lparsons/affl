@@ -14,6 +14,7 @@ Official Jekyll-based website for The Art of Fantasy Football League (AFFL), hos
 ### Prerequisites
 
 **Ruby 3.2+ with MSYS2** (Windows)
+
 - Install via: `winget install RubyInstallerTeam.RubyWithDevKit.3.2`
 - Adds Ruby to PATH automatically
 
@@ -21,6 +22,7 @@ Official Jekyll-based website for The Art of Fantasy Football League (AFFL), hos
 
 1. Navigate to the project directory
 2. Install dependencies:
+
    ```bash
    $env:PATH = "C:\Ruby32-x64\bin;" + $env:PATH
    bundle install
@@ -29,11 +31,13 @@ Official Jekyll-based website for The Art of Fantasy Football League (AFFL), hos
 ### 📊 Updating League Data
 
 #### Method 1: One-Click Update (Recommended)
+
 ```bash
 .\update_affl.bat
 ```
 
 #### Method 2: Manual Commands
+
 ```bash
 # Set Ruby path for current session
 $env:PATH = "C:\Ruby32-x64\bin;" + $env:PATH
@@ -49,6 +53,7 @@ ruby _scripts\update_standings.rb
 ```
 
 #### Method 3: View Raw Data
+
 ```bash
 $env:PATH = "C:\Ruby32-x64\bin;" + $env:PATH
 ruby _scripts\sleeper_data.rb
@@ -66,6 +71,7 @@ Site will be available at `http://localhost:4000`
 ## 🔗 Sleeper API Integration
 
 ### Current League Configuration
+
 - **League ID**: `1124837607272898560` (configured in `_config.yml`)
 - **Platform**: Sleeper
 - **Season**: 2024
@@ -74,6 +80,7 @@ Site will be available at `http://localhost:4000`
 ### What Gets Updated Automatically
 
 #### Standings Page (`standings.md`)
+
 - **Current standings table** with rank, team name, manager, record, points for/against
 - **Playoff picture** showing top 6 playoff teams and bubble teams
 - **Statistical leaders**:
@@ -93,6 +100,7 @@ Site will be available at `http://localhost:4000`
 ### Current League Status
 
 **Top Teams** (as of last update):
+
 1. **Kolners** (kolners) - 10-4, 1823.00 PF
 2. **Birants** (maheshbiradar) - 10-4, 1733.00 PF
 3. **Desert Scorpions** (CodeBrewer) - 9-5, 1783.00 PF
@@ -106,11 +114,13 @@ Site will be available at `http://localhost:4000`
    - Copy the number from the URL: `https://sleeper.app/leagues/YOUR_LEAGUE_ID/team`
 
 2. **Update `_config.yml`**:
+
    ```yaml
    sleeper_league_id: "YOUR_LEAGUE_ID_HERE"
    ```
 
 3. **Run the update script**:
+
    ```bash
    ruby _scripts\update_standings.rb
    ```
@@ -118,6 +128,7 @@ Site will be available at `http://localhost:4000`
 ### Troubleshooting
 
 **Common Issues**:
+
 - **"nvim not found"**: Neovim installed at `C:\Program Files\Neovim\bin\nvim.exe`
 - **"ruby not found"**: Use full path `C:\Ruby32-x64\bin\ruby.exe`
 - **Gem errors**: Run `bundle install` first
@@ -125,6 +136,7 @@ Site will be available at `http://localhost:4000`
 
 **Ruby Path Issues**:
 If Ruby commands don't work, set the path:
+
 ```bash
 $env:PATH = "C:\Ruby32-x64\bin;" + $env:PATH
 ```
@@ -134,6 +146,7 @@ $env:PATH = "C:\Ruby32-x64\bin;" + $env:PATH
 ### Available Editors
 
 **Neovim** (Installed and configured):
+
 ```bash
 nvim _config.yml          # Edit main config
 nvim standings.md         # Edit standings page
@@ -141,6 +154,7 @@ nvim index.md             # Edit home page
 ```
 
 **Other Options**:
+
 ```bash
 notepad _config.yml       # Windows Notepad
 code .                    # VS Code (if installed)
@@ -148,6 +162,7 @@ start _config.yml         # Default program
 ```
 
 ### Basic Neovim Commands
+
 - `i` - Enter insert mode (start typing)
 - `Esc` - Exit insert mode
 - `:w` - Save file
@@ -157,7 +172,7 @@ start _config.yml         # Default program
 
 ## Site Structure
 
-```
+```text
 ├── _config.yml          # Jekyll configuration
 ├── _posts/              # Blog posts (future league updates)
 ├── _layouts/            # HTML templates
@@ -179,6 +194,7 @@ start _config.yml         # Default program
 ### League Information
 
 Update the following in `_config.yml`:
+
 - `title`: Your league name
 - `description`: League description
 - `current_season`: Current season year
@@ -202,17 +218,33 @@ Update the following in `_config.yml`:
 ## Deployment Options
 
 ### GitHub Pages
+
 1. Push to a GitHub repository
 2. Enable GitHub Pages in repository settings
 3. Site will be available at `https://username.github.io/repository-name`
 
 ### Netlify
+
 1. Connect your repository to Netlify
 2. Set build command: `bundle exec jekyll build`
 3. Set publish directory: `_site`
 
 ### Other Hosting
+
 Build the site with `bundle exec jekyll build` and upload the `_site` directory to your web host.
+
+## Code Quality & Linting
+
+To ensure markdown tables, headings, and internal links render properly without broken formatting:
+
+- **Markdown Linting:** Run `npx markdownlint-cli "**/*.md"` (or `npx markdownlint-cli --fix "**/*.md"` to auto-format).
+- **Git Pre-Commit Hook:** Enable automated pre-commit checks locally by running:
+
+  ```bash
+  git config core.hooksPath .githooks
+  ```
+
+- **CI Validation:** Pushes and pull requests automatically execute `markdownlint` and `html-proofer` in GitHub Actions before deploying.
 
 ## Contributing
 

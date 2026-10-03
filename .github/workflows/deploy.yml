@@ -3,6 +3,8 @@ name: Deploy AFFL to GitHub Pages
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
   schedule:
     # Run automatically every Tuesday at 10:00 AM UTC (after Monday Night Football) to sync Sleeper stats
@@ -24,6 +26,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli "**/*.md" --ignore "_site/**" --ignore "node_modules/**" --ignore "vendor/**"
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -43,10 +48,19 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Verify HTML & Internal Links (HTMLProofer)
+        run: |
+          bundle exec htmlproofer ./_site \
+            --disable-external \
+            --allow-hash-href \
+            --swap-urls "^${{ steps.pages.outputs.base_path }}:"
+
       - name: Upload Artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
 
   deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# AFFL Git Pre-Commit Hook
+# Validates Markdown formatting and table/heading spacing before committing.
+
+# Get list of staged markdown files
+STAGED_MD_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
+
+if [ -n "$STAGED_MD_FILES" ]; then
+  echo "🔍 Linting staged Markdown files with markdownlint..."
+  if ! npx --yes markdownlint-cli $STAGED_MD_FILES; then
+    echo ""
+    echo "❌ Markdown lint errors found. Please fix them before committing."
+    echo "💡 Tip: Run 'npx markdownlint-cli --fix <file>' to automatically fix spacing and formatting."
+    exit 1
+  fi
+  echo "✅ Markdown lint passed!"
+fi
+
+exit 0
