@@ -49,8 +49,8 @@ When setting up the 2026 season in the Sleeper App/Web:
 - [ ] **Keeper Deadline:** Set to **"1 week before draft"** (resolves to **August 23, 2026** for the Aug 30 draft).
 - [ ] **Max Keepers:** Set to **1 Keeper** per team (Round 1 pick forfeited).
 - [ ] **Draft Order:**
-  - Assign non-playoff teams picks 1–6 in reverse order of regular season record.
-  - Assign Toilet Bowl Winner Pick **2.01** (or 1.01 if keeping no player).
+  - Assign non-playoff teams picks 1–6 in reverse order of lower bracket finish (12th place gets Pick 1, 11th gets Pick 2, ..., 7th gets Pick 6).
+  - Assign Toilet Bowl Winner Pick **2.01** (or 1.01 if keeping no player) in the first round post-keepers.
   - Assign playoff teams picks 7–12 based on playoff finish.
 - [ ] **Divisions:** Confirm 2 Divisions (**Yin** and **Yang**), 6 teams each.
 - [ ] **Playoff Schedule:** 6 Teams, 3 Weeks (Weeks 15, 16, and 17; Top 2 seeds get 1st-round byes).

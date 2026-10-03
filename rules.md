@@ -99,25 +99,27 @@ Before the start of the next season, teams may designate **one (1) keeper**:
 
 ## 6. Draft Order Determination
 
-Draft order for the next season is determined by playoff finishes for playoff teams, and regular season records for non-playoff teams.
+Draft order for the next season is determined by playoff finishes for championship playoff teams, and by **lower bracket (Toilet Bowl) finishes** for non-playoff teams (Seeds 7–12), rather than regular season records. A team's lower bracket finish establishes their draft slot for the entire snake draft.
 
 ### The Toilet Bowl Incentive
 
-* The winner of the **Toilet Bowl** receives the **#1 overall pick in the first round after keeper selections**:
-  * If the Toilet Bowl winner chooses **1 keeper**, they forfeit their 1st round pick but receive the **1st pick of the 2nd round (Pick 2.01)**. In Round 3 and subsequent rounds, they return to their standard draft position based on regular season record.
+* The winner of the **Toilet Bowl** (7th place overall) receives the **#1 overall pick in the first round after keeper selections** as a one-round incentive exception:
+  * If the Toilet Bowl winner chooses **1 keeper**, they forfeit their 1st round pick but receive the **1st pick of the 2nd round (Pick 2.01)**. In all other rounds, they pick from their base draft slot determined by their lower bracket finish (Slot 6).
   * If the Toilet Bowl winner chooses **no keeper**, they receive the **#1 overall pick in the 1st round (Pick 1.01)**.
 
 ### Draft Order Allocation (12-Team League)
 
 | Picks | Qualifying Teams | Tiebreaker / Order |
 |:---|:---|:---|
-| **Picks 1 – 6** | Non-playoff teams | Reverse regular season record (worst record gets Pick 1) |
+| **Picks 1 – 6** | Non-playoff teams (Seeds 7–12) | Reverse lower bracket finish (12th place gets Pick 1, 11th gets Pick 2, ..., 7th gets Pick 6)* |
 | **Picks 7 – 8** | Wild Card round losers | Worst regular season record gets Pick 7 |
 | **Picks 9 – 10** | Conference Semifinal / Round 2 losers | Worst regular season record gets Pick 9 |
 | **Pick 11** | Super Bowl Runner-up | — |
 | **Pick 12** | Super Bowl Champion | — |
 
-*Ties are broken by regular season record and standard division rank tiebreakers.*
+*\*The Toilet Bowl winner (7th place finish) receives Pick 1.01 (or 2.01 if keeping a player) in the first round post-keepers as an exception, while their base draft slot (Slot 6) applies to all other rounds.*
+
+*Ties (e.g. between round losers in the championship bracket) are broken by regular season record and standard division rank tiebreakers.*
 
 ---
 
