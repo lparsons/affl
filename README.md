@@ -244,7 +244,7 @@ To ensure markdown tables, headings, and internal links render properly without 
   git config core.hooksPath .githooks
   ```
 
-- **CI Validation:** Pushes and pull requests automatically execute `markdownlint` in GitHub Actions before deploying.
+- **CI Validation:** Pushes and pull requests automatically execute `markdownlint` and HTML link validation (`_scripts/proof_html.rb`) in GitHub Actions before deploying.
 
 ## Contributing
 

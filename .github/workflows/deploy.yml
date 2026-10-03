@@ -48,6 +48,10 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Verify HTML & Internal Links (HTMLProofer)
+        run: |
+          gem install html-proofer -v "~> 5.0" --no-document
+          ruby _scripts/proof_html.rb
 
       - name: Upload Artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
