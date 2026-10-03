@@ -99,6 +99,7 @@ Draft order for the next season is determined by playoff finishes for playoff te
   - If the Toilet Bowl winner chooses **no keeper**, they receive the **#1 overall pick in the 1st round (Pick 1.01)**.
 
 ### Draft Order Allocation (12-Team League)
+
 | Picks | Qualifying Teams | Tiebreaker / Order |
 |:---|:---|:---|
 | **Picks 1 – 6** | Non-playoff teams | Reverse regular season record (worst record gets Pick 1) |
