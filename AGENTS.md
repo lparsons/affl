@@ -18,16 +18,19 @@ The Art of Fantasy Football League (AFFL) website is a Jekyll-based static site 
   - `index.md`: Dynamic homepage dashboard with upcoming milestone countdown banner and season phase switching (`predraft`, `regular_season`, `playoffs`, `offseason`).
   - `rules.md`: Complete league constitution and governance rules.
   - `schedule.md`: Interactive milestone timeline and recurring in-season deadlines.
-  - `seasons.md`: Interactive seasons dashboard with podiums, awards, historical standings, and matchup showcases (filtered to completed weeks with valid scores).
+  - `seasons.html`: Interactive seasons dashboard template backed by `assets/js/seasons-dashboard.js` (with podiums, awards, historical standings, and completed matchup showcases).
   - `records.md`: All-time record book and hall of champions.
   - `about.md`: League mission, roster format, scoring summary, and contact information.
 
 ## Recent Updates & Bug Fixes
 
+- **Decoupled Seasons Dashboard Architecture:**
+  - Migrated `seasons.md` to `seasons.html` and extracted ~800 lines of client-side JavaScript into a standalone asset file `assets/js/seasons-dashboard.js`.
+  - Resolves linter blind spots and keeps `.md` files reserved strictly for pure Markdown content.
 - **In-Progress Week & 0–0 Matchup Filtering (Seasons Dashboard):**
   - Resolved issue where active/incomplete weeks (e.g., Week 4 with 0–0 scores) populated "Closest Nail-Biters" and "Wildest Shootouts".
   - `_plugins/sleeper_generator.rb` now restricts season superlative calculations and career matchups strictly to completed weeks (`completed_weeks_limit`) and ignores unplayed `0 <= points` matchups.
-  - `seasons.md` UI safely validates `winner_points > 0 && loser_points > 0 && total_points > 0` before rendering matchup cards and single-game highs.
+  - `assets/js/seasons-dashboard.js` UI safely validates `winner_points > 0 && loser_points > 0 && total_points > 0` before rendering matchup cards and single-game highs.
   - `_scripts/update_standings.rb` persists Sleeper's `last_scored_leg` to season JSONs.
 
 ## Building and Running Locally

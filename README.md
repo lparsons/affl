@@ -181,7 +181,7 @@ start _config.yml         # Default program
 ├── assets/              # CSS, JS, images
 ├── index.md             # Home page
 ├── about.md             # About page
-├── seasons.md           # Seasons dashboard and historical standings
+├── seasons.html         # Seasons dashboard and historical standings
 ├── records.md           # All-time record book and hall of champions
 ├── teams.md             # Franchises and team profiles
 ├── schedule.md          # Season schedule and milestone calendar

@@ -1,107 +1,34 @@
----
-layout: page
-title: Seasons Dashboard
-permalink: /seasons/
----
+/**
+ * AFFL Seasons & Historical Standings Dashboard
+ * Manages dynamic season switching, playoff clinches, podium cards, and matchup showcases.
+ */
 
-<div class="dashboard-container">
-  <div class="dashboard-header" style="justify-content: space-between; align-items: flex-start;">
-    <div>
-      <h1 style="margin: 0;" id="seasons-title">Season Dashboard</h1>
-      <p style="margin: 5px 0 0; opacity: 0.8;" id="selected-season-label">Historical League Records</p>
-    </div>
-    <div style="display: flex; align-items: center; gap: 15px; background: var(--card-bg); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--border-color);">
-      <label for="season-selector" style="font-weight: bold; font-size: 0.9em; opacity: 0.7;">Select Year:</label>
-      <select id="season-selector" style="padding: 8px 15px; border-radius: 8px; background: var(--header-bg); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold; cursor: pointer;">
-        {% for season in site.data.all_seasons %}
-          {% assign has_played_games = false %}
-          {% for s in season.standings %}
-            {% assign total_g = s.wins | plus: s.losses %}
-            {% if total_g > 0 %}{% assign has_played_games = true %}{% endif %}
-          {% endfor %}
-          <option value="{{ season.year }}" {% if season.year == site.data.default_season_year %}selected{% endif %}>
-            {{ season.year }}
-            {%- if season.year == site.current_season %}
-              {%- if has_played_games -%}
-                {%- if season.status == 'complete' %} (Final){% else %} (In Progress){% endif -%}
-              {%- elsif site.league_state == 'drafting' %} (Draft Underway)
-              {%- else %} (Upcoming / Pre-Draft)
-              {%- endif -%}
-            {%- elsif season.year == site.data.latest_completed_season %} (Latest Final)
-            {%- endif %}
-          </option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+(function () {
+  'use strict';
 
-  <!-- Season Awards & Podium / Phase Highlights -->
-  <div id="season-highlights" class="dashboard-grid">
-    <!-- Injected by JS -->
-  </div>
+  const config = window.AFFL_SEASONS_CONFIG || {};
+  const baseUrl = config.baseUrl || '';
+  const defaultSeasonYear = config.defaultSeasonYear || '2026';
+  const seasonsData = config.seasonsData || {};
+  const currentDraftId = config.currentDraftId || '';
+  const draftDateFormatted = config.draftDateFormatted || '';
 
-  <!-- Standings / Divisions Content -->
-  <div id="standings-content">
-    <!-- Injected by JS -->
-  </div>
-
-  <!-- Link to All-Time Record Book -->
-  <div style="text-align: center; margin-top: 30px; padding: 16px; opacity: 0.85;">
-    Looking for all-time league records, career milestones, and annual honors? <a href="{{ site.baseurl }}/records/" style="font-weight: 700; color: var(--link-color);">Visit the All-Time Record Book &rarr;</a>
-  </div>
-</div>
-
-<script>
   const seasonSelector = document.getElementById('season-selector');
   const title = document.getElementById('seasons-title');
   const label = document.getElementById('selected-season-label');
   const highlightsContainer = document.getElementById('season-highlights');
-  const defaultSeasonYear = "{{ site.data.default_season_year | default: site.data.latest_completed_season | default: site.current_season | default: 2026 }}";
-  
-  const seasonsData = {
-    {% for season in site.data.all_seasons %}
-      "{{ season.year }}": {
-        "year": "{{ season.year }}",
-        "name": "{{ season.name }}",
-        "status": "{{ season.status }}",
-        "draft_id": "{{ season.draft_id }}",
-        "is_current": {% if season.year == site.current_season %}true{% else %}false{% endif %},
-        "awards": {{ season.awards | jsonify }},
-        "records": {{ season.records | jsonify }},
-        "podium": {{ season.podium | jsonify }},
-        "toilet_bowl_winner": {{ season.toilet_bowl_winner | jsonify }},
-        "divisions": {{ season.divisions | jsonify }},
-        "standings": [
-          {% for team in season.standings %}
-            {
-              "rank": {{ team.rank | default: forloop.index }},
-              "regular_season_rank": {{ team.regular_season_rank | default: forloop.index }},
-              "is_toilet_bowl_winner": {{ team.is_toilet_bowl_winner | default: false }},
-              "team_name": {{ team.team_name | jsonify }},
-              "username": "{{ team.username }}",
-              "user_id": "{{ team.user_id }}",
-              "division": {{ team.division | default: 1 }},
-              "division_name": "{{ team.division_name | default: 'Yin' }}",
-              "draft_slot": {{ team.draft_slot | jsonify }},
-              "record": "{{ team.record }}",
-              "wins": {{ team.wins | default: 0 }},
-              "losses": {{ team.losses | default: 0 }},
-              "points_for": "{{ team.points_for | round: 2 }}",
-              "points_against": "{{ team.points_against | round: 2 }}",
-              "avatar": "{{ team.avatar }}"
-            }{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        ]
-      }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  };
+  const standingsContentContainer = document.getElementById('standings-content');
+
+  if (!seasonSelector || !title || !label || !highlightsContainer || !standingsContentContainer) {
+    return;
+  }
 
   function computeClinchStatus(standings, totalWeeks = 14) {
     if (!standings || standings.length === 0) return {};
 
     const gamesPlayed = Math.max(...standings.map(t => {
       const parts = (t.record || "0-0").split("-");
-      return (parseInt(parts[0]) || 0) + (parseInt(parts[1]) || 0);
+      return (parseInt(parts[0], 10) || 0) + (parseInt(parts[1], 10) || 0);
     }));
 
     if (gamesPlayed === 0) return {};
@@ -110,7 +37,7 @@ permalink: /seasons/
 
     const teamsWithBounds = standings.map((t, idx) => {
       const parts = (t.record || "0-0").split("-");
-      const wins = parseInt(parts[0]) || 0;
+      const wins = parseInt(parts[0], 10) || 0;
       const pf = parseFloat(t.points_for) || 0;
       return {
         user_id: t.user_id,
@@ -156,11 +83,13 @@ permalink: /seasons/
 
     const isComplete = season.status === 'complete';
     const hasGames = season.standings && season.standings.some(t => {
-      return (parseInt(t.wins) || 0) + (parseInt(t.losses) || 0) > 0;
+      return (parseInt(t.wins, 10) || 0) + (parseInt(t.losses, 10) || 0) > 0;
     });
 
     title.textContent = `${year} Season Dashboard`;
-    label.textContent = isComplete ? `${season.name} • Final Results` : `${season.name} • ${hasGames ? 'Regular Season in Progress' : 'Pre-Draft & Rosters'}`;
+    label.textContent = isComplete
+      ? `${season.name} • Final Results`
+      : `${season.name} • ${hasGames ? 'Regular Season in Progress' : 'Pre-Draft & Rosters'}`;
     seasonSelector.value = year;
 
     let highlightsHtml = '';
@@ -175,20 +104,20 @@ permalink: /seasons/
             <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 0; gap: 20px; max-width: 620px; margin: 0 auto; width: 100%;">
               <div style="text-align: center; flex: 1; order: 2;">
                 <p style="font-size: 2em; margin: 0;">🥇</p>
-                <img src="${season.podium.first.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.first.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #ffd700;">
-                <p style="margin: 5px 0 0; font-weight: 800;"><a href="{{ site.baseurl }}/teams/${season.podium.first.user_id}/">${season.podium.first.team_name}</a></p>
+                <img src="${season.podium.first.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.first.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #ffd700;" alt="${season.podium.first.team_name}">
+                <p style="margin: 5px 0 0; font-weight: 800;"><a href="${baseUrl}/teams/${season.podium.first.user_id}/">${season.podium.first.team_name}</a></p>
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Champion (${season.podium.first.record})</p>
               </div>
               <div style="text-align: center; flex: 1; order: 1; opacity: 0.9;">
                 <p style="font-size: 1.5em; margin: 0;">🥈</p>
-                <img src="${season.podium.second.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.second.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid #c0c0c0;">
-                <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.9em;"><a href="{{ site.baseurl }}/teams/${season.podium.second.user_id}/">${season.podium.second.team_name}</a></p>
+                <img src="${season.podium.second.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.second.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid #c0c0c0;" alt="${season.podium.second.team_name}">
+                <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.9em;"><a href="${baseUrl}/teams/${season.podium.second.user_id}/">${season.podium.second.team_name}</a></p>
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">Runner-Up (${season.podium.second.record})</p>
               </div>
               <div style="text-align: center; flex: 1; order: 3; opacity: 0.8;">
                 <p style="font-size: 1.3em; margin: 0;">🥉</p>
-                <img src="${season.podium.third.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.third.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #cd7f32;">
-                <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.8em;"><a href="{{ site.baseurl }}/teams/${season.podium.third.user_id}/">${season.podium.third.team_name}</a></p>
+                <img src="${season.podium.third.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + season.podium.third.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #cd7f32;" alt="${season.podium.third.team_name}">
+                <p style="margin: 5px 0 0; font-weight: bold; font-size: 0.8em;"><a href="${baseUrl}/teams/${season.podium.third.user_id}/">${season.podium.third.team_name}</a></p>
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">3rd Place (${season.podium.third.record})</p>
               </div>
             </div>
@@ -208,7 +137,7 @@ permalink: /seasons/
           highlightsHtml += `
               <div style="padding: 12px 15px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px;">
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚽 Toilet Bowl Winner (Pick #1 Post-Keepers)</p>
-                <p style="margin: 4px 0 0; font-weight: bold; color: #ff9800; font-size: 1.05em;"><a href="{{ site.baseurl }}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
+                <p style="margin: 4px 0 0; font-weight: bold; color: #ff9800; font-size: 1.05em;"><a href="${baseUrl}/teams/${season.toilet_bowl_winner.user_id}/">${season.toilet_bowl_winner.team_name}</a></p>
                 <p style="margin: 2px 0 0; font-size: 0.85em; opacity: 0.8;">${season.toilet_bowl_winner.username} (${season.toilet_bowl_winner.record})</p>
               </div>
           `;
@@ -219,7 +148,7 @@ permalink: /seasons/
               <div style="padding: 12px 15px; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px;">
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">🚀 High Score of Year</p>
                 <p style="margin: 4px 0 0; font-weight: bold; color: #4caf50; font-size: 1.05em;">${parseFloat(season.awards.highest_game.points).toFixed(2)} pts</p>
-                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
+                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${season.awards.highest_game.user_id}/">${season.awards.highest_game.team_name}</a> (Week ${season.awards.highest_game.week})</p>
               </div>
           `;
         }
@@ -229,7 +158,7 @@ permalink: /seasons/
               <div style="padding: 12px 15px; background: rgba(42, 122, 226, 0.08); border: 1px solid rgba(42, 122, 226, 0.3); border-radius: 8px;">
                 <p style="margin: 0; font-size: 0.8em; opacity: 0.7; text-transform: uppercase; font-weight: 800;">👑 Regular Season Points King</p>
                 <p style="margin: 4px 0 0; font-weight: bold; color: var(--link-color); font-size: 1.05em;">${parseFloat(season.awards.regular_season_points_leader.points_for).toFixed(2)} pts</p>
-                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
+                <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${season.awards.regular_season_points_leader.user_id}/">${season.awards.regular_season_points_leader.team_name}</a></p>
               </div>
           `;
         }
@@ -274,9 +203,9 @@ permalink: /seasons/
             <td style="font-weight: bold; white-space: nowrap;">${rankBadge}</td>
             <td>
               <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;" alt="${team.team_name}">
                 <div>
-                  <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a></div>
+                  <div style="font-weight: bold;"><a href="${baseUrl}/teams/${team.user_id}/">${team.team_name}</a></div>
                   <div style="font-size: 0.82em; opacity: 0.7;">${team.username}</div>
                 </div>
               </div>
@@ -294,6 +223,7 @@ permalink: /seasons/
     } else if (!hasGames) {
       // ⏳ PRE-DRAFT / PRE-SEASON VIEW (NO EMPTY TABLE!)
       const pick1Team = season.standings ? season.standings.find(t => t.draft_slot === 1) : null;
+      const draftRoomId = season.draft_id || currentDraftId;
 
       highlightsHtml += `
         <div class="dashboard-card" style="grid-column: 1 / -1;">
@@ -301,19 +231,19 @@ permalink: /seasons/
             <div>
               <h2 style="margin: 0;">🏈 ${season.year} Season • Slow Snake Draft Launchpad</h2>
               <p style="margin: 6px 0 0; opacity: 0.85; line-height: 1.5;">
-                12 Franchises split across Yin & Yang divisions. The slow snake draft begins on <strong>{{ site.draft_date | date: "%A, %B %d, %Y at %I:%M %p" }}</strong>.
+                12 Franchises split across Yin & Yang divisions. The slow snake draft begins on <strong>${draftDateFormatted}</strong>.
               </p>
             </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
-              <a href="{{ site.baseurl }}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestones</a>
-              <a href="{{ site.baseurl }}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Rules</a>
+              <a href="https://sleeper.com/draft/nfl/${draftRoomId}?is_active=true" target="_blank" class="btn">🚀 Enter Sleeper Draft Room</a>
+              <a href="${baseUrl}/schedule/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Milestones</a>
+              <a href="${baseUrl}/rules/" class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-color) !important;">Rules</a>
             </div>
           </div>
           ${pick1Team ? `
             <div style="margin-top: 15px; padding: 10px 14px; background: rgba(255, 152, 0, 0.08); border: 1px solid rgba(255, 152, 0, 0.25); border-radius: 8px; font-size: 0.88em; display: flex; align-items: center; gap: 10px;">
               <span style="font-size: 1.3em;">🎯</span>
-              <span><strong>Pick #1 On the Clock:</strong> <a href="{{ site.baseurl }}/teams/${pick1Team.user_id}/"><strong>${pick1Team.team_name}</strong></a> (${pick1Team.username}) holds the #1 overall selection post-keepers!</span>
+              <span><strong>Pick #1 On the Clock:</strong> <a href="${baseUrl}/teams/${pick1Team.user_id}/"><strong>${pick1Team.team_name}</strong></a> (${pick1Team.username}) holds the #1 overall selection post-keepers!</span>
             </div>
           ` : ''}
         </div>
@@ -332,7 +262,7 @@ permalink: /seasons/
                 <h3 style="margin: 0; font-size: 1.25em;">🎯 ${season.year} Draft Order Board</h3>
                 <p style="margin: 3px 0 0; font-size: 0.85em; opacity: 0.7;">14-Round Slow Snake Draft • 1 Keeper Forfeits Round 1</p>
               </div>
-              <a href="https://sleeper.com/draft/nfl/${season.draft_id || '{{ site.current_draft_id }}'}?is_active=true" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
+              <a href="https://sleeper.com/draft/nfl/${draftRoomId}?is_active=true" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85em;">Draft Room ↗</a>
             </div>
             <div class="table-responsive">
               <table class="high-contrast-table">
@@ -351,8 +281,8 @@ permalink: /seasons/
                       <tr>
                         <td style="font-weight: 800; color: var(--link-color);">#${t.draft_slot || '-'}</td>
                         <td style="display: flex; align-items: center; gap: 10px;">
-                          <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;">
-                          <a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a>
+                          <img src="${avatarUrl}" width="28" height="28" style="border-radius: 50%;" alt="${t.team_name}">
+                          <a href="${baseUrl}/teams/${t.user_id}/">${t.team_name}</a>
                         </td>
                         <td>${t.username}</td>
                         <td><span class="category-tag">${t.division_name || 'Yin'}</span></td>
@@ -383,9 +313,9 @@ permalink: /seasons/
                     return `
                       <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;" alt="${t.team_name}">
                           <div>
-                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="${baseUrl}/teams/${t.user_id}/">${t.team_name}</a></p>
                             <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
                           </div>
                         </div>
@@ -409,9 +339,9 @@ permalink: /seasons/
                     return `
                       <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                          <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;" alt="${t.team_name}">
                           <div>
-                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="{{ site.baseurl }}/teams/${t.user_id}/">${t.team_name}</a></p>
+                            <p style="margin: 0; font-weight: bold; font-size: 0.92em;"><a href="${baseUrl}/teams/${t.user_id}/">${t.team_name}</a></p>
                             <p style="margin: 0; font-size: 0.8em; opacity: 0.7;">${t.username}</p>
                           </div>
                         </div>
@@ -429,7 +359,7 @@ permalink: /seasons/
             ℹ️ <strong>Live Standings Notice:</strong> Win-loss standings, total points, weekly high scores, and mathematical playoff clinch trackers will automatically activate on this page once NFL Week 1 matchups kick off in September.
           </div>
 
-          <!-- 📋 League Configuration & Rules (Moved to bottom reference) -->
+          <!-- 📋 League Configuration & Rules -->
           <div class="dashboard-card">
             <h3 style="margin-top: 0; font-size: 1.15em;">📋 League Configuration & Roster Rules</h3>
             <div style="font-size: 0.9em; opacity: 0.85; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; line-height: 1.5;">
@@ -439,8 +369,8 @@ permalink: /seasons/
               <div><strong>Toilet Bowl:</strong> Winner gets next year's <strong>Pick #1 (Post-Keepers)</strong></div>
             </div>
             <div style="margin-top: 14px; display: flex; gap: 10px;">
-              <a href="{{ site.baseurl }}/rules/" style="font-size: 0.85em; text-decoration: underline;">View Full Constitution Rules &rarr;</a>
-              <a href="{{ site.baseurl }}/schedule/" style="font-size: 0.85em; text-decoration: underline;">Milestone Calendar &rarr;</a>
+              <a href="${baseUrl}/rules/" style="font-size: 0.85em; text-decoration: underline;">View Full Constitution Rules &rarr;</a>
+              <a href="${baseUrl}/schedule/" style="font-size: 0.85em; text-decoration: underline;">Milestone Calendar &rarr;</a>
             </div>
           </div>
         </div>
@@ -468,7 +398,7 @@ permalink: /seasons/
               <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
                 <img src="${topTeam.avatar ? 'https://sleepercdn.com/avatars/thumbs/' + topTeam.avatar : 'https://sleepercdn.com/images/v2/icons/player_default.webp'}" alt="${topTeam.team_name}" width="42" height="42" style="border-radius: 50%; border: 2px solid #ffd700; flex-shrink: 0;">
                 <div>
-                  <div style="font-weight: 800; font-size: 1.05em;"><a href="{{ site.baseurl }}/teams/${topTeam.user_id}/">${topTeam.team_name}</a></div>
+                  <div style="font-weight: 800; font-size: 1.05em;"><a href="${baseUrl}/teams/${topTeam.user_id}/">${topTeam.team_name}</a></div>
                   <div style="font-size: 0.85em; opacity: 0.75; margin-top: 2px;">${topTeam.username} • <strong>${topTeam.record}</strong></div>
                 </div>
               </div>
@@ -489,13 +419,13 @@ permalink: /seasons/
             <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
               ${yinLeader ? `
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.88em;">
-                  <span><strong>☯️ Yin:</strong> <a href="{{ site.baseurl }}/teams/${yinLeader.user_id}/">${yinLeader.team_name}</a> <span style="opacity: 0.7;">(${yinLeader.record})</span></span>
+                  <span><strong>☯️ Yin:</strong> <a href="${baseUrl}/teams/${yinLeader.user_id}/">${yinLeader.team_name}</a> <span style="opacity: 0.7;">(${yinLeader.record})</span></span>
                   <span style="font-weight: 600; font-size: 0.85em;">${yinLeader.points_for} PF</span>
                 </div>
               ` : ''}
               ${yangLeader ? `
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.88em;">
-                  <span><strong>☯️ Yang:</strong> <a href="{{ site.baseurl }}/teams/${yangLeader.user_id}/">${yangLeader.team_name}</a> <span style="opacity: 0.7;">(${yangLeader.record})</span></span>
+                  <span><strong>☯️ Yang:</strong> <a href="${baseUrl}/teams/${yangLeader.user_id}/">${yangLeader.team_name}</a> <span style="opacity: 0.7;">(${yangLeader.record})</span></span>
                   <span style="font-weight: 600; font-size: 0.85em;">${yangLeader.points_for} PF</span>
                 </div>
               ` : ''}
@@ -518,7 +448,7 @@ permalink: /seasons/
                 ${parseFloat(highScore.points).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
               </div>
               <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
-                <a href="{{ site.baseurl }}/teams/${highScore.user_id}/">${highScore.team_name}</a>
+                <a href="${baseUrl}/teams/${highScore.user_id}/">${highScore.team_name}</a>
               </div>
               <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${highScore.username}</div>
             </div>
@@ -537,7 +467,7 @@ permalink: /seasons/
                 ${parseFloat(pointsLeader.points_for).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
               </div>
               <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
-                <a href="{{ site.baseurl }}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
+                <a href="${baseUrl}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
               </div>
               <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${pointsLeader.username}</div>
             </div>
@@ -559,7 +489,7 @@ permalink: /seasons/
                 ${parseFloat(pointsLeader.points_for).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">pts</span>
               </div>
               <div style="margin-top: 4px; font-weight: bold; font-size: 0.9em;">
-                <a href="{{ site.baseurl }}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
+                <a href="${baseUrl}/teams/${pointsLeader.user_id}/">${pointsLeader.team_name}</a>
               </div>
               <div style="font-size: 0.8em; opacity: 0.7;">Managed by ${pointsLeader.username}</div>
             </div>
@@ -578,7 +508,7 @@ permalink: /seasons/
                 +${parseFloat(closestGame.diff).toFixed(2)} <span style="font-size: 0.55em; opacity: 0.8; font-weight: 600;">diff</span>
               </div>
               <div style="margin-top: 4px; font-size: 0.85em; font-weight: bold;">
-                <a href="{{ site.baseurl }}/teams/${closestGame.winner.user_id}/">${closestGame.winner.username}</a> (${closestGame.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${closestGame.loser.user_id}/">${closestGame.loser.username}</a> (${closestGame.loser_points.toFixed(1)})
+                <a href="${baseUrl}/teams/${closestGame.winner.user_id}/">${closestGame.winner.username}</a> (${closestGame.winner_points.toFixed(1)}) def. <a href="${baseUrl}/teams/${closestGame.loser.user_id}/">${closestGame.loser.username}</a> (${closestGame.loser_points.toFixed(1)})
               </div>
             </div>
             <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
@@ -645,9 +575,9 @@ permalink: /seasons/
             <td style="font-weight: bold; white-space: nowrap;">#${index + 1}</td>
             <td>
               <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;">
+                <img src="${avatarUrl}" width="32" height="32" style="border-radius: 50%;" alt="${team.team_name}">
                 <div>
-                  <div style="font-weight: bold;"><a href="{{ site.baseurl }}/teams/${team.user_id}/">${team.team_name}</a></div>
+                  <div style="font-weight: bold;"><a href="${baseUrl}/teams/${team.user_id}/">${team.team_name}</a></div>
                   <div style="font-size: 0.82em; opacity: 0.75; display: flex; align-items: center; gap: 6px; margin-top: 2px;">
                     <span>${team.username}</span>
                     <span>•</span>
@@ -687,7 +617,7 @@ permalink: /seasons/
                 • <strong>Seeds 1 & 2:</strong> Top 2 teams (Division Winners) earn 1st-round byes.<br>
                 • <strong>Seeds 3–6:</strong> Next best regular season records advance to Wild Card round.<br>
                 • <strong>Tiebreakers:</strong> 1. Overall Record, 2. Total Points For (PF), 3. Head-to-Head record.<br>
-                • <a href="{{ site.baseurl }}/rules/" style="text-decoration: underline;">View Full Constitution Rules &rarr;</a>
+                • <a href="${baseUrl}/rules/" style="text-decoration: underline;">View Full Constitution Rules &rarr;</a>
               </p>
             </div>
           </div>
@@ -699,7 +629,7 @@ permalink: /seasons/
     }
 
     highlightsContainer.innerHTML = highlightsHtml;
-    document.getElementById('standings-content').innerHTML = contentHtml;
+    standingsContentContainer.innerHTML = contentHtml;
   }
 
   function renderSeasonRecords(season) {
@@ -723,7 +653,7 @@ permalink: /seasons/
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #4caf50;">
               <p style="margin: 0; font-size: 0.75em; color: #4caf50; text-transform: uppercase; font-weight: 800;">🚀 Season High Score</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: #4caf50;">${parseFloat(r.high_score.points).toFixed(2)} pts</p>
-              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.high_score.user_id}/"><strong>${r.high_score.username}</strong></a> (${r.high_score.team_name}, Wk ${r.high_score.week})</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${r.high_score.user_id}/"><strong>${r.high_score.username}</strong></a> (${r.high_score.team_name}, Wk ${r.high_score.week})</p>
             </div>
           ` : ''}
 
@@ -731,15 +661,15 @@ permalink: /seasons/
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid var(--link-color);">
               <p style="margin: 0; font-size: 0.75em; color: var(--link-color); text-transform: uppercase; font-weight: 800;">👑 Total Points Leader</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800; color: var(--link-color);">${parseFloat(r.points_leader.points_for).toFixed(2)} pts</p>
-              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.points_leader.user_id}/"><strong>${r.points_leader.username}</strong></a> (${r.points_leader.team_name})</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${r.points_leader.user_id}/"><strong>${r.points_leader.username}</strong></a> (${r.points_leader.team_name})</p>
             </div>
           ` : ''}
 
-          ${r.best_record && ((parseInt(r.best_record.wins) || 0) + (parseInt(r.best_record.losses) || 0) > 0) ? `
+          ${r.best_record && ((parseInt(r.best_record.wins, 10) || 0) + (parseInt(r.best_record.losses, 10) || 0) > 0) ? `
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #ffd700;">
               <p style="margin: 0; font-size: 0.75em; color: #ffd700; text-transform: uppercase; font-weight: 800;">⭐ Best Regular Record</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${r.best_record.record}</p>
-              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.best_record.user_id}/"><strong>${r.best_record.username}</strong></a> (${r.best_record.team_name})</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${r.best_record.user_id}/"><strong>${r.best_record.username}</strong></a> (${r.best_record.team_name})</p>
             </div>
           ` : ''}
 
@@ -747,7 +677,7 @@ permalink: /seasons/
             <div class="dashboard-card" style="padding: 15px; border-left: 4px solid #f44336;">
               <p style="margin: 0; font-size: 0.75em; color: #f44336; text-transform: uppercase; font-weight: 800;">🛡️ Toughest Schedule (Most PA)</p>
               <p style="margin: 4px 0 0; font-size: 1.25em; font-weight: 800;">${parseFloat(r.pa_leader.points_against).toFixed(2)} pts</p>
-              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="{{ site.baseurl }}/teams/${r.pa_leader.user_id}/"><strong>${r.pa_leader.username}</strong></a> (${r.pa_leader.team_name})</p>
+              <p style="margin: 2px 0 0; font-size: 0.85em;"><a href="${baseUrl}/teams/${r.pa_leader.user_id}/"><strong>${r.pa_leader.username}</strong></a> (${r.pa_leader.team_name})</p>
             </div>
           ` : ''}
         </div>
@@ -779,7 +709,7 @@ permalink: /seasons/
                           <td style="font-weight: bold; white-space: nowrap;">${rankLabel}</td>
                           <td style="font-weight: 800; color: #4caf50; font-size: 1.05em; white-space: nowrap;">${parseFloat(g.points).toFixed(2)}</td>
                           <td>
-                            <a href="{{ site.baseurl }}/teams/${g.user_id}/">${g.username}</a>
+                            <a href="${baseUrl}/teams/${g.user_id}/">${g.username}</a>
                           </td>
                           <td>${g.team_name}</td>
                           <td style="font-size: 0.85em; opacity: 0.8; white-space: nowrap;">Week ${g.week}</td>
@@ -804,7 +734,7 @@ permalink: /seasons/
                     ${validShootouts.map(m => `
                       <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
                         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
+                          <span><a href="${baseUrl}/teams/${m.winner.user_id}/">${m.winner.username}</a> (${m.winner_points.toFixed(1)}) def. <a href="${baseUrl}/teams/${m.loser.user_id}/">${m.loser.username}</a> (${m.loser_points.toFixed(1)})</span>
                           <span style="color: var(--link-color);">${m.total_points.toFixed(1)} pts</span>
                         </div>
                         <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} Matchup</span>
@@ -821,7 +751,7 @@ permalink: /seasons/
                     ${validNailBiters.map(m => `
                       <div style="padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.88em;">
                         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px;">
-                          <span><a href="{{ site.baseurl }}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="{{ site.baseurl }}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
+                          <span><a href="${baseUrl}/teams/${m.winner.user_id}/">${m.winner.username}</a> def. <a href="${baseUrl}/teams/${m.loser.user_id}/">${m.loser.username}</a></span>
                           <span style="color: #ff9800;">+${m.diff.toFixed(2)} pts</span>
                         </div>
                         <span style="font-size: 0.8em; opacity: 0.7;">Week ${m.week} (${m.winner_points.toFixed(2)} - ${m.loser_points.toFixed(2)})</span>
@@ -850,5 +780,9 @@ permalink: /seasons/
   }
 
   window.addEventListener('hashchange', handleRoute);
-  window.addEventListener('load', handleRoute);
-</script>
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleRoute);
+  } else {
+    handleRoute();
+  }
+})();
