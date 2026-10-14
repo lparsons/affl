@@ -1,8 +1,18 @@
 #!/usr/bin/env sh
 # AFFL Git Pre-Commit Hook
-# Validates Markdown formatting and Ruby code before committing.
+# Validates conflict markers, Markdown formatting, and Ruby code before committing.
 
-# Get list of staged markdown files
+# 1. Reject any staged files containing unresolved merge conflict markers
+if git diff --cached | grep -E '^\+(<{7}|={7}|>{7})( |$)' >/dev/null 2>&1; then
+  echo ""
+  echo "❌ Unresolved merge conflict markers detected in staged changes:"
+  git diff --cached | grep -E '^\+(<{7}|={7}|>{7})( |$)'
+  echo ""
+  echo "Please resolve all conflicts before committing."
+  exit 1
+fi
+
+# 2. Get list of staged markdown files
 STAGED_MD_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
 
 if [ -n "$STAGED_MD_FILES" ]; then
