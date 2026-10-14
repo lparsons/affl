@@ -457,6 +457,7 @@ permalink: /seasons/
       const closestGame = rec.closest;
 
       highlightsHtml += `
+<<<<<<< HEAD
         <!-- 👑 Current #1 Seed Spotlight -->
         ${topTeam ? `
           <div class="dashboard-card" style="border-left: 4px solid #ffd700; display: flex; flex-direction: column; justify-content: space-between;">
@@ -692,7 +693,7 @@ permalink: /seasons/
             </div>
           </div>
           <div style="margin-top: 15px; padding: 12px 16px; background: rgba(42, 122, 226, 0.08); border-radius: 8px; font-size: 0.85em; opacity: 0.85;">
-            ℹ️ Standings, weekly scores, and clinch trackers update automatically via Sleeper API every Tuesday morning during the regular season.
+            ℹ️ Standings, weekly scores, and clinch trackers update automatically throughout the week (Tuesdays–Thursdays as Sleeper records and official stat corrections finalize).
           </div>
         </div>
       `;

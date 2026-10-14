@@ -6,7 +6,7 @@ The Art of Fantasy Football League (AFFL) website is a Jekyll-based static site 
 
 - **Main Technologies:** Jekyll 4, Ruby 3.2, Liquid, Sass, Sleeper API, GitHub Actions.
 - **Hosting Target:** GitHub Pages (`https://lparsons.github.io/affl/`).
-- **CI/CD:** `.github/workflows/deploy.yml` (Automated build & weekly Sleeper sync every Tuesday).
+- **CI/CD:** `.github/workflows/deploy.yml` (Automated build & weekly Sleeper sync on Tuesdays–Thursdays for finalized records & stat corrections).
 
 ## Core Architecture
 
