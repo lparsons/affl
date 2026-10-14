@@ -457,7 +457,6 @@ permalink: /seasons/
       const closestGame = rec.closest;
 
       highlightsHtml += `
-<<<<<<< HEAD
         <!-- 👑 Current #1 Seed Spotlight -->
         ${topTeam ? `
           <div class="dashboard-card" style="border-left: 4px solid #ffd700; display: flex; flex-direction: column; justify-content: space-between;">
